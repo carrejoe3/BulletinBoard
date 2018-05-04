@@ -1,6 +1,6 @@
 "use strict";
 
-var DictItem = function(text) {
+var Bulletin = function(text) {
 	if (text) {
 		var obj = JSON.parse(text);
 		this.key = obj.key;
@@ -13,16 +13,16 @@ var DictItem = function(text) {
 	}
 };
 
-DictItem.prototype = {
+Bulletin.prototype = {
 	toString: function () {
 		return JSON.stringify(this);
 	}
 };
 
-var SuperDictionary = function () {
+var BulletinBoard = function () {
     LocalContractStorage.defineMapProperty(this, "repo", {
         parse: function (text) {
-            return new DictItem(text);
+            return new Bulletin(text);
         },
         stringify: function (o) {
             return o.toString();
@@ -30,7 +30,7 @@ var SuperDictionary = function () {
     });
 };
 
-SuperDictionary.prototype = {
+BulletinBoard.prototype = {
     init: function () {
         // todo
     },
@@ -47,17 +47,17 @@ SuperDictionary.prototype = {
         }
 
         var from = Blockchain.transaction.from;
-        var dictItem = this.repo.get(key);
-        if (dictItem){
+        var bulletin = this.repo.get(key);
+        if (bulletin){
             throw new Error("value has been occupied");
         }
 
-        dictItem = new DictItem();
-        dictItem.author = from;
-        dictItem.key = key;
-        dictItem.value = value;
+        bulletin = new Bulletin();
+        bulletin.author = from;
+        bulletin.key = key;
+        bulletin.value = value;
 
-        this.repo.put(key, dictItem);
+        this.repo.put(key, bulletin);
     },
 
     get: function (key) {
@@ -68,4 +68,4 @@ SuperDictionary.prototype = {
         return this.repo.get(key);
     }
 };
-module.exports = SuperDictionary;
+module.exports = BulletinBoard;
