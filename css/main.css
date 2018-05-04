@@ -17,3 +17,20 @@ body {
 .mainContent {
   margin-top: 5%;
 }
+
+.removeBulletinBtn {
+  position: relative;
+  bottom: 25%;
+  right: 0;
+}
+
+.removeBulletinBtnImg {
+  width: 10%;
+  position: absolute;
+  right: 5%;
+  cursor: pointer;
+}
+
+.removeBulletinBtnImg:hover {
+  width: 11%;
+}
