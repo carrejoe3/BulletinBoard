@@ -20,7 +20,7 @@ var sourceAccount = new Account("a6e5eb290e1438fce79f5cb8774a72621637c2c9654c8b2
 var coinbase = "eb31ad2d8a89a0ca6935c308d5425730430bc2d63f2573b8";
 var coinState;
 
-// deploy a new contract each run 
+// deploy a new contract each run
 var redeploy = process.env.REDEPLOY || true;
 var scriptType = process.env.script || 'js';
 var env = process.env.NET || 'local';
