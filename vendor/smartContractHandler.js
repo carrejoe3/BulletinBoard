@@ -11,6 +11,7 @@ neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
 $("#submitBtn").click(function () {
 
   var from = Account.NewAccount().getAddressString();
+  console.log(from);
 
   var value = "0";
   var nonce = "0";
@@ -34,11 +35,11 @@ $("#submitBtn").click(function () {
 
 //return of search,
 function cbSearch(resp) {
-  var result = resp.result;    ////resp is an object, resp.result is a JSON string
+  var result = resp.result;    //resp is an object, resp.result is a JSON string
   console.log("return of rpc call: " + JSON.stringify(result));
 
   if (result === 'null') {
-    //let user know they don't have any 
+    //let user know they don't have any items
   } else {
     //if result is not null, then it should be "return value" or "error message"
     try {
