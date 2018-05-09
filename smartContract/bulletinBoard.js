@@ -6,25 +6,17 @@ var BulletinBoard = function () {
 BulletinBoard.prototype = {
     init: function () {
     },
-    set: function (name, value) {
-        // Storing a string
-        // LocalContractStorage.set("name",name);
-        // Storing a number (value)
-        // LocalContractStorage.set("value", value);
-        // Storing an objects
-        LocalContractStorage.set("obj", {name:name, value:value});
+    set: function (author, content) {
+
+        LocalContractStorage.set(author,content);
     },
-    get: function () {
-        // var name = LocalContractStorage.get("name");
-        // console.log("name:" + name)
-        // var value = LocalContractStorage.get("value");
-        // console.log("value:" + value)
-        var obj = LocalContractStorage.get("obj");
-        console.log("obj:" + JSON.stringify(obj))
+    get: function (author) {
+
+        return LocalContractStorage.get(author);
     },
-    del: function () {
-        var result = LocalContractStorage.del("name");
-        console.log("del result:" + result)
+    del: function (author) {
+        var result = LocalContractStorage.del(author);
+        console.log("del result: " + result)
     }
 };
 

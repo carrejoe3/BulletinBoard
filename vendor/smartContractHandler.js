@@ -1,7 +1,7 @@
 "use strict";
 
 //change dapp address to deployed smart contract
-var dappAddress = "n1oXdmwuo5jJRExnZR5rbceMEyzRsPeALgm";
+var dappAddress = "n1hSMbxFPB9QTveRQcm6nMPpFeqBD6MmxMH";
 
 var nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -17,9 +17,9 @@ $("#submitBtn").click(function () {
   var nonce = "0";
   var gas_price = "1000000";
   var gas_limit = "2000000";
-  var callFunction = "get";
-  //change arguments to whatever my smart contract needs 
-  var callArgs = "[\"" + $("#search_value").val() + "\"]"; //in the form of ["args"]
+  var callFunction = "set";
+  //change arguments to whatever my smart contract needs
+  var callArgs = "[\"" + from + "\",\"" + $("bulletinInput").val() + "\"]"; //in the form of ["args"]
   var contract = {
     "function": callFunction,
     "args": callArgs
@@ -36,6 +36,7 @@ $("#submitBtn").click(function () {
 //return of search,
 function cbSearch(resp) {
   var result = resp.result;    //resp is an object, resp.result is a JSON string
+  console.log(resp);
   console.log("return of rpc call: " + JSON.stringify(result));
 
   if (result === 'null') {
