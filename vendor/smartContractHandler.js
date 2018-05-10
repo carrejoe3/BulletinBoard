@@ -1,41 +1,58 @@
 "use strict";
 
 //change dapp address to deployed smart contract
-var dappAddress = "n1hSMbxFPB9QTveRQcm6nMPpFeqBD6MmxMH";
+var dappAddress = "n1tLCrAi5FWxbvLDnRoy11aoVWTk5tc3sKQ";
 
 var nebulas = require("nebulas"),
   Account = nebulas.Account,
   neb = new nebulas.Neb();
 neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
 
-$("#submitBtn").click(function () {
-
-  var from = Account.NewAccount().getAddressString();
-  console.log(from);
-
-  var value = "0";
-  var nonce = "0";
-  var gas_price = "1000000";
-  var gas_limit = "2000000";
-  var callFunction = "set";
-  //change arguments to whatever my smart contract needs
-  var callArgs = "[\"" + from + "\",\"" + $("bulletinInput").val() + "\"]"; //in the form of ["args"]
-  var contract = {
+function getBulletins() {
+  let from = $("#addressInput").val();
+  let value = "0";
+  let nonce = "0";
+  let gas_price = "1000000";
+  let gas_limit = "2000000";
+  let callFunction = "get";
+  let callArgs = "[\"" + from + "\"]"; //in the form of ["args"]
+  let contract = {
     "function": callFunction,
     "args": callArgs
-  }
+  };
 
   neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    cbSearch(resp)
+    cbSearch(resp);
   }).catch(function (err) {
     //cbSearch(err)
-    console.log("error:" + err.message)
+    console.log("error:" + err.message);
   })
-});
+};
 
-//return of search,
+function setBulletin() {
+  let from = $("#addressInput").val();
+  let value = "0";
+  let nonce = "0";
+  let gas_price = "1000000";
+  let gas_limit = "2000000";
+  let callFunction = "set";
+  let callArgs = "[\"" + from + "\",\"" + $("#bulletinMainContent").val() + "\"]"; //in the form of ["args"]
+  let contract = {
+    "function": callFunction,
+    "args": callArgs
+  };
+
+  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+    cbSearch(resp);
+  }).catch(function (err) {
+    //cbSearch(err)
+    console.log("error:" + err.message);
+  })
+};
+
 function cbSearch(resp) {
-  var result = resp.result;    //resp is an object, resp.result is a JSON string
+  //resp is an object, resp.result is a JSON string
+  var result = resp.result;
   console.log(resp);
   console.log("return of rpc call: " + JSON.stringify(result));
 
@@ -44,22 +61,16 @@ function cbSearch(resp) {
   } else {
     //if result is not null, then it should be "return value" or "error message"
     try {
-      result = JSON.parse(result)
+      result = JSON.parse(result);
     } catch (err) {
       //result is the error message
+      console.log(err);
     }
-
-    if (!!result.key) {      //"return value"
-
-      // $("#search_banner").text($("#search_value").val())
-      // $("#search_result").text(result.value)
-      // $("#search_result_author").text(result.author)
-
-    } else {        //"error message"
-
-      // $("#search_banner").text($("#search_value").val())
-      // $("#search_result").text(result)
-      // $("#search_result_author").text("")
+    if (!!result.key) {
+      //"return value"
+      console.log('Saved bulletin: ' + result);
+    } else {
+      //"error message"
     }
   }
 };

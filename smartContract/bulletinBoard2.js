@@ -2,12 +2,10 @@ class BulletinBoard {
     init() {};
 
     set(author, content) {
-
         LocalContractStorage.set(author,content);
     };
 
     get(author) {
-
         return LocalContractStorage.get(author);
     };
 
