@@ -1,12 +1,14 @@
 "use strict";
 
-//change dapp address to deployed smart contract
 var dappAddress = "n1tLCrAi5FWxbvLDnRoy11aoVWTk5tc3sKQ";
-
+var intervalQuery;
 var nebulas = require("nebulas"),
   Account = nebulas.Account,
   neb = new nebulas.Neb();
 neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+var NebPay = require("nebpay");
+var nebPay = new NebPay();
+var serialNumber
 
 function getBulletins() {
   let from = $("#addressInput").val();
@@ -30,25 +32,38 @@ function getBulletins() {
 };
 
 function setBulletin() {
-  let from = $("#addressInput").val();
+  let to = dappAddress;
   let value = "0";
-  let nonce = "0";
-  let gas_price = "1000000";
-  let gas_limit = "2000000";
-  let callFunction = "set";
-  let callArgs = "[\"" + from + "\",\"" + $("#bulletinMainContent").val() + "\"]"; //in the form of ["args"]
-  let contract = {
-    "function": callFunction,
-    "args": callArgs
-  };
+  let callFunction = "set"
+  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + $("#bulletinMainContent").val() + "\"]"
 
-  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    cbSearch(resp);
-  }).catch(function (err) {
-    //cbSearch(err)
-    console.log("error:" + err.message);
-  })
+  serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+      listener: cbPush        //设置listener, 处理交易返回信息
+  });
+
+  intervalQuery = setInterval(function () {
+      funcIntervalQuery();
+  }, 5000);
 };
+
+function funcIntervalQuery() {
+  nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
+      .then(function (resp) {
+          console.log("tx result: " + resp)   //resp is a JSON string
+          var respObject = JSON.parse(resp)
+          if(respObject.code === 0){
+              alert(`set ${$("#addressInput").val()} succeed!`)
+              clearInterval(intervalQuery)
+          }
+      })
+      .catch(function (err) {
+          console.log(err);
+      });
+}
+
+function cbPush(resp) {
+  console.log("response of push: " + JSON.stringify(resp))
+}
 
 function cbSearch(resp) {
   //resp is an object, resp.result is a JSON string
