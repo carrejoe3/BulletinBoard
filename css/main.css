@@ -9,7 +9,7 @@ body {
 }
 
 .mainContent {
-  margin-top: 5%;
+  margin: 20% 5% 5% 5%;
 }
 
 .removeBulletinBtn {
@@ -24,4 +24,22 @@ body {
   position: absolute;
   right: 5%;
   cursor: pointer;
+}
+
+#bulletinMainContent,
+#addressInput {
+  margin: 2% auto;
+}
+
+#submitBtn {
+  display: block;
+}
+
+#walletAddressGroup {
+  margin-bottom: 10%;
+}
+
+#logo {
+  width: 100%;
+  height: auto;
 }
