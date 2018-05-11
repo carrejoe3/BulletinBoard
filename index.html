@@ -113,15 +113,23 @@
         </div>
       </div> -->
     <form>
-      <div class="form-group" id="walletAddressGroup">
-        <label for="addressInput">Please enter your wallet address</label>
-        <input id="addressInput" class="form-control" type="text" />
-        <button id="submitBtn" class="btn btn-dark" type="submit">Submit</button>
+      <div class="card" style="width: 29rem;">
+        <h4 class="card-header">Wallet address</h4>
+        <div class="card-body">
+          <div class="form-group" id="walletAddressGroup">
+            <input id="addressInput" class="form-control card-text" type="text" value="n1Sp7HsMLNwGj7kzsZRfS6xxeD2rgvKf24d"/>
+            <button id="submitBtn" class="btn btn-dark" type="submit">Submit</button>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="bulletinMainContent">Your bulletin</label>
-        <textarea class="form-control" id="bulletinMainContent" type="text"></textarea>
-        <button id="saveBtn" class="btn btn-dark" type="submit">Save</button>
+      <div class="card">
+        <h4 class="card-header">Your bulletin</h4>
+        <div class="card-body">
+          <div class="form-group">
+            <textarea class="form-control" id="bulletinMainContent" type="text" value="This is a bulletin." rows="10"></textarea>
+            <button id="saveBtn" class="btn btn-dark" type="submit">Save</button>
+          </div>
+        </div>
       </div>
     </form>
 
