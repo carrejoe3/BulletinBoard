@@ -1,15 +1,5 @@
-body {
-  padding-top: 54px;
-}
-
-@media (min-width: 992px) {
-  body {
-    padding-top: 56px;
-  }
-}
-
 .mainContent {
-  margin: 12% 5% 5% 5%;
+  margin: 7% 5% 5% 5%;
 }
 
 .removeBulletinBtn {
@@ -27,7 +17,7 @@ body {
 }
 
 #bulletinMainContent {
-  margin: 2% auto;
+  margin-bottom: 2%;
 }
 
 #submitBtn {
@@ -35,14 +25,15 @@ body {
 }
 
 #walletAddressGroup {
-  margin-bottom: 7%;
   width: 100%;
   display: inline-flex;
 }
 
 #logo {
-  width: 100%;
-  height: auto;
+  font-family: "memoriam-inline-pro", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  padding-top: 6%;
 }
 
 .card {

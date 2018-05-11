@@ -12,126 +12,39 @@
 
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.typekit.net/nue5vav.css">
 
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#"><img id="logo" src="images/logo.png"/></a>
-      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
-        </div> -->
+      <a class="navbar-brand" href="#"><h1 id="logo">Bulletin Board</h1></a>
     </div>
   </nav>
 
   <div class="mainContent">
 
-    <!-- <div class="row text-center text-lg-left">
+    <div class="card" style="width: 29rem;">
+      <h4 class="card-header">Wallet address</h4>
+      <div class="card-body">
+        <div class="form-group" id="walletAddressGroup">
+          <input id="addressInput" class="form-control card-text" type="text" value="n1Sp7HsMLNwGj7kzsZRfS6xxeD2rgvKf24d"/>
+          <button id="submitBtn" class="btn btn-dark" type="submit">Submit</button>
+        </div>
+      </div>
+    </div>
 
-        <div class="col-lg-3 col-md-4 mb-4 d-block col-xs-6 bulletinContainer">
-          <a href="#" class="h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-          <div class="removeBulletinBtn">
-            <img src="images/rubbish-bin.png" alt="Remove bulletin button" class="removeBulletinBtnImg" />
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6 bulletinContainer">
-          <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="images/paperBackground.png" alt="">
-          </a>
-        </div>
-      </div> -->
-    <form>
-      <div class="card" style="width: 29rem;">
-        <h4 class="card-header">Wallet address</h4>
-        <div class="card-body">
-          <div class="form-group" id="walletAddressGroup">
-            <input id="addressInput" class="form-control card-text" type="text" value="n1Sp7HsMLNwGj7kzsZRfS6xxeD2rgvKf24d"/>
-            <button id="submitBtn" class="btn btn-dark" type="submit">Submit</button>
-          </div>
+    <div class="card">
+      <h4 class="card-header">Your bulletin</h4>
+      <div class="card-body">
+        <div class="form-group">
+          <textarea class="form-control" id="bulletinMainContent" type="text" rows="10">This is a bulletin.</textarea>
+          <button id="saveBtn" class="btn btn-dark" type="submit">Save</button>
         </div>
       </div>
-      <div class="card">
-        <h4 class="card-header">Your bulletin</h4>
-        <div class="card-body">
-          <div class="form-group">
-            <textarea class="form-control" id="bulletinMainContent" type="text" value="This is a bulletin." rows="10"></textarea>
-            <button id="saveBtn" class="btn btn-dark" type="submit">Save</button>
-          </div>
-        </div>
-      </div>
-    </form>
+    </div>
 
   </div>
 
@@ -143,7 +56,6 @@
 
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
   <script src="vendor/main.js"></script>
   <script src="vendor/nebulas.js"></script>
   <script src="vendor/nebPay.js"></script>
