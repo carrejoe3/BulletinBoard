@@ -22,11 +22,18 @@
 
 #submitBtn {
   display: block;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
 }
 
 #walletAddressGroup {
   width: 100%;
   display: inline-flex;
+}
+
+#addressInput {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
 }
 
 #logo {

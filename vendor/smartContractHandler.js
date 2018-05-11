@@ -1,37 +1,37 @@
 "use strict";
 
-const dappAddress = "n1tLCrAi5FWxbvLDnRoy11aoVWTk5tc3sKQ";
+const dappAddress = "n1fBJHLYWB9dhV7SHToSYDf5Vu8j6vGHpBX";
 var intervalQuery;
-// const nebulas = require("nebulas"),
-//   Account = nebulas.Account,
-//   neb = new nebulas.Neb();
-// neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+const nebulas = require("nebulas"),
+  Account = nebulas.Account,
+  neb = new nebulas.Neb();
+neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
 
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
 var serialNumber;
 
-// function getBulletins() {
-//   let from = $("#addressInput").val();
-//   let value = "0";
-//   let nonce = "0";
-//   let gas_price = "1000000";
-//   let gas_limit = "2000000";
-//   let callFunction = "get";
-//   //in the form of ["args"]
-//   let callArgs = "[\"" + from + "\"]";
-//   let contract = {
-//     "function": callFunction,
-//     "args": callArgs
-//   };
+function getBulletins() {
+  let from = $("#addressInput").val();
+  let value = "0";
+  let nonce = "0";
+  let gas_price = "1000000";
+  let gas_limit = "2000000";
+  let callFunction = "get";
+  //in the form of ["args"]
+  let callArgs = "[\"" + from + "\"]";
+  let contract = {
+    "function": callFunction,
+    "args": callArgs
+  };
 
-//   neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-//     cbSearch(resp);
-//   }).catch(function (err) {
-//     //cbSearch(err)
-//     console.log("error:" + err.message);
-//   })
-// };
+  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+    cbSearch(resp);
+  }).catch(function (err) {
+    //cbSearch(err)
+    console.log("error:" + err.message);
+  })
+};
 
 function setBulletin() {
   let to = dappAddress;
@@ -54,7 +54,7 @@ function funcIntervalQuery() {
     .then(function (resp) {
       //resp is a JSON string
       let respObject = JSON.parse(resp)
-      console.log("tx result: " + respObject)
+      console.log("tx result: " + resp)
       if (respObject.code === 0) {
         alert(`set ${$("#addressInput").val()} succeed!`)
         clearInterval(intervalQuery)
