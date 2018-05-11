@@ -1,3 +1,24 @@
+textarea:focus,
+input:focus,
+.form-control:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+input {
+  background-color: transparent;
+  border: 0px solid;
+  color: #CCC;
+  box-shadow: none;
+}
+
+@media screen and (max-width: 520px) {
+  .card {
+    width: 100% !important;
+  }
+}
+
 .mainContent {
   margin: 7% 5% 5% 5%;
 }
@@ -16,8 +37,27 @@
   cursor: pointer;
 }
 
+.card {
+  margin-bottom: 5%;
+}
+
+#bulletinTitle {
+  width: 100%;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: black;
+  font-weight: 500;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: none;
+  resize: none;
+  background-color: transparent;
+}
+
 #bulletinMainContent {
-  margin-bottom: 2%;
+  margin-bottom: 1.25em;
+  border: none;
+  resize: none;
 }
 
 #submitBtn {
@@ -41,8 +81,4 @@
   font-style: normal;
   font-weight: 400;
   padding-top: 6%;
-}
-
-.card {
-  margin-bottom: 5%;
 }

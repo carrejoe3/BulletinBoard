@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1fBJHLYWB9dhV7SHToSYDf5Vu8j6vGHpBX";
+const dappAddress = "n22pErTZdLFVS18ec9TK99PzxhvgvLPoJso";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -37,7 +37,7 @@ function setBulletin() {
   let to = dappAddress;
   let value = "0";
   let callFunction = "set"
-  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + $("#bulletinMainContent").val() + "\"]"
+  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + "Title test" + "\",\"" + $("#bulletinMainContent").val() + "\"]"
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush

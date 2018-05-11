@@ -6,12 +6,10 @@ var BulletinBoard = function () {
 BulletinBoard.prototype = {
     init: function () {
     },
-    set: function (author, content) {
-
-        LocalContractStorage.set(author,content);
+    set: function (author, title, content) {
+        LocalContractStorage.set(author, {title:title, content:content});
     },
     get: function (author) {
-
         return LocalContractStorage.get(author);
     },
     del: function (author) {
