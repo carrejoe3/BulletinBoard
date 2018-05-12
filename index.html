@@ -26,30 +26,42 @@
     </div>
   </nav>
 
-  <div class="mainContent">
+  <div class="mainContent container">
 
-    <div class="card" style="width: 29rem;">
-      <h4 class="card-header">Wallet address</h4>
-      <div class="card-body">
-        <div class="form-group" id="walletAddressGroup">
-          <input id="addressInput" class="form-control card-text" type="text" value="n1Sp7HsMLNwGj7kzsZRfS6xxeD2rgvKf24d" />
-          <button id="submitBtn" class="btn btn-dark" type="submit">Submit</button>
+    <div class="row">
+      <div class="col-8">
+        <div class="card">
+          <h4 class="card-header">Wallet address</h4>
+          <div class="card-body">
+            <div class="form-group" id="walletAddressGroup">
+              <input id="addressInput" class="form-control card-text" type="text" value="n1Sp7HsMLNwGj7kzsZRfS6xxeD2rgvKf24d" />
+              <button id="submitBtn" class="btn btn-dark" type="submit">Submit</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <textarea id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <textarea class="form-control" id="bulletinMainContent" type="text" rows="10">Bulletin text goes here...</textarea>
+              <button id="saveBtn" class="btn btn-dark" type="submit">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card">
+          <h4 class="card-header">Your Bulletins</h4>
+          <div class="card-body">
+            <div class="form-group">
+              <ul id="bulletinList"></ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="card" style="width: 29rem;">
-      <div class="card-header">
-        <textarea id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
-      </div>
-      <div class="card-body">
-        <div class="form-group">
-          <textarea class="form-control" id="bulletinMainContent" type="text" rows="10">Bulletin text goes here...</textarea>
-          <button id="saveBtn" class="btn btn-dark" type="submit">Save</button>
-        </div>
-      </div>
-    </div>
-
   </div>
 
   <footer class="py-5 bg-dark">
