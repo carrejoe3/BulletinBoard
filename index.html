@@ -27,11 +27,10 @@
   </nav>
 
   <div class="mainContent container">
-
     <div class="row">
       <div class="col-8">
         <div class="card">
-          <h4 class="card-header">Wallet address</h4>
+          <h4 class="card-header">Wallet Address</h4>
           <div class="card-body">
             <div class="form-group" id="walletAddressGroup">
               <input id="addressInput" class="form-control card-text" type="text" value="n1Sp7HsMLNwGj7kzsZRfS6xxeD2rgvKf24d" />
@@ -53,7 +52,10 @@
       </div>
       <div class="col-4">
         <div class="card">
-          <h4 class="card-header">Your Bulletins</h4>
+          <div class="card-header sidebarHeader">
+            <h4 id="sidebarTitle">Your Bulletins</h4>
+            <button class="btn btn-dark addBulletinBtn"><img class="addBulletinIcon" src="images/add.png"/></button>
+          </div>
           <div class="card-body">
             <div class="form-group">
               <ul id="bulletinList"></ul>
