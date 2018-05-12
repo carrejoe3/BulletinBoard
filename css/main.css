@@ -23,20 +23,6 @@ input {
   margin: 7% 5% 5% 5%;
 }
 
-.removeBulletinBtn {
-  position: relative;
-  bottom: 25%;
-  right: 0;
-  display: none;
-}
-
-.removeBulletinBtnImg {
-  width: 10%;
-  position: absolute;
-  right: 5%;
-  cursor: pointer;
-}
-
 .card {
   margin-bottom: 5%;
 }
@@ -56,6 +42,7 @@ input {
 
 .bulletinListItem {
   list-style-type: none;
+  display: flex;
 }
 
 #bulletinList {
