@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n22pErTZdLFVS18ec9TK99PzxhvgvLPoJso";
+const dappAddress = "n1sFR5xt46vRohUmrkVZzqFrxhCAwdPV2zN";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -38,29 +38,18 @@ function getBulletinIds() {
 };
 
 function setBulletinIds() {
-  let from = $("#addressInput").val();
+  let to = dappAddress;
   let value = "0";
-  let nonce = "0";
-  let gas_price = "1000000";
-  let gas_limit = "2000000";
-
-  //function on smart contract to call
   let callFunction = "setBulletinIds";
+  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + bulletinIds + "\"]";
 
-  //function paramaters
-  //in the form of ["args"]
-  let callArgs = "[\"" + from + "\",\"" + bulletinIds + "\"]";
-  let contract = {
-    "function": callFunction,
-    "args": callArgs
-  };
+  serialNumber = nebPay.call(to, value, callFunction, callArgs, {
+    listener: cbPush
+  });
 
-  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    cbSearch(resp);
-  }).catch(function (err) {
-    //cbSearch(err)
-    console.log("error:" + err.message);
-  })
+  intervalQuery = setInterval(function () {
+    funcIntervalQuery();
+  }, 5000);
 };
 
 function getBulletin() {
@@ -93,8 +82,8 @@ function getBulletin() {
 function setBulletin() {
   let to = dappAddress;
   let value = "0";
-  let callFunction = "set"
-  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + "Title test" + "\",\"" + $("#bulletinMainContent").val() + "\"]"
+  let callFunction = "setBulletin"
+  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + $("#bulletinMainContent").val() + "\"]"
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush

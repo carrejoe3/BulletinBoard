@@ -1,6 +1,7 @@
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
-        setBulletin();
+        // setBulletin();
+        setBulletinIds();
     });
 
     $("#submitBtn").click(function() {
@@ -18,7 +19,7 @@ $( document ).ready(function() {
 });
 
 const bulletinIds = [];
-const bulletinId;
+var bulletinId;
 
 function newBulletin() {
     let x = "<li class='bulletinListItem' data-bulletinId=''>New</li><hr class='listItemBottomBorder'>";
@@ -29,7 +30,8 @@ function newBulletin() {
     $("#bulletinList").append(x);
 
     bulletinIds.push(bulletinId);
-    setBulletinIds();
+    
+    console.log('bulletin id array: ' + bulletinIds);
 }
 
 function generateUUID() {
