@@ -37,6 +37,32 @@ function getBulletinIds() {
   })
 };
 
+function setBulletinIds() {
+  let from = $("#addressInput").val();
+  let value = "0";
+  let nonce = "0";
+  let gas_price = "1000000";
+  let gas_limit = "2000000";
+
+  //function on smart contract to call
+  let callFunction = "setBulletinIds";
+
+  //function paramaters
+  //in the form of ["args"]
+  let callArgs = "[\"" + from + "\",\"" + bulletinIds + "\"]";
+  let contract = {
+    "function": callFunction,
+    "args": callArgs
+  };
+
+  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+    cbSearch(resp);
+  }).catch(function (err) {
+    //cbSearch(err)
+    console.log("error:" + err.message);
+  })
+};
+
 function getBulletin() {
   let from = $("#addressInput").val();
   let value = "0";

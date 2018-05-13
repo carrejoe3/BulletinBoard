@@ -25,11 +25,11 @@ function newBulletin() {
 
     //give bulletin list item an id
     bulletinId = generateUUID();
-    x = x.substring(0, 46) + generateUUID() + x.substring(46, x.length);
+    x = x.substring(0, 46) + bulletinId + x.substring(46, x.length);
     $("#bulletinList").append(x);
 
     bulletinIds.push(bulletinId);
-    //call setBulletinIds when i've written it
+    setBulletinIds();
 }
 
 function generateUUID() {
