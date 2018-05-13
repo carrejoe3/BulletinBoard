@@ -20,7 +20,7 @@ input {
 }
 
 .mainContent {
-  margin: 7% 5% 5% 5%;
+  margin: 5%;
 }
 
 .card {
@@ -38,6 +38,11 @@ input {
 
 .addBulletinBtn {
   padding: 0.1rem .4rem;
+}
+
+.bulletinListContainer {
+  overflow-y: scroll;
+  max-height: 561px;
 }
 
 .bulletinListItem {
