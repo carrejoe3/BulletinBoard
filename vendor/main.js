@@ -4,15 +4,11 @@ $( document ).ready(function() {
     });
 
     $("#submitBtn").click(function() {
-        getBulletins();
+        getBulletinIds();
     });
 
     $(".addBulletinBtn").click(function() {
-        let x = "<li class='bulletinListItem' data-bulletinId=''>New</li><hr class='listItemBottomBorder'>";
-
-        //give bulletin list item an id
-        x = x.substring(0, 46) + generateUUID() + x.substring(46, x.length);
-        $("#bulletinList").append(x);
+        newBulletin();
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function() {
@@ -21,8 +17,24 @@ $( document ).ready(function() {
     });
 });
 
+const bulletinIds = [];
+const bulletinId;
+
+function newBulletin() {
+    let x = "<li class='bulletinListItem' data-bulletinId=''>New</li><hr class='listItemBottomBorder'>";
+
+    //give bulletin list item an id
+    bulletinId = generateUUID();
+    x = x.substring(0, 46) + generateUUID() + x.substring(46, x.length);
+    $("#bulletinList").append(x);
+
+    bulletinIds.push(bulletinId);
+    //call setBulletinIds when i've written it
+}
+
 function generateUUID() {
     var d = new Date().getTime();
+
     if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
         d += performance.now();
     }

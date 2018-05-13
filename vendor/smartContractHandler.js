@@ -11,15 +11,46 @@ var NebPay = require("nebpay");
 var nebPay = new NebPay();
 var serialNumber;
 
-function getBulletins() {
+function getBulletinIds() {
   let from = $("#addressInput").val();
   let value = "0";
   let nonce = "0";
   let gas_price = "1000000";
   let gas_limit = "2000000";
-  let callFunction = "get";
+
+  //function on smart contract to call
+  let callFunction = "getBulletinIds";
+
+  //function paramaters
   //in the form of ["args"]
   let callArgs = "[\"" + from + "\"]";
+  let contract = {
+    "function": callFunction,
+    "args": callArgs
+  };
+
+  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+    cbSearch(resp);
+  }).catch(function (err) {
+    //cbSearch(err)
+    console.log("error:" + err.message);
+  })
+};
+
+function getBulletin() {
+  let from = $("#addressInput").val();
+  let value = "0";
+  let nonce = "0";
+  let gas_price = "1000000";
+  let gas_limit = "2000000";
+  
+  //function on smart contract to call
+  let callFunction = "getBulletin";
+
+  //function paramaters
+  //in the form of ["args"]
+  //bulletinId generated in main.js
+  let callArgs = "[\"" + bulletinId + "\"]";
   let contract = {
     "function": callFunction,
     "args": callArgs
