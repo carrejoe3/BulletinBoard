@@ -1,7 +1,12 @@
+const bulletinIds = [];
+var bulletinId;
+
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
-        // setBulletin();
-        setBulletinIds();
+        //might have to combine setBulletin and setBulletinIds
+        //this would prevent having to do two transactions
+        setBulletin(bulletinId);
+        setBulletinIds(bulletinIds);
     });
 
     $("#submitBtn").click(function() {
@@ -15,11 +20,9 @@ $( document ).ready(function() {
     $("#bulletinList").on("click", ".bulletinListItem", function() {
         let bulletinId = $(this).attr("data-bulletinId");
         //call getBulletin() and set bulletin fields to returned values
+        getBulletin(bulletinId);
     });
 });
-
-const bulletinIds = [];
-var bulletinId;
 
 function newBulletin() {
     let x = "<li class='bulletinListItem' data-bulletinId=''>New</li><hr class='listItemBottomBorder'>";

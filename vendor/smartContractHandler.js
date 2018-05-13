@@ -37,7 +37,7 @@ function getBulletinIds() {
   })
 };
 
-function setBulletinIds() {
+function setBulletinIds(bulletinIds) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "setBulletinIds";
@@ -52,7 +52,7 @@ function setBulletinIds() {
   }, 5000);
 };
 
-function getBulletin() {
+function getBulletin(bulletinId) {
   let from = $("#addressInput").val();
   let value = "0";
   let nonce = "0";
@@ -79,11 +79,11 @@ function getBulletin() {
   })
 };
 
-function setBulletin() {
+function setBulletin(bulletinId) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "setBulletin"
-  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + $("#bulletinMainContent").val() + "\"]"
+  let callArgs = "[\"" + bulletinId + "\",\"" + $("#bulletinMainContent").val() + "\"]"
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush
