@@ -16,11 +16,13 @@ class BulletinBoard {
     };
     
     delBulletinIds(author) {
-        LocalContractStorage.del(author);
+        let result = LocalContractStorage.del(author);
+        console.log("del result: " + result);
     };
 
     delBulletin(bulletinId) {
-        LocalContractStorage.del(bulletinId);
+        let result = LocalContractStorage.del(bulletinId);
+        console.log("del result: " + result);
     };
 }
 

@@ -20,7 +20,6 @@ $( document ).ready(function() {
     });
 
     $("#deleteAllBtn").click(function() {
-        alert(bulletinIds);
         deleteEverything();
     });
 });
@@ -41,11 +40,11 @@ function handleIdListResponse(data) {
             newBulletinListItem(id, 'test');
         }
     }
-}
+};
 
 function setBulletinContent(data) {
     //set bulletin content with returned values
-}
+};
 
 function generateUUID() {
     var d = new Date().getTime();
@@ -58,14 +57,14 @@ function generateUUID() {
         d = Math.floor(d / 16);
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
-}
+};
 
 function newBulletinListItem(bulletinId, title) {
     let x = "<li class='bulletinListItem' data-bulletinId=''>" + title + "</li><hr class='listItemBottomBorder'>";
     x = x.substring(0, 46) + bulletinId + x.substring(46, x.length);
     $("#bulletinList").append(x);
     bulletinIds.push(bulletinId);
-}
+};
 
 function deleteEverything() {
 
@@ -76,4 +75,4 @@ function deleteEverything() {
     $("#bulletinList").empty();
     delBulletinIds();
     bulletinIds = [];
-}
+};
