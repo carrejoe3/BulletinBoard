@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1sFR5xt46vRohUmrkVZzqFrxhCAwdPV2zN";
+const dappAddress = "n1v6r39Z9iGw3nZ9dRDFqA59zMWuSSMfErE";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -37,11 +37,11 @@ function getBulletinIds() {
   })
 };
 
-function setBulletinIds(bulletinIds) {
+function saveBulletins(bulletinIds, bulletinId) {
   let to = dappAddress;
   let value = "0";
-  let callFunction = "setBulletinIds";
-  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + bulletinIds + "\"]";
+  let callFunction = "set";
+  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + bulletinIds + "\",\"" + bulletinId + "\",\"" + $("#bulletinMainContent").val() + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush
@@ -58,7 +58,7 @@ function getBulletin(bulletinId) {
   let nonce = "0";
   let gas_price = "1000000";
   let gas_limit = "2000000";
-  
+
   //function on smart contract to call
   let callFunction = "getBulletin";
 
@@ -78,38 +78,6 @@ function getBulletin(bulletinId) {
     console.log("error:" + err.message);
   })
 };
-
-function setBulletin(bulletinId) {
-  let to = dappAddress;
-  let value = "0";
-  let callFunction = "setBulletin"
-  let callArgs = "[\"" + bulletinId + "\",\"" + $("#bulletinMainContent").val() + "\"]"
-
-  serialNumber = nebPay.call(to, value, callFunction, callArgs, {
-    listener: cbPush
-  });
-
-  intervalQuery = setInterval(function () {
-    funcIntervalQuery();
-  }, 5000);
-};
-
-function funcIntervalQuery() {
-  //search transaction result from server (result upload to server by app)
-  nebPay.queryPayInfo(serialNumber)
-    .then(function (resp) {
-      //resp is a JSON string
-      let respObject = JSON.parse(resp)
-      console.log("tx result: " + resp)
-      if (respObject.code === 0) {
-        alert(`set ${$("#addressInput").val()} succeed!`)
-        clearInterval(intervalQuery)
-      }
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
-}
 
 function cbPush(resp) {
   console.log("response of push: " + JSON.stringify(resp))
@@ -139,3 +107,20 @@ function cbSearch(resp) {
     }
   }
 };
+
+function funcIntervalQuery() {
+  //search transaction result from server (result upload to server by app)
+  nebPay.queryPayInfo(serialNumber)
+    .then(function (resp) {
+      //resp is a JSON string
+      let respObject = JSON.parse(resp)
+      console.log("tx result: " + resp)
+      if (respObject.code === 0) {
+        alert(`set ${$("#addressInput").val()} succeed!`)
+        clearInterval(intervalQuery)
+      }
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+}

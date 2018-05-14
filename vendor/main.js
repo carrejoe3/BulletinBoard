@@ -3,10 +3,7 @@ var bulletinId;
 
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
-        //might have to combine setBulletin and setBulletinIds
-        //this would prevent having to do two transactions
-        setBulletin(bulletinId);
-        setBulletinIds(bulletinIds);
+        saveBulletins(bulletinIds, bulletinId);
     });
 
     $("#submitBtn").click(function() {
@@ -33,7 +30,7 @@ function newBulletin() {
     $("#bulletinList").append(x);
 
     bulletinIds.push(bulletinId);
-    
+
     console.log('bulletin id array: ' + bulletinIds);
 }
 
