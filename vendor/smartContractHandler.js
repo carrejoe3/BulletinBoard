@@ -30,9 +30,8 @@ function getBulletinIds() {
   };
 
   neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    cbSearch(resp);
+    cbSearch(resp, 'array');
   }).catch(function (err) {
-    //cbSearch(err)
     console.log("error:" + err.message);
   })
 };
@@ -72,38 +71,40 @@ function getBulletin(bulletinId) {
   };
 
   neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    cbSearch(resp);
+    cbSearch(resp, 'bulletin');
   }).catch(function (err) {
-    //cbSearch(err)
     console.log("error:" + err.message);
   })
 };
 
-function cbPush(resp) {
+function cbPush(resp, type) {
   console.log("response of push: " + JSON.stringify(resp))
 }
 
-function cbSearch(resp) {
+function cbSearch(resp, type) {
   //resp is an object, resp.result is a JSON string
   var result = resp.result;
-  console.log(resp);
   console.log("return of rpc call: " + JSON.stringify(result));
 
   if (result === 'null') {
-    //let user know they don't have any items
+    //let user know they don't have any stored bulletins
   } else {
+
     //if result is not null, then it should be "return value" or "error message"
     try {
       result = JSON.parse(result);
     } catch (err) {
-      //result is the error message
       console.log(err);
     }
-    if (!!result.key) {
-      //"return value"
-      console.log('Saved bulletin: ' + result);
-    } else {
-      //"error message"
+
+    //if resp is bulletin ids array, push to bulletinIds
+    //if resp is bulletin, call setContent()
+    if(type == 'array') {
+      console.log('pushed to array: ' + bulletinIds);
+      bulletinIds.push(resp.result);
+    } else if(type == 'bulletin') {
+      console.log('this will set bulletin content');
+      //call function that sets bulletin content
     }
   }
 };
