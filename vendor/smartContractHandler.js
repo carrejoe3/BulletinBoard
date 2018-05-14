@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1v6r39Z9iGw3nZ9dRDFqA59zMWuSSMfErE";
+const dappAddress = "n1xbtAcQ6vx3MyTEPgcvYMLP56CTEZZMb8k";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -100,11 +100,9 @@ function cbSearch(resp, type) {
     //if resp is bulletin ids array, push to bulletinIds
     //if resp is bulletin, call setBulletinContent()
     if(type == 'array') {
-      console.log('pushed to array: ' + bulletinIds);
-      bulletinIds.push(resp.result);
+      handleIdListResponse(result);
     } else if(type == 'bulletin') {
-      console.log('this will set bulletin content');
-      //call setBulletinContent() when its written
+      setBulletinContent(result);
     }
   }
 };
