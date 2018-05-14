@@ -98,13 +98,13 @@ function cbSearch(resp, type) {
     }
 
     //if resp is bulletin ids array, push to bulletinIds
-    //if resp is bulletin, call setContent()
+    //if resp is bulletin, call setBulletinContent()
     if(type == 'array') {
       console.log('pushed to array: ' + bulletinIds);
       bulletinIds.push(resp.result);
     } else if(type == 'bulletin') {
       console.log('this will set bulletin content');
-      //call function that sets bulletin content
+      //call setBulletinContent() when its written
     }
   }
 };
