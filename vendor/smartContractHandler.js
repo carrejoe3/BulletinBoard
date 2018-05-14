@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1xbtAcQ6vx3MyTEPgcvYMLP56CTEZZMb8k";
+const dappAddress = "n1g88ApyMWVB1nR9qkAnPEhzbuDBEYfTBrE";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -77,9 +77,63 @@ function getBulletin(bulletinId) {
   })
 };
 
+function delBulletin(bulletinId) {
+  let from = $("#addressInput").val();
+  let value = "0";
+  let nonce = "0";
+  let gas_price = "1000000";
+  let gas_limit = "2000000";
+
+  //function on smart contract to call
+  let callFunction = "delBulletin";
+
+  //function paramaters
+  //in the form of ["args"]
+  //bulletinId generated in main.js
+  let callArgs = "[\"" + bulletinId + "\"]";
+  let contract = {
+    "function": callFunction,
+    "args": callArgs
+  };
+
+  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+    // cbSearch(resp, 'bulletin');
+    console.log("delete bulletin response: " + resp.result)
+  }).catch(function (err) {
+    console.log("error:" + err.message);
+  })
+};
+
+function delBulletinIds() {
+  let from = $("#addressInput").val();
+  let value = "0";
+  let nonce = "0";
+  let gas_price = "1000000";
+  let gas_limit = "2000000";
+
+  //function on smart contract to call
+  let callFunction = "delBulletinIds";
+
+  //function paramaters
+  //in the form of ["args"]
+  //bulletinId generated in main.js
+  let callArgs = "[\"" + from + "\"]";
+  let contract = {
+    "function": callFunction,
+    "args": callArgs
+  };
+
+  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+    // cbSearch(resp, 'bulletin');
+    console.log("delete bulletin id's response: " + resp.result)
+  }).catch(function (err) {
+    console.log("error:" + err.message);
+  })
+};
+
 function cbPush(resp, type) {
   console.log("response of push: " + JSON.stringify(resp))
-}
+};
 
 function cbSearch(resp, type) {
   //resp is an object, resp.result is a JSON string
@@ -122,4 +176,4 @@ function funcIntervalQuery() {
     .catch(function (err) {
       console.log(err);
     });
-}
+};

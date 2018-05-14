@@ -1,4 +1,4 @@
-const bulletinIds = [];
+var bulletinIds = [];
 var bulletinId;
 
 $( document ).ready(function() {
@@ -11,22 +11,35 @@ $( document ).ready(function() {
     });
 
     $(".addBulletinBtn").click(function() {
-        newBulletinListItem(generateUUID());
+        newBulletinListItem(generateUUID(), 'test');
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function() {
         let bulletinId = $(this).attr("data-bulletinId");
         getBulletin(bulletinId);
     });
+
+    $("#deleteAllBtn").click(function() {
+        alert(bulletinIds);
+        deleteEverything();
+    });
 });
 
 function handleIdListResponse(data) {
 
+    bulletinIds = [];
+    $("#bulletinList").empty();
+
     sortedIds = data.split(',');
 
-    for(let i in sortedIds) {
-        let id = sortedIds[i];
-        newBulletinListItem(id);
+    //if returned array isnt blank
+    if(sortedIds[0] !== "") {
+        for(let i in sortedIds) {
+            let id = sortedIds[i];
+
+            getBulletin(id);
+            newBulletinListItem(id, 'test');
+        }
     }
 }
 
@@ -47,9 +60,20 @@ function generateUUID() {
     });
 }
 
-function newBulletinListItem(bulletinId) {
-    let x = "<li class='bulletinListItem' data-bulletinId=''>New</li><hr class='listItemBottomBorder'>";
+function newBulletinListItem(bulletinId, title) {
+    let x = "<li class='bulletinListItem' data-bulletinId=''>" + title + "</li><hr class='listItemBottomBorder'>";
     x = x.substring(0, 46) + bulletinId + x.substring(46, x.length);
     $("#bulletinList").append(x);
     bulletinIds.push(bulletinId);
+}
+
+function deleteEverything() {
+
+    for(var i in bulletinIds) {
+        delBulletin(bulletinIds[i]);
+    }
+
+    $("#bulletinList").empty();
+    delBulletinIds();
+    bulletinIds = [];
 }

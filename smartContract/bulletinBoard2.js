@@ -10,20 +10,17 @@ class BulletinBoard {
         return LocalContractStorage.get(author);
     };
 
-    //this also needs to loop through all ids and call delBulletinList on each id
-    //this ensures all user data is removed from blockchain
-    detBulletinIds(author) {
-        let result = LocalContractStorage.del(author);
-        console.log("del result: " + result);
-    };
-
+    
     getBulletin(bulletinId) {
         return LocalContractStorage.get(bulletinId);
     };
+    
+    delBulletinIds(author) {
+        LocalContractStorage.del(author);
+    };
 
     delBulletin(bulletinId) {
-        let result = LocalContractStorage.del(bulletinId);
-        console.log("del result: " + result);
+        LocalContractStorage.del(bulletinId);
     };
 }
 
