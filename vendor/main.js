@@ -3,7 +3,6 @@ var bulletinId;
 
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
-        getBulletinTitles();
         saveBulletins(bulletinIds, getBulletinTitles());
     });
 

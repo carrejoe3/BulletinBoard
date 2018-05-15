@@ -6,15 +6,30 @@ var BulletinBoard = function () {
 BulletinBoard.prototype = {
     init: function () {
     },
-    set: function (author, title, content) {
-        LocalContractStorage.set(author, {title:title, content:content});
+    set: function (author, idList, titles) {
+
+        for(var i in idList) {
+            setBulletin(idList[i], titles[i]);
+        }
+
+        LocalContractStorage.set(author, idList);
     },
-    get: function (author) {
+    setBulletin: function (bulletinId, title) {
+        LocalContractStorage.set(bulletinId, title);
+    },
+    getBulletinIds: function (author) {
         return LocalContractStorage.get(author);
     },
-    del: function (author) {
+    getBulletin: function (bulletinId) {
+        return LocalContractStorage.get(bulletinId);
+    },
+    delBulletinIds: function (author) {
         var result = LocalContractStorage.del(author);
         console.log("del result: " + result)
+    },
+    delBulletin: function (bulletinId) {
+        var result = LocalContractStorage.del(bulletinId);
+        console.log("del result: " + result);
     }
 };
 
