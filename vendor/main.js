@@ -3,7 +3,8 @@ var bulletinId;
 
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
-        saveBulletins(bulletinIds, bulletinId);
+        getBulletinTitles();
+        saveBulletins(bulletinIds, getBulletinTitles());
     });
 
     $("#submitBtn").click(function() {
@@ -11,7 +12,7 @@ $( document ).ready(function() {
     });
 
     $(".addBulletinBtn").click(function() {
-        newBulletinListItem(generateUUID(), 'test');
+        newBulletinListItem(generateUUID(), 'New');
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function() {
@@ -36,7 +37,7 @@ function handleIdListResponse(data) {
         for(let i in sortedIds) {
             let id = sortedIds[i];
 
-            getBulletin(id);
+            console.log(getBulletin(id));
             newBulletinListItem(id, 'test');
         }
     }
@@ -44,6 +45,17 @@ function handleIdListResponse(data) {
 
 function setBulletinContent(data) {
     //set bulletin content with returned values
+};
+
+function getBulletinTitles() {
+
+    var bulletinTitles = [];
+
+    $(".bulletinListItem").each(function() {
+        bulletinTitles.push($(this).text());
+    });
+
+    return bulletinTitles;
 };
 
 function generateUUID() {

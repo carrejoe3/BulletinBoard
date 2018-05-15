@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1g88ApyMWVB1nR9qkAnPEhzbuDBEYfTBrE";
+const dappAddress = "n1vvk9zAw1XF9jUTtbSTnPU42CqCGGJT9MK";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -36,11 +36,11 @@ function getBulletinIds() {
   })
 };
 
-function saveBulletins(bulletinIds, bulletinId) {
+function saveBulletins(bulletinIds, bulletinTitles) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "set";
-  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + bulletinIds + "\",\"" + bulletinId + "\",\"" + $("#bulletinMainContent").val() + "\"]";
+  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + bulletinIds + "\",\"" + bulletinTitles + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush
@@ -72,6 +72,8 @@ function getBulletin(bulletinId) {
 
   neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
     cbSearch(resp, 'bulletin');
+    console.log('get bulletin response: ' + resp.result);
+    return resp.result;
   }).catch(function (err) {
     console.log("error:" + err.message);
   })
