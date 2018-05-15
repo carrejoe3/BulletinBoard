@@ -27,6 +27,10 @@ input {
   margin-bottom: 5%;
 }
 
+.card-header {
+  font-family: "chennai-slab", serif;
+}
+
 .sidebarHeader {
   display: flex;
   padding: 0.75rem 1.25rem;
