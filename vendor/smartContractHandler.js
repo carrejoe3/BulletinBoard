@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1eZikmJptp7dyHWDyrV7e3Vp4YQ36JJoxJ";
+const dappAddress = "n1wZNRHBd46r2pe4MCTiTHK6c9DG624DNc9";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -11,7 +11,7 @@ var NebPay = require("nebpay");
 var nebPay = new NebPay();
 var serialNumber;
 
-function getBulletinIds() {
+function getBulletins() {
   let from = $("#addressInput").val();
   let value = "0";
   let nonce = "0";
@@ -19,7 +19,7 @@ function getBulletinIds() {
   let gas_limit = "2000000";
 
   //function on smart contract to call
-  let callFunction = "getBulletinIds";
+  let callFunction = "getBulletins";
 
   //function paramaters
   //in the form of ["args"]
@@ -30,7 +30,7 @@ function getBulletinIds() {
   };
 
   neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    cbSearch(resp, 'array');
+    cbSearch(resp);
   }).catch(function (err) {
     console.log("error:" + err.message);
   })
@@ -51,7 +51,7 @@ function saveBulletins(bulletinIds, bulletinTitles) {
   }, 5000);
 };
 
-function getBulletin(bulletinId) {
+function delBulletin() {
   let from = $("#addressInput").val();
   let value = "0";
   let nonce = "0";
@@ -59,62 +59,7 @@ function getBulletin(bulletinId) {
   let gas_limit = "2000000";
 
   //function on smart contract to call
-  let callFunction = "getBulletin";
-
-  //function paramaters
-  //in the form of ["args"]
-  //bulletinId generated in main.js
-  let callArgs = "[\"" + bulletinId + "\"]";
-  let contract = {
-    "function": callFunction,
-    "args": callArgs
-  };
-
-  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    cbSearch(resp, 'bulletin');
-    console.log('get bulletin response: ' + resp.result);
-    return resp.result;
-  }).catch(function (err) {
-    console.log("error:" + err.message);
-  })
-};
-
-function delBulletin(bulletinId) {
-  let from = $("#addressInput").val();
-  let value = "0";
-  let nonce = "0";
-  let gas_price = "1000000";
-  let gas_limit = "2000000";
-
-  //function on smart contract to call
-  let callFunction = "delBulletin";
-
-  //function paramaters
-  //in the form of ["args"]
-  //bulletinId generated in main.js
-  let callArgs = "[\"" + bulletinId + "\"]";
-  let contract = {
-    "function": callFunction,
-    "args": callArgs
-  };
-
-  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    // cbSearch(resp, 'bulletin');
-    console.log("delete bulletin response: " + resp.result)
-  }).catch(function (err) {
-    console.log("error:" + err.message);
-  })
-};
-
-function delBulletinIds() {
-  let from = $("#addressInput").val();
-  let value = "0";
-  let nonce = "0";
-  let gas_price = "1000000";
-  let gas_limit = "2000000";
-
-  //function on smart contract to call
-  let callFunction = "delBulletinIds";
+  let callFunction = "delBulletins";
 
   //function paramaters
   //in the form of ["args"]
@@ -126,8 +71,7 @@ function delBulletinIds() {
   };
 
   neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    // cbSearch(resp, 'bulletin');
-    console.log("delete bulletin id's response: " + resp.result)
+    console.log("delete bulletin response: " + resp.result)
   }).catch(function (err) {
     console.log("error:" + err.message);
   })
@@ -152,14 +96,8 @@ function cbSearch(resp, type) {
     } catch (err) {
       console.log(err);
     }
-
-    //if resp is bulletin ids array, push to bulletinIds
-    //if resp is bulletin, call setBulletinContent()
-    if(type == 'array') {
-      handleIdListResponse(result);
-    } else if(type == 'bulletin') {
-      setBulletinContent(result);
-    }
+    
+    handleResponse(result);
   }
 };
 
