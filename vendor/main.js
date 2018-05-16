@@ -1,9 +1,9 @@
 var bulletinIds = [];
-var bulletinId;
+var bulletinTitles = [];
 
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
-        saveBulletins(bulletinIds, getBulletinTitles());
+        saveBulletins(bulletinIds, bulletinTitles);
     });
 
     $("#submitBtn").click(function() {
@@ -11,12 +11,11 @@ $( document ).ready(function() {
     });
 
     $(".addBulletinBtn").click(function() {
-        newBulletinListItem(generateUUID(), 'New');
+        newBulletinListItem(generateUUID(), 'Bulletin Title');
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function() {
         let bulletinId = $(this).attr("data-bulletinId");
-        // getBulletin(bulletinId);
     });
 
     $("#deleteAllBtn").click(function() {
@@ -30,7 +29,7 @@ function handleResponse(data) {
     const sortedTitles = data.titles.split(',');
     $("#bulletinList").empty();
 
-    //if returned object isnt blank
+    //if returned object isnt blank, populate bulletin list
     if(sortedIds[0] !== "") {
         for(let i in sortedIds) {
             newBulletinListItem(sortedIds[i], sortedTitles[i]);
@@ -40,17 +39,6 @@ function handleResponse(data) {
 
 function setBulletinContent(data) {
     //set bulletin content with returned values
-};
-
-function getBulletinTitles() {
-
-    var bulletinTitles = [];
-
-    $(".bulletinListItem").each(function() {
-        bulletinTitles.push($(this).text());
-    });
-
-    return bulletinTitles;
 };
 
 function generateUUID() {
@@ -71,10 +59,12 @@ function newBulletinListItem(bulletinId, title) {
     x = x.substring(0, 46) + bulletinId + x.substring(46, x.length);
     $("#bulletinList").append(x);
     bulletinIds.push(bulletinId);
+    bulletinTitles.push(title);
 };
 
 function deleteEverything() {
     $("#bulletinList").empty();
     delBulletins();
     bulletinIds = [];
+    bulletinTitles = [];
 };
