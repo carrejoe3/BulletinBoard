@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1wZNRHBd46r2pe4MCTiTHK6c9DG624DNc9";
+const dappAddress = "n1fXCWBSSjMWZyvCF4Jkigeb59gYZAGyF7K";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -17,12 +17,7 @@ function getBulletins() {
   let nonce = "0";
   let gas_price = "1000000";
   let gas_limit = "2000000";
-
-  //function on smart contract to call
   let callFunction = "getBulletins";
-
-  //function paramaters
-  //in the form of ["args"]
   let callArgs = "[\"" + from + "\"]";
   let contract = {
     "function": callFunction,
@@ -36,11 +31,11 @@ function getBulletins() {
   })
 };
 
-function saveBulletins(bulletinIds, bulletinTitles) {
+function saveBulletins(bulletinIds, bulletinTitles, bulletinContents) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "set";
-  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + bulletinIds + "\",\"" + bulletinTitles + "\"]";
+  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush
@@ -51,19 +46,13 @@ function saveBulletins(bulletinIds, bulletinTitles) {
   }, 5000);
 };
 
-function delBulletin() {
+function delBulletins() {
   let from = $("#addressInput").val();
   let value = "0";
   let nonce = "0";
   let gas_price = "1000000";
   let gas_limit = "2000000";
-
-  //function on smart contract to call
   let callFunction = "delBulletins";
-
-  //function paramaters
-  //in the form of ["args"]
-  //bulletinId generated in main.js
   let callArgs = "[\"" + from + "\"]";
   let contract = {
     "function": callFunction,
