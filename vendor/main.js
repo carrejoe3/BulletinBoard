@@ -26,22 +26,16 @@ $( document ).ready(function() {
 
 function handleResponse(data) {
 
-    bulletinIds = [];
+    const sortedIds = data.ids.split(',');
+    const sortedTitles = data.titles.split(',');
     $("#bulletinList").empty();
 
-    alert(JSON.stringify(data));
-
-    // let sortedIds = data.split(',');
-
-    //if returned array isnt blank
-    // if(sortedIds[0] !== "") {
-    //     for(let i in sortedIds) {
-    //         let id = sortedIds[i];
-
-    //         console.log(getBulletin(id));
-    //         newBulletinListItem(id, 'test');
-    //     }
-    // }
+    //if returned object isnt blank
+    if(sortedIds[0] !== "") {
+        for(let i in sortedIds) {
+            newBulletinListItem(sortedIds[i], sortedTitles[i]);
+        }
+    }
 };
 
 function setBulletinContent(data) {

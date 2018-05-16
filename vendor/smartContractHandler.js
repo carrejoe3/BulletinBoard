@@ -87,16 +87,16 @@ function cbSearch(resp, type) {
   console.log("return of rpc call: " + JSON.stringify(result));
 
   if(result === 'null') {
+
     //let user know they don't have any stored bulletins
   } else {
-
     //if result is not null, then it should be "return value" or "error message"
     try {
       result = JSON.parse(result);
     } catch (err) {
       console.log(err);
     }
-    
+
     handleResponse(result);
   }
 };
