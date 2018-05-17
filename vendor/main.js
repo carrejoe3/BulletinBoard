@@ -14,7 +14,7 @@ $( document ).ready(function() {
     });
 
     $(".addBulletinBtn").click(function() {
-        newBulletinListItem(generateUUID(), 'Bulletin Title', 'Bulletin text goes here...');
+        newBulletinListItem(generateUUID(), 'Bulletin Title', '');
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function() {
@@ -50,12 +50,14 @@ function handleResponse(data) {
 
     const sortedIds = data.ids.split(',');
     const sortedTitles = data.titles.split(',');
-    const sortedContents = data.contents.split('/.c0ntent./');
+    //remove start and end of content markers
+    const filteredContents = replaceAll(data.contents, '/.c0ntent./', '');
+    const sortedContents = filteredContents.split(',');
 
     //if returned object isnt blank, populate bulletin list
     if(sortedIds[0] !== "") {
         for(let i in sortedIds) {
-            sortedTitles[i].replace('/.c0ntent./', '');
+            // sortedTitles[i].replace('/.c0ntent./', '');
             newBulletinListItem(sortedIds[i], sortedTitles[i], sortedContents[i]);
         }
     }
@@ -65,6 +67,19 @@ function setBulletinContent() {
     let activeIdIndex = bulletinIds.indexOf(activeBulletinId);
     bulletinTitles.splice(activeIdIndex, 1, $('#bulletinTitle').val());
     bulletinContents.splice(activeIdIndex, 1, '/.c0ntent./' + $('#bulletinMainContent').val().trim() + '/.c0ntent./');
+};
+
+function newBulletinListItem(bulletinId, title, content) {
+    let x = "<li class='bulletinListItem' data-bulletinId=''>" + title + "</li><hr class='listItemBottomBorder'>";
+    x = x.substring(0, 46) + bulletinId + x.substring(46, x.length);
+    $("#bulletinList").append(x);
+    bulletinIds.push(bulletinId);
+    bulletinTitles.push(title);
+    bulletinContents.push(content);
+};
+
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
 };
 
 function generateUUID() {
@@ -78,13 +93,4 @@ function generateUUID() {
         d = Math.floor(d / 16);
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
-};
-
-function newBulletinListItem(bulletinId, title, content) {
-    let x = "<li class='bulletinListItem' data-bulletinId=''>" + title + "</li><hr class='listItemBottomBorder'>";
-    x = x.substring(0, 46) + bulletinId + x.substring(46, x.length);
-    $("#bulletinList").append(x);
-    bulletinIds.push(bulletinId);
-    bulletinTitles.push(title);
-    bulletinContents.push(content);
 };
