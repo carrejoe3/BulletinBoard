@@ -56,15 +56,14 @@ function handleResponse(data) {
 
     const sortedIds = data.ids.split(',');
     const sortedTitles = data.titles.split(',');
-    //remove start and end of content markers
-    const filteredContents = replaceAll(data.contents, '/.c0ntent./', '');
-    const sortedContents = filteredContents.split(',');
+    const sortedContents = data.contents.split('/.c0ntent./,/.c0ntent./');
 
     //if returned object isnt blank, populate bulletin list
     if(sortedIds[0] !== "") {
         for(let i in sortedIds) {
-            // sortedTitles[i].replace('/.c0ntent./', '');
-            newBulletinListItem(sortedIds[i], sortedTitles[i], sortedContents[i]);
+            //remove content markers
+            let markerless = replaceAll(sortedContents[i], '/.c0ntent./', '');
+            newBulletinListItem(sortedIds[i], sortedTitles[i], markerless);
         }
     }
 };
@@ -72,7 +71,7 @@ function handleResponse(data) {
 function setBulletinContent() {
     let activeIdIndex = bulletinIds.indexOf(activeBulletinId);
     bulletinTitles.splice(activeIdIndex, 1, $('#bulletinTitle').val());
-    bulletinContents.splice(activeIdIndex, 1, '/.c0ntent./' + $('#bulletinMainContent').val().trim() + '/.c0ntent./');
+    bulletinContents.splice(activeIdIndex, 1, $('#bulletinMainContent').val().trim());
 };
 
 function newBulletinListItem(bulletinId, title, content) {

@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1k3biiXyGsWJFQ4xhVM8XpvhmGUJrSLb6x";
+const dappAddress = "n1tFVbEbMrDebmvSzf8R3ZJbhz7TDgABvkg";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -35,6 +35,11 @@ function saveBulletins(bulletinIds, bulletinTitles, bulletinContents) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "set";
+
+  for(var i in bulletinContents) {
+    bulletinContents[i] = '/.c0ntent./' + bulletinContents[i] + '/.c0ntent./';
+  };
+
   let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
