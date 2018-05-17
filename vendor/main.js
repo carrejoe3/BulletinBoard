@@ -56,15 +56,16 @@ function handleResponse(data) {
     $("#bulletinList").empty();
 
     const sortedIds = data.ids.split(',');
-    const sortedTitles = data.titles.split(',');
+    const sortedTitles = data.titles.split('/.t1tle./,/.t1tle./');
     const sortedContents = data.contents.split('/.c0ntent./,/.c0ntent./');
 
     //if returned object isnt blank, populate bulletin list
     if(sortedIds[0] !== "") {
         for(let i in sortedIds) {
             //remove content markers
-            let markerless = replaceAll(sortedContents[i], '/.c0ntent./', '');
-            newBulletinListItem(sortedIds[i], sortedTitles[i], markerless);
+            let markerlessTitles = replaceAll(sortedTitles[i], '/.t1tle./', '');
+            let markerlessContent = replaceAll(sortedContents[i], '/.c0ntent./', '');
+            newBulletinListItem(sortedIds[i], markerlessTitles, markerlessContent);
         }
     }
 };

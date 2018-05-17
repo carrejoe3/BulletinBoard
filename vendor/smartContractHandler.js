@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1tFVbEbMrDebmvSzf8R3ZJbhz7TDgABvkg";
+const dappAddress = "n1zhfk8QopAP82Z1iaDmft9vx3BDGCKTiVP";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -38,6 +38,7 @@ function saveBulletins(bulletinIds, bulletinTitles, bulletinContents) {
 
   for(var i in bulletinContents) {
     bulletinContents[i] = '/.c0ntent./' + bulletinContents[i] + '/.c0ntent./';
+    bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i] + '/.t1tle./';
   };
 
   let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\"]";
