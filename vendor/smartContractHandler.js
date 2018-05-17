@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1fXCWBSSjMWZyvCF4Jkigeb59gYZAGyF7K";
+const dappAddress = "n1k3biiXyGsWJFQ4xhVM8XpvhmGUJrSLb6x";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -98,7 +98,7 @@ function funcIntervalQuery() {
       let respObject = JSON.parse(resp)
       console.log("tx result: " + resp)
       if (respObject.code === 0) {
-        alert(`set ${$("#addressInput").val()} succeed!`)
+        // alert(`set ${$("#addressInput").val()} succeed!`)
         clearInterval(intervalQuery)
       }
     })

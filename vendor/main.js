@@ -30,6 +30,17 @@ $( document ).ready(function() {
     });
 });
 
+//WebWalletExtension detection
+window.addEventListener("load", function () {
+    let isExtensionExist = typeof (webExtensionWallet) !== "undefined";
+    if (!isExtensionExist) {
+        $('#webWalletExtensionDetectionBanner').append('<div class="alert alert-warning" role="alert"><div>Please install <a href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> to use Bulletin Board</div></div>');
+        $('#bulletinMainContent, .addBulletinBtn, #bulletinTitle, #deleteAllBtn, #saveBtn').prop('disabled', true);
+    } else {
+        $('#webWalletExtensionDetectionBanner').append('<div class="alert alert-success" role="alert"><div>WebExtensionWallet detected!</div></div>');
+    }
+});
+
 function handleResponse(data) {
     //firstly, remove old data from arrays and list
     bulletinIds = [];
