@@ -18,9 +18,13 @@ $( document ).ready(function() {
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function() {
-        activeBulletinId = $(this).attr("data-bulletinId");
+        $('.bulletinListItem').css('font-weight', '');
+        $(this).css("font-weight", "bold");
+
         $('.eye').fadeOut('fast');
         $(this).find(".eye").fadeIn('fast');
+
+        activeBulletinId = $(this).attr("data-bulletinId");
         let activeIdIndex = bulletinIds.indexOf(activeBulletinId);
         $('#bulletinTitle').val(bulletinTitles[activeIdIndex]);
         $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);

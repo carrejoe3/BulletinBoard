@@ -47,8 +47,8 @@ input {
 
 .eye {
   display: none;
-  width: 15%;
-  height: 15%;
+  width: 21px;
+  height: 13px;
 }
 
 .addBulletinBtn {
