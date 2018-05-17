@@ -19,6 +19,8 @@ $( document ).ready(function() {
 
     $("#bulletinList").on("click", ".bulletinListItem", function() {
         activeBulletinId = $(this).attr("data-bulletinId");
+        $('.eye').fadeOut('fast');
+        $(this).find(".eye").fadeIn('fast');
         let activeIdIndex = bulletinIds.indexOf(activeBulletinId);
         $('#bulletinTitle').val(bulletinTitles[activeIdIndex]);
         $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
@@ -70,7 +72,7 @@ function setBulletinContent() {
 };
 
 function newBulletinListItem(bulletinId, title, content) {
-    let x = "<li class='bulletinListItem' data-bulletinId=''>" + title + "</li><hr class='listItemBottomBorder'>";
+    let x = "<li class='bulletinListItem' data-bulletinId=''><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></li><hr class='listItemBottomBorder'>";
     x = x.substring(0, 46) + bulletinId + x.substring(46, x.length);
     $("#bulletinList").append(x);
     bulletinIds.push(bulletinId);

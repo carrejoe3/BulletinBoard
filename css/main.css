@@ -36,9 +36,19 @@ input {
   padding: 0.75rem 1.25rem;
 }
 
+.sidebarBulletinTitle {
+  flex-grow: 2;
+}
+
 .addBulletinIcon {
   width: 1rem;
   height: 1rem;
+}
+
+.eye {
+  display: none;
+  width: 15%;
+  height: 15%;
 }
 
 .addBulletinBtn {
@@ -53,6 +63,7 @@ input {
 .bulletinListItem {
   list-style-type: none;
   display: flex;
+  align-items: center;
 }
 
 #bulletinList {
