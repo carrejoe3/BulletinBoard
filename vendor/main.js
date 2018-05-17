@@ -25,17 +25,21 @@ $( document ).ready(function() {
     });
 
     $("#deleteAllBtn").click(function() {
-        deleteEverything();
+        delBulletins();
+        getBulletins();
     });
 });
 
 function handleResponse(data) {
+    //firstly, remove old data from arrays and list
+    bulletinIds = [];
+    bulletinTitles = [];
+    bulletinContents = [];
+    $("#bulletinList").empty();
 
     const sortedIds = data.ids.split(',');
     const sortedTitles = data.titles.split(',');
     const sortedContents = data.contents.split('/.c0ntent./');
-
-    $("#bulletinList").empty();
 
     //if returned object isnt blank, populate bulletin list
     if(sortedIds[0] !== "") {
@@ -72,13 +76,4 @@ function newBulletinListItem(bulletinId, title, content) {
     bulletinIds.push(bulletinId);
     bulletinTitles.push(title);
     bulletinContents.push(content);
-
-};
-
-function deleteEverything() {
-    $("#bulletinList").empty();
-    delBulletins();
-    bulletinIds = [];
-    bulletinTitles = [];
-    bulletinContents = [];
 };
