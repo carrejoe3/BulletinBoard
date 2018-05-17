@@ -24,6 +24,7 @@ $( document ).ready(function() {
         $('.eye').fadeOut('fast');
         $(this).find(".eye").fadeIn('fast');
 
+        setBulletinContent();
         activeBulletinId = $(this).attr("data-bulletinId");
         let activeIdIndex = bulletinIds.indexOf(activeBulletinId);
         $('#bulletinTitle').val(bulletinTitles[activeIdIndex]);
