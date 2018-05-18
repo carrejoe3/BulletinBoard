@@ -64,6 +64,7 @@ input {
   list-style-type: none;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 #bulletinList {
@@ -103,6 +104,10 @@ input {
 #walletAddressGroup {
   width: 100%;
   display: inline-flex;
+}
+
+#bulletinContainer {
+  display: none;
 }
 
 #addressInput {

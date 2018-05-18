@@ -18,22 +18,33 @@ $( document ).ready(function() {
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function() {
+        //activeBulletinId is initially null, so this check is necessary
+        if(null != activeBulletinId) {
+            setBulletinContent();
+        }
+
+        $("#bulletinContainer").fadeIn('fast');
+        $(".sidebarBulletinTitle").removeClass('activeBulletin');
+        $(this).find(".sidebarBulletinTitle").addClass('activeBulletin');
+
         $('.bulletinListItem').css('font-weight', '');
         $(this).css("font-weight", "bold");
-
         $('.eye').fadeOut('fast');
         $(this).find(".eye").fadeIn('fast');
 
-        setBulletinContent();
         activeBulletinId = $(this).attr("data-bulletinId");
         let activeIdIndex = bulletinIds.indexOf(activeBulletinId);
-        $('#bulletinTitle').val(bulletinTitles[activeIdIndex]);
-        $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
+        $('#bulletinTitle').text(bulletinTitles[activeIdIndex]);
+        $('#bulletinMainContent').text(bulletinContents[activeIdIndex]);
     });
 
     $("#deleteAllBtn").click(function() {
         delBulletins();
         getBulletins();
+    });
+
+    $("#bulletinTitle").change(function() {
+        $(".activeBulletin").text($("#bulletinTitle").val());
     });
 });
 

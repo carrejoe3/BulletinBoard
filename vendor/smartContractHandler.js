@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1zhfk8QopAP82Z1iaDmft9vx3BDGCKTiVP";
+const dappAddress = "n1ya1NUSps7xWqQfG5M4srx78hK2WLEfRH1";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
