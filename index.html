@@ -29,16 +29,18 @@
   <div class="mainContent container">
     <div id="webWalletExtensionDetectionBanner"></div>
     <div class="row">
-      <div class="col-8">
-        <div class="card">
-          <h4 class="card-header">Wallet Address</h4>
-          <div class="card-body">
-            <div class="form-group" id="walletAddressGroup">
-              <input id="addressInput" class="form-control card-text" type="text" value="n1Sp7HsMLNwGj7kzsZRfS6xxeD2rgvKf24d" />
-              <button id="submitBtn" class="btn btn-dark" type="submit">Submit</button>
+      <div class="col-4">
+          <div class="card">
+            <div class="card-header sidebarHeader">
+              <h4 id="sidebarTitle">Bulletins</h4>
+              <button class="btn btn-dark addBulletinBtn"><img class="addBulletinIcon" src="images/add.png"/></button>
+            </div>
+            <div class="card-body bulletinListContainer">
+              <ul id="bulletinList"></ul>
             </div>
           </div>
         </div>
+      <div class="col-8">
         <div class="card" id="bulletinContainer">
           <div class="card-header">
             <textarea id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
@@ -47,17 +49,6 @@
             <div class="form-group">
               <textarea class="form-control" id="bulletinMainContent" type="text" rows="10" placeholder="Bulletin text goes here..."></textarea>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="card">
-          <div class="card-header sidebarHeader">
-            <h4 id="sidebarTitle">Bulletins</h4>
-            <button class="btn btn-dark addBulletinBtn"><img class="addBulletinIcon" src="images/add.png"/></button>
-          </div>
-          <div class="card-body bulletinListContainer">
-            <ul id="bulletinList"></ul>
           </div>
         </div>
       </div>

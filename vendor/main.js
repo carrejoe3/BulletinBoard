@@ -9,10 +9,6 @@ $( document ).ready(function() {
         saveBulletins(bulletinIds, bulletinTitles, bulletinContents);
     });
 
-    $("#submitBtn").click(function() {
-        getBulletins();
-    });
-
     $(".addBulletinBtn").click(function() {
         newBulletinListItem(generateUUID(), 'Bulletin Title', '');
     });
@@ -55,6 +51,7 @@ window.addEventListener("load", function () {
         $('#bulletinMainContent, .addBulletinBtn, #bulletinTitle, #deleteAllBtn, #saveBtn').prop('disabled', true);
     } else {
         $('#webWalletExtensionDetectionBanner').append('<div class="alert alert-success" role="alert"><div>WebExtensionWallet detected!</div></div>');
+        getBulletins();
     }
 });
 
