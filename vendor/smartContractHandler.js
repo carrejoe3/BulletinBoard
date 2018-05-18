@@ -12,23 +12,13 @@ var nebPay = new NebPay();
 var serialNumber;
 
 function getBulletins() {
-  let from = $("#addressInput").val();
   let value = "0";
-  let nonce = "0";
-  let gas_price = "1000000";
-  let gas_limit = "2000000";
   let callFunction = "getBulletins";
   let callArgs = "[]";
-  let contract = {
-    "function": callFunction,
-    "args": callArgs
-  };
 
-  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    cbSearch(resp);
-  }).catch(function (err) {
-    console.log("error:" + err.message);
-  })
+  nebPay.simulateCall(dappAddress, value, callFunction, callArgs, {  
+    listener: cbSearch
+  });
 };
 
 function saveBulletins(bulletinIds, bulletinTitles, bulletinContents) {
@@ -72,11 +62,11 @@ function delBulletins() {
   })
 };
 
-function cbPush(resp, type) {
+function cbPush(resp) {
   console.log("response of push: " + JSON.stringify(resp))
 };
 
-function cbSearch(resp, type) {
+function cbSearch(resp) {
   //resp is an object, resp.result is a JSON string
   var result = resp.result;
   console.log("return of rpc call: " + JSON.stringify(result));
