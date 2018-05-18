@@ -84,7 +84,7 @@ function handleResponse(data) {
 function setBulletinContent() {
     let activeIdIndex = bulletinIds.indexOf(activeBulletinId);
     bulletinTitles.splice(activeIdIndex, 1, $('#bulletinTitle').val());
-    bulletinContents.splice(activeIdIndex, 1, $('#bulletinMainContent').val().trim());
+    bulletinContents.splice(activeIdIndex, 1, $('#bulletinMainContent').val());
 };
 
 function newBulletinListItem(bulletinId, title, content) {

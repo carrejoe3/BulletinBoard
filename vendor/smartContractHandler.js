@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1ya1NUSps7xWqQfG5M4srx78hK2WLEfRH1";
+const dappAddress = "n1irYDcNQq1q6vXxZ4W2V2kQkrQrLVPyCiD";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -18,7 +18,7 @@ function getBulletins() {
   let gas_price = "1000000";
   let gas_limit = "2000000";
   let callFunction = "getBulletins";
-  let callArgs = "[\"" + from + "\"]";
+  let callArgs = "[]";
   let contract = {
     "function": callFunction,
     "args": callArgs
@@ -41,7 +41,7 @@ function saveBulletins(bulletinIds, bulletinTitles, bulletinContents) {
     bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i] + '/.t1tle./';
   };
 
-  let callArgs = "[\"" + $("#addressInput").val() + "\",\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\"]";
+  let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush
@@ -59,7 +59,7 @@ function delBulletins() {
   let gas_price = "1000000";
   let gas_limit = "2000000";
   let callFunction = "delBulletins";
-  let callArgs = "[\"" + from + "\"]";
+  let callArgs = "[]";
   let contract = {
     "function": callFunction,
     "args": callArgs
