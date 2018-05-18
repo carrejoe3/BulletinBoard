@@ -40,7 +40,6 @@ $( document ).ready(function() {
 
     $("#deleteAllBtn").click(function() {
         delBulletins();
-        getBulletins();
     });
 
     $("#bulletinTitle").change(function() {

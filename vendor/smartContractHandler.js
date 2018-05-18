@@ -16,7 +16,7 @@ function getBulletins() {
   let callFunction = "getBulletins";
   let callArgs = "[]";
 
-  nebPay.simulateCall(dappAddress, value, callFunction, callArgs, {  
+  nebPay.simulateCall(dappAddress, value, callFunction, callArgs, {
     listener: cbSearch
   });
 };
@@ -43,23 +43,13 @@ function saveBulletins(bulletinIds, bulletinTitles, bulletinContents) {
 };
 
 function delBulletins() {
-  let from = $("#addressInput").val();
   let value = "0";
-  let nonce = "0";
-  let gas_price = "1000000";
-  let gas_limit = "2000000";
   let callFunction = "delBulletins";
   let callArgs = "[]";
-  let contract = {
-    "function": callFunction,
-    "args": callArgs
-  };
 
-  neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
-    console.log("delete bulletin response: " + resp.result)
-  }).catch(function (err) {
-    console.log("error:" + err.message);
-  })
+  nebPay.call(dappAddress, value, callFunction, callArgs, {
+    listener: cbDelete
+  });
 };
 
 function cbPush(resp) {
@@ -85,6 +75,12 @@ function cbSearch(resp) {
     handleResponse(result);
   }
 };
+
+function cbDelete(resp) {
+  console.log("response of deletion: " + JSON.stringify(resp));
+  $("#bulletinList").empty();
+  $("#bulletinContainer").fadeOut('fast');
+}
 
 function funcIntervalQuery() {
   //search transaction result from server (result upload to server by app)
