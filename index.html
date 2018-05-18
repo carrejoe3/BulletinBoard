@@ -26,24 +26,27 @@
     </div>
   </nav>
 
-  <div class="mainContent container">
+  <div class="mainContent">
     <div id="webWalletExtensionDetectionBanner"></div>
     <div class="row">
       <div class="col-4">
           <div class="card">
             <div class="card-header sidebarHeader">
-              <h4 id="sidebarTitle">Bulletins</h4>
-              <button class="btn btn-dark addBulletinBtn"><img class="addBulletinIcon" src="images/add.png"/></button>
+              <textarea class="cardHeaderTitle" rows="1" type="text" disabled>Bulletins</textarea>
+              <button type="button" class="btn btn-dark btn-sm addBulletinBtn"><img class="addBulletinIcon" src="images/add.png"/></button>
             </div>
             <div class="card-body bulletinListContainer">
               <ul id="bulletinList"></ul>
             </div>
           </div>
+          <button type="button" id="saveBtn" class="btn btn-dark" type="submit">Save</button>
+          <button type="button" class="btn btn-dark" id="deleteAllBtn">Delete All</button>
         </div>
       <div class="col-8">
         <div class="card" id="bulletinContainer">
-          <div class="card-header">
-            <textarea id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
+          <div class="card-header" id="bulletinTitleContainer">
+            <textarea class="cardHeaderTitle" id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
+            <button type="button" class="btn btn-dark btn-sm removeBulletinBtn"><img class="addBulletinIcon" src="images/minus.png"/></button>
           </div>
           <div class="card-body">
             <div class="form-group">
@@ -51,14 +54,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-8">
-        <button id="saveBtn" class="btn btn-dark" type="submit">Save</button>
-      </div>
-      <div class="col-4">
-        <button class="btn btn-dark" id="deleteAllBtn">Delete All</button>
       </div>
     </div>
   </div>
