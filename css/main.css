@@ -57,9 +57,12 @@ input {
 
 .bulletinListItem {
   list-style-type: none;
-  display: flex;
-  align-items: center;
   cursor: pointer;
+}
+
+.bulletinListItemInnerDiv {
+  align-items: center;
+  display: flex;
 }
 
 .cardHeaderTitle {

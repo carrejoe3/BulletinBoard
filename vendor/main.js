@@ -1,7 +1,7 @@
-var bulletinIds = [];
-var bulletinTitles = [];
-var bulletinContents = [];
-var activeBulletinId;
+let bulletinIds = [];
+let bulletinTitles = [];
+let bulletinContents = [];
+let activeBulletinId;
 
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
@@ -14,10 +14,10 @@ $( document ).ready(function() {
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function() {
-        //activeBulletinId is initially null, so this check is necessary
+        //activeBulletinId is initially null and after bulletin has been removed
         if(null != activeBulletinId) {
             setBulletinContent();
-        }
+        };
 
         $("#bulletinContainer").fadeIn('fast');
         $(".sidebarBulletinTitle").removeClass('activeBulletin');
@@ -29,15 +29,29 @@ $( document ).ready(function() {
         $(this).find(".eye").fadeIn('fast');
 
         activeBulletinId = $(this).attr("data-bulletinId");
-        let activeIdIndex = bulletinIds.indexOf(activeBulletinId);
-        $('#bulletinTitle').text(bulletinTitles[activeIdIndex]);
-        $('#bulletinMainContent').text(bulletinContents[activeIdIndex]);
+        let activeIdIndex = getActiveBulletinIdIndex();
+        $('#bulletinTitle').val(bulletinTitles[activeIdIndex]);
+        $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
+    });
+
+    $(".removeBulletinBtn").click(function() {
+        let activeIdIndex = getActiveBulletinIdIndex();
+        bulletinIds.splice(activeIdIndex, 1);
+        bulletinTitles.splice(activeIdIndex, 1);
+        bulletinContents.splice(activeIdIndex, 1);
+
+        $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).remove();
+        $('#bulletinContainer').fadeOut('fast');
+
+        //set activeBulletinId to null, so setBulletinContent isn't called when user clicks on bulletinListItem
+        activeBulletinId = null;
     });
 
     $("#deleteAllBtn").click(function() {
         delBulletins();
     });
 
+    //update the sidebar active bulletin title when editing active bulletin
     $("#bulletinTitle").change(function() {
         $(".activeBulletin").text($("#bulletinTitle").val());
     });
@@ -78,13 +92,13 @@ function handleResponse(data) {
 };
 
 function setBulletinContent() {
-    let activeIdIndex = bulletinIds.indexOf(activeBulletinId);
+    let activeIdIndex = getActiveBulletinIdIndex();
     bulletinTitles.splice(activeIdIndex, 1, $('#bulletinTitle').val());
     bulletinContents.splice(activeIdIndex, 1, $('#bulletinMainContent').val());
 };
 
 function newBulletinListItem(bulletinId, title, content) {
-    let x = "<li class='bulletinListItem' data-bulletinId=''><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></li><hr class='listItemBottomBorder'>";
+    let x = "<li class='bulletinListItem' data-bulletinId=''><div class='bulletinListItemInnerDiv'><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></div><hr class='listItemBottomBorder'/></li>";
     x = x.substring(0, 46) + bulletinId + x.substring(46, x.length);
     $("#bulletinList").append(x);
     bulletinIds.push(bulletinId);
@@ -97,7 +111,7 @@ function replaceAll(str, find, replace) {
 };
 
 function generateUUID() {
-    var d = new Date().getTime();
+    let d = new Date().getTime();
 
     if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
         d += performance.now();
@@ -107,4 +121,8 @@ function generateUUID() {
         d = Math.floor(d / 16);
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
+};
+
+function getActiveBulletinIdIndex() {
+    return bulletinIds.indexOf(activeBulletinId);
 };
