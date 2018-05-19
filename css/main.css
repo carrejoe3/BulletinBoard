@@ -19,7 +19,7 @@ input {
   }
 }
 
-.logoContainer {
+.container.logoContainer {
   display: block;
 }
 
