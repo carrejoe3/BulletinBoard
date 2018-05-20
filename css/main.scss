@@ -1,5 +1,8 @@
+@import "components/typography";
+@import "components/palette";
+
 body {
-  font-family: roboto-condensed, sans-serif;
+  font-family: $body-font;
   font-style: normal;
   font-weight: 300;
 }
@@ -36,7 +39,7 @@ input {
 }
 
 .alert {
-  font-family: roboto-mono, monospace;
+  font-family: $alert-font;
   font-style: normal;
   font-weight: 400;
 }
@@ -50,7 +53,7 @@ input {
 }
 
 .card-header {
-  font-family: roboto-slab, serif;
+  font-family: $card-header-font;
   font-style: normal;
   font-weight: 700;
 }
@@ -111,6 +114,10 @@ input {
   padding: .375rem .75rem;
 }
 
+#bulletinCol {
+  padding-left: 6px;
+}
+
 #bulletinTitleContainer {
   display: flex;
 }
@@ -134,7 +141,7 @@ input {
 }
 
 #logo {
-  font-family: montserrat, sans-serif;
+  font-family: $logo-font;
   font-style: normal;
   font-weight: 900;
   padding-top: 2rem;
@@ -143,7 +150,7 @@ input {
 
 #subtitle {
   color: white;
-  font-family: montserrat, sans-serif;
+  font-family: $logo-font;
   font-style: normal;
   font-weight: 900;
 }
