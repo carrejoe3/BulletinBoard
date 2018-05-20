@@ -20,19 +20,26 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container logoContainer">
-      <h1 id="logo">Bulletin Board</h1>
-      <h6 id="subtitle"><em>Built on the Nebulas blockchain.</em></h6>
+      <div class="jumbotron jumbotron-fluid">
+        <h1 class="display-5" id="logo">Bulletin Board</h1>
+        <p class="lead" id="subtitle">
+          <em>Built on the Nebulas blockchain.</em>
+        </p>
+      </div>
     </div>
   </nav>
 
-  <div class="mainContent">
-    <div id="webWalletExtensionDetectionBanner"></div>
-    <div class="row">
-      <div class="col-4">
+  <div class="">
+    <div class="mainContent">
+      <div id="webWalletExtensionDetectionBanner"></div>
+      <div class="row">
+        <div class="col-4">
           <div class="card">
             <div class="card-header sidebarHeader">
               <textarea class="cardHeaderTitle" rows="1" type="text" disabled>Bulletins</textarea>
-              <button type="button" class="btn btn-dark btn-sm addBulletinBtn"><img class="addBulletinIcon" src="images/add.png"/></button>
+              <button type="button" class="btn btn-dark btn-sm addBulletinBtn">
+                <img class="addBulletinIcon" src="images/add.png" />
+              </button>
             </div>
             <div class="card-body bulletinListContainer">
               <ul id="bulletinList"></ul>
@@ -41,15 +48,18 @@
           <button type="button" id="saveBtn" class="btn btn-dark" type="submit">Save</button>
           <button type="button" class="btn btn-dark" id="deleteAllBtn">Delete All</button>
         </div>
-      <div class="col-8">
-        <div class="card" id="bulletinContainer">
-          <div class="card-header" id="bulletinTitleContainer">
-            <textarea class="cardHeaderTitle" id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
-            <button type="button" class="btn btn-dark btn-sm removeBulletinBtn"><img class="addBulletinIcon" src="images/minus.png"/></button>
-          </div>
-          <div class="card-body">
-            <div class="form-group">
-              <textarea class="form-control" id="bulletinMainContent" type="text" rows="10" placeholder="Bulletin text goes here..."></textarea>
+        <div class="col-8">
+          <div class="card" id="bulletinContainer">
+            <div class="card-header" id="bulletinTitleContainer">
+              <textarea class="cardHeaderTitle" id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
+              <button type="button" class="btn btn-dark btn-sm removeBulletinBtn">
+                <img class="addBulletinIcon" src="images/minus.png" />
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <textarea class="form-control" id="bulletinMainContent" type="text" rows="10" placeholder="Bulletin text goes here..."></textarea>
+              </div>
             </div>
           </div>
         </div>
@@ -57,7 +67,7 @@
     </div>
   </div>
 
-  <footer class="py-5 bg-dark">
+  <footer class="py-4 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; 2018</p>
     </div>

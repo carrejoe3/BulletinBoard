@@ -19,6 +19,12 @@ input {
   }
 }
 
+.jumbotron {
+  background: none;
+  padding: 0rem 1rem;
+  margin-bottom: 0;
+}
+
 .container.logoContainer {
   display: block;
 }
@@ -50,8 +56,8 @@ input {
 
 .eye {
   display: none;
-  width: 21px;
-  height: 13px;
+  width: 16px;
+  height: 9px;
   margin: 0 0.1em;
 }
 
@@ -117,7 +123,7 @@ input {
   font-family: "memoriam-inline-pro", sans-serif;
   font-style: normal;
   font-weight: 400;
-  padding-top: 6%;
+  padding-top: 2rem;
   color: white;
 }
 
