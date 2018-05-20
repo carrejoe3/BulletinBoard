@@ -30,14 +30,14 @@
   </nav>
 
   <div class="">
-    <div class="mainContent">
+    <div class="mainContent container">
       <div id="webWalletExtensionDetectionBanner"></div>
       <div class="row">
         <div class="col-4">
           <div class="card">
             <div class="card-header sidebarHeader">
               <textarea class="cardHeaderTitle" rows="1" type="text" disabled>Bulletins</textarea>
-              <button type="button" class="btn btn-sm addBulletinBtn">
+              <button type="button" id="addBulletinBtn" class="btn btn-sm">
                 <img class="bulletinIcon" src="images/add.png" />
               </button>
             </div>
@@ -52,7 +52,7 @@
           <div class="card" id="bulletinContainer">
             <div class="card-header" id="bulletinTitleContainer">
               <textarea class="cardHeaderTitle" id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
-              <button type="button" class="btn btn-sm removeBulletinBtn">
+              <button type="button" class="btn btn-sm" id="removeBulletinBtn">
                 <img class="bulletinIcon" src="images/minus.png" />
               </button>
             </div>

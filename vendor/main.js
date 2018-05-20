@@ -9,7 +9,7 @@ $( document ).ready(function() {
         saveBulletins(bulletinIds, bulletinTitles, bulletinContents);
     });
 
-    $(".addBulletinBtn").click(function() {
+    $("#addBulletinBtn").click(function() {
         newBulletinListItem(generateUUID(), 'Bulletin Title', '');
     });
 
@@ -19,22 +19,25 @@ $( document ).ready(function() {
             setBulletinContent();
         };
 
+        //apply active styling to main bulletin container
         $("#bulletinContainer").fadeIn('fast');
         $(".sidebarBulletinTitle").removeClass('activeBulletin');
         $(this).find(".sidebarBulletinTitle").addClass('activeBulletin');
 
+        //apply active styling to bulletin list item
         $('.bulletinListItem').css('font-weight', '');
         $(this).css("font-weight", "bold");
         $('.eye').fadeOut('fast');
         $(this).find(".eye").fadeIn('fast');
 
+        //set bulletin contents
         activeBulletinId = $(this).attr("data-bulletinId");
         let activeIdIndex = getActiveBulletinIdIndex();
         $('#bulletinTitle').val(bulletinTitles[activeIdIndex]);
         $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
     });
 
-    $(".removeBulletinBtn").click(function() {
+    $("#removeBulletinBtn").click(function() {
         let activeIdIndex = getActiveBulletinIdIndex();
         bulletinIds.splice(activeIdIndex, 1);
         bulletinTitles.splice(activeIdIndex, 1);
@@ -51,24 +54,28 @@ $( document ).ready(function() {
         delBulletins();
     });
 
-    $(".removeBulletinBtn").mouseover(function() {
+    $("#removeBulletinBtn").mouseover(function() {
         $(this).find(".bulletinIcon").attr("src", "images/minusActive.png");
     });
 
-    $(".removeBulletinBtn").mouseleave(function() {
+    $("#removeBulletinBtn").mouseleave(function() {
         $(this).find(".bulletinIcon").attr("src", "images/minus.png");
     });
 
-    $(".addBulletinBtn").mouseover(function() {
+    $("#addBulletinBtn").mouseover(function() {
         $(this).find(".bulletinIcon").attr("src", "images/addActive.png");
     });
 
-    $(".addBulletinBtn").mouseleave(function() {
+    $("#addBulletinBtn").mouseleave(function() {
         $(this).find(".bulletinIcon").attr("src", "images/add.png");
     });
 
     $('#saveBtn, #deleteAllBtn').hover(function() {
         $(this).toggleClass('activeBtn');
+    });
+
+    $('#alertCloseBtn').click(function() {
+        $('.alert').fadeOut();
     });
 
     //update the sidebar active bulletin title when editing active bulletin
@@ -82,9 +89,9 @@ window.addEventListener("load", function () {
     let isExtensionExist = typeof (webExtensionWallet) !== "undefined";
     if (!isExtensionExist) {
         $('#webWalletExtensionDetectionBanner').append('<div class="alert" role="alert"><div>Please install <a href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> to use Bulletin Board</div></div>');
-        $('#bulletinMainContent, .addBulletinBtn, #bulletinTitle, #deleteAllBtn, #saveBtn').prop('disabled', true);
+        $('#bulletinMainContent, #addBulletinBtn, #bulletinTitle, #deleteAllBtn, #saveBtn').prop('disabled', true);
     } else {
-        $('#webWalletExtensionDetectionBanner').append('<div class="alert" role="alert"><div>WebExtensionWallet detected!</div></div>');
+        $('#webWalletExtensionDetectionBanner').append('<div class="alert" role="alert"><div id="alertText">WebExtensionWallet detected!</div><button id="alertCloseBtn" type="button" class="btn btn-sm"><img class="bulletinIcon" src="images/cancel.png" /></button></div></div>');
         getBulletins();
     }
 });

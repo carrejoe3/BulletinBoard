@@ -22,11 +22,6 @@ textarea:focus,
   box-shadow: none;
 }
 
-button {
-  background-color: $gunMetal;
-  color: $white;
-}
-
 @media screen and (max-width: 520px) {
   .card {
     width: 100% !important;
@@ -45,6 +40,7 @@ button {
 
 .container.logoContainer {
   display: block;
+  margin-left: 2%;
 }
 
 .alert {
@@ -54,10 +50,11 @@ button {
   color: $orange;
   background-color: $white;
   border-color: $orange;
+  display: flex;
 }
 
 .mainContent {
-  margin: 5%;
+  margin: 2%;
 }
 
 .card {
@@ -144,8 +141,12 @@ button {
   height: 350px;
 }
 
-.activeBtn {
+.activeBtn#deleteAllBtn, .activeBtn#saveBtn {
   color: $orange;
+}
+
+#alertCloseBtn {
+  display: flex;
 }
 
 #bulletinList {
@@ -163,6 +164,11 @@ button {
 #bulletinMainContent {
   border: none;
   resize: none;
+}
+
+#saveBtn, #deleteAllBtn, #addBulletinBtn, #removeBulletinBtn {
+  background-color: $gunMetal;
+  color: $white;
 }
 
 #deleteAllBtn {
@@ -191,4 +197,8 @@ button {
   font-family: $logo-font;
   font-style: normal;
   font-weight: 900;
+}
+
+#alertText {
+  flex-grow: 2;
 }
