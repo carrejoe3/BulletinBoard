@@ -51,6 +51,26 @@ $( document ).ready(function() {
         delBulletins();
     });
 
+    $(".removeBulletinBtn").mouseover(function() {
+        $(this).find(".bulletinIcon").attr("src", "images/minusActive.png");
+    });
+
+    $(".removeBulletinBtn").mouseleave(function() {
+        $(this).find(".bulletinIcon").attr("src", "images/minus.png");
+    });
+
+    $(".addBulletinBtn").mouseover(function() {
+        $(this).find(".bulletinIcon").attr("src", "images/addActive.png");
+    });
+
+    $(".addBulletinBtn").mouseleave(function() {
+        $(this).find(".bulletinIcon").attr("src", "images/add.png");
+    });
+
+    $('#saveBtn, #deleteAllBtn').hover(function() {
+        $(this).toggleClass('activeBtn');
+    });
+
     //update the sidebar active bulletin title when editing active bulletin
     $("#bulletinTitle").change(function() {
         $(".activeBulletin").text($("#bulletinTitle").val());
@@ -61,10 +81,10 @@ $( document ).ready(function() {
 window.addEventListener("load", function () {
     let isExtensionExist = typeof (webExtensionWallet) !== "undefined";
     if (!isExtensionExist) {
-        $('#webWalletExtensionDetectionBanner').append('<div class="alert alert-warning" role="alert"><div>Please install <a href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> to use Bulletin Board</div></div>');
+        $('#webWalletExtensionDetectionBanner').append('<div class="alert" role="alert"><div>Please install <a href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> to use Bulletin Board</div></div>');
         $('#bulletinMainContent, .addBulletinBtn, #bulletinTitle, #deleteAllBtn, #saveBtn').prop('disabled', true);
     } else {
-        $('#webWalletExtensionDetectionBanner').append('<div class="alert alert-success" role="alert"><div>WebExtensionWallet detected!</div></div>');
+        $('#webWalletExtensionDetectionBanner').append('<div class="alert" role="alert"><div>WebExtensionWallet detected!</div></div>');
         getBulletins();
     }
 });

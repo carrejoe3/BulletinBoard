@@ -18,7 +18,7 @@
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container logoContainer">
       <div class="jumbotron jumbotron-fluid">
         <h1 class="display-5" id="logo">Bulletin Board</h1>
@@ -37,23 +37,23 @@
           <div class="card">
             <div class="card-header sidebarHeader">
               <textarea class="cardHeaderTitle" rows="1" type="text" disabled>Bulletins</textarea>
-              <button type="button" class="btn btn-dark btn-sm addBulletinBtn">
-                <img class="addBulletinIcon" src="images/add.png" />
+              <button type="button" class="btn btn-sm addBulletinBtn">
+                <img class="bulletinIcon" src="images/add.png" />
               </button>
             </div>
             <div class="card-body bulletinListContainer">
               <ul id="bulletinList"></ul>
             </div>
           </div>
-          <button type="button" id="saveBtn" class="btn btn-dark" type="submit">Save</button>
-          <button type="button" class="btn btn-dark" id="deleteAllBtn">Delete All</button>
+          <button type="button" id="saveBtn" class="btn" type="submit">Save</button>
+          <button type="button" class="btn" id="deleteAllBtn">Delete All</button>
         </div>
         <div class="col-8" id="bulletinCol">
           <div class="card" id="bulletinContainer">
             <div class="card-header" id="bulletinTitleContainer">
               <textarea class="cardHeaderTitle" id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
-              <button type="button" class="btn btn-dark btn-sm removeBulletinBtn">
-                <img class="addBulletinIcon" src="images/minus.png" />
+              <button type="button" class="btn btn-sm removeBulletinBtn">
+                <img class="bulletinIcon" src="images/minus.png" />
               </button>
             </div>
             <div class="card-body">
@@ -67,7 +67,7 @@
     </div>
   </div>
 
-  <footer class="py-4 bg-dark">
+  <footer class="py-4">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; 2018</p>
     </div>
