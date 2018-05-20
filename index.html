@@ -29,37 +29,36 @@
     </div>
   </nav>
 
-  <div class="">
-    <div class="mainContent container">
-      <div id="webWalletExtensionDetectionBanner"></div>
-      <div class="row">
-        <div class="col-4">
-          <div class="card">
-            <div class="card-header sidebarHeader">
-              <textarea class="cardHeaderTitle" rows="1" type="text" disabled>Bulletins</textarea>
-              <button type="button" id="addBulletinBtn" class="btn btn-sm">
-                <img class="bulletinIcon" src="images/add.png" />
-              </button>
-            </div>
-            <div class="card-body bulletinListContainer">
-              <ul id="bulletinList"></ul>
-            </div>
+  <div class="mainContent container">
+    <div id="webWalletExtensionDetectionBanner"></div>
+    <div id="helpBanner"></div>
+    <div class="row">
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header sidebarHeader">
+            <textarea class="cardHeaderTitle" rows="1" type="text" disabled>Bulletins</textarea>
+            <button type="button" id="addBulletinBtn" class="btn btn-sm">
+              <img class="bulletinIcon" src="images/add.png" />
+            </button>
           </div>
-          <button type="button" id="saveBtn" class="btn" type="submit">Save</button>
-          <button type="button" class="btn" id="deleteAllBtn">Delete All</button>
+          <div class="card-body bulletinListContainer">
+            <ul id="bulletinList"></ul>
+          </div>
         </div>
-        <div class="col-8" id="bulletinCol">
-          <div class="card" id="bulletinContainer">
-            <div class="card-header" id="bulletinTitleContainer">
-              <textarea class="cardHeaderTitle" id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
-              <button type="button" class="btn btn-sm" id="removeBulletinBtn">
-                <img class="bulletinIcon" src="images/minus.png" />
-              </button>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <textarea class="form-control" id="bulletinMainContent" type="text" rows="10" placeholder="Bulletin text goes here..."></textarea>
-              </div>
+        <button type="button" id="saveBtn" class="btn" type="submit">Save</button>
+        <button type="button" class="btn" id="deleteAllBtn">Delete All</button>
+      </div>
+      <div class="col-8" id="bulletinCol">
+        <div class="card" id="bulletinContainer">
+          <div class="card-header" id="bulletinTitleContainer">
+            <textarea class="cardHeaderTitle" id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
+            <button type="button" class="btn btn-sm" id="removeBulletinBtn">
+              <img class="bulletinIcon" src="images/minus.png" />
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <textarea class="form-control" id="bulletinMainContent" type="text" rows="10" placeholder="Bulletin text goes here..."></textarea>
             </div>
           </div>
         </div>

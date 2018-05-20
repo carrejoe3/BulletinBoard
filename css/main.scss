@@ -57,6 +57,10 @@ textarea:focus,
   margin: 2%;
 }
 
+.btn.focus, .btn:focus {
+  box-shadow: none;
+}
+
 .card {
   margin-bottom: 1rem;
   border: none;
@@ -145,7 +149,7 @@ textarea:focus,
   color: $orange;
 }
 
-#alertCloseBtn {
+.alertCloseBtn {
   display: flex;
 }
 
