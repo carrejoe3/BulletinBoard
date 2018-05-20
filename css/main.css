@@ -1,3 +1,9 @@
+body {
+  font-family: roboto-condensed, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+}
+
 textarea:focus,
 input:focus,
 .form-control:focus {
@@ -29,6 +35,12 @@ input {
   display: block;
 }
 
+.alert {
+  font-family: roboto-mono, monospace;
+  font-style: normal;
+  font-weight: 400;
+}
+
 .mainContent {
   margin: 5%;
 }
@@ -38,7 +50,9 @@ input {
 }
 
 .card-header {
-  font-family: "chennai-slab", serif;
+  font-family: roboto-slab, serif;
+  font-style: normal;
+  font-weight: 700;
 }
 
 .sidebarHeader {
@@ -120,13 +134,16 @@ input {
 }
 
 #logo {
-  font-family: "memoriam-inline-pro", sans-serif;
+  font-family: montserrat, sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 900;
   padding-top: 2rem;
   color: white;
 }
 
 #subtitle {
   color: white;
+  font-family: montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 900;
 }
