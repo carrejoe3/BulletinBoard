@@ -39,7 +39,7 @@ textarea:focus,
 }
 
 .container.logoContainer {
-  display: block;
+  display: flex;
   margin-left: 2%;
 }
 
@@ -186,6 +186,10 @@ textarea:focus,
 #addressInput {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
+}
+
+#logoPic {
+  width: 4em;
 }
 
 #logo {
