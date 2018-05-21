@@ -11,6 +11,10 @@ hr {
   border-top: 1px solid $silver;
 }
 
+a, a:hover {
+  color: inherit;
+}
+
 footer {
   background-color: $gunMetal;
 }
@@ -200,6 +204,10 @@ textarea:focus,
   color: $white;
 }
 
+#logo::before {
+  content: url(../images/pin.png);
+}
+
 #subtitle {
   color: $orange;
   font-family: $logo-font;
@@ -209,4 +217,5 @@ textarea:focus,
 
 #alertText {
   flex-grow: 2;
+  line-height: 1.8em;
 }
