@@ -81,7 +81,7 @@ $( document ).ready(function() {
     });
 
     $('.alertCloseBtn').click(function() {
-        closeAlert($(this).parent().parent().attr('id').toString());
+        $('#helpBanner').fadeOut();
     });
 
     //update the sidebar active bulletin title when editing active bulletin
@@ -94,18 +94,32 @@ $( document ).ready(function() {
 window.addEventListener("load", function () {
     let isExtensionExist = typeof (webExtensionWallet) !== "undefined";
     if (!isExtensionExist) {
-        $('#webWalletExtensionDetectionBanner').append('<div class="alert" role="alert"><div>Please install <a href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> to use Bulletin Board</div></div>');
+        $('#helpBanner').append('<div class="alert" role="alert"><div>Please install <a href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> to use Bulletin Board</div></div>');
         $('#bulletinMainContent, #addBulletinBtn, #bulletinTitle, #deleteAllBtn, #saveBtn').prop('disabled', true);
     } else {
-        $('#webWalletExtensionDetectionBanner').append('<div class="alert" role="alert"><div id="alertText">WebExtensionWallet detected!</div><button class="btn alertCloseBtn" type="button" class="btn btn-sm"><img class="bulletinIcon" src="images/cancel.png" /></button></div></div>');
+        $('#helpBanner').append('<div class="alert" role="alert"><div id="alertText">WebExtensionWallet detected!</div><button class="btn alertCloseBtn" type="button" class="btn btn-sm"><img class="bulletinIcon" src="images/cancel.png" /></button></div></div>');
         getBulletins();
-
-        //if user has no bulletins, show help message
-        if(bulletinIds[0] == undefined || bulletinIds[0] == '') {
-            $('#helpBanner').append('<div class="alert" role="alert"><div id="alertText">Click + to add your first bulletin</div><button class="btn alertCloseBtn" type="button" class="btn btn-sm"><img class="bulletinIcon" src="images/cancel.png" /></button></div></div>');
-        }
+        helpBannerHandler();
     }
 });
+
+function helpBannerHandler() {
+    let helpMessages = ['None of your changes will be committed until you click save!', 'WebExtensionWallet detected!'];
+    let helpIndex = 0;
+
+    //if user has no bulletins, add help message to array
+    if(bulletinIds[0] == undefined || bulletinIds[0] == '') {
+        helpMessages.push('Click + to add your first bulletin');
+    }
+
+    //change help message
+    window.setInterval(function() {
+        $('#alertText').fadeOut(function() {
+            $(this).text(helpMessages[helpIndex]).fadeIn();
+            helpIndex >= helpMessages.length - 1? helpIndex = 0: helpIndex++;
+        })
+    }, 4000 );
+};
 
 function handleResponse(data) {
     //firstly, remove old data from arrays and list
@@ -143,11 +157,6 @@ function newBulletinListItem(bulletinId, title, content) {
     bulletinIds.push(bulletinId);
     bulletinTitles.push(title);
     bulletinContents.push(content);
-};
-
-function closeAlert(id) {
-    console.log('close alert id: ' + id);
-    $('#' + id).fadeOut();
 };
 
 function replaceAll(str, find, replace) {
