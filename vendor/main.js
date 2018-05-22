@@ -20,7 +20,6 @@ $( document ).ready(function() {
         };
 
         //apply active styling to main bulletin container
-        $("#bulletinContainer").fadeIn('fast');
         $(".sidebarBulletinTitle").removeClass('activeBulletin');
         $(this).find(".sidebarBulletinTitle").addClass('activeBulletin');
 
@@ -45,6 +44,9 @@ $( document ).ready(function() {
         //if user is on mobile, hide bulletin list
         if ($(window).width() < 768) {
             $('.col-md-4').hide();
+            $("#bulletinContainer").show();
+        } else {
+            $("#bulletinContainer").fadeIn('fast');
         }
     });
 
@@ -88,7 +90,7 @@ $( document ).ready(function() {
         $(this).find(".bulletinIcon").attr("src", "images/add.png");
     });
 
-    $('#saveBtn, #deleteAllBtn').hover(function() {
+    $('#saveBtn, #deleteAllBtn, #bulletinListBtn').hover(function() {
         $(this).toggleClass('activeBtn');
     });
 
