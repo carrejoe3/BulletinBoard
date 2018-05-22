@@ -21,6 +21,10 @@ footer {
   background-color: $gunMetal;
 }
 
+button {
+  background: none;
+}
+
 textarea:focus,
 .form-control:focus {
   outline: none;
@@ -73,6 +77,7 @@ textarea:focus,
 .card {
   margin-bottom: 1rem;
   border: none;
+  @include subtleBoxShadow();
 }
 
 .card-header {
@@ -186,10 +191,15 @@ textarea:focus,
 
 #deleteAllBtn, #bulletinListBtn {
   margin-left: 1rem;
+  @include subtleBoxShadow();
 }
 
 #deleteAllBtn {
   visibility: hidden;
+}
+
+#saveBtn {
+  @include subtleBoxShadow();
 }
 
 #bulletinContainer {

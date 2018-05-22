@@ -10,7 +10,10 @@ $( document ).ready(function() {
     });
 
     $("#addBulletinBtn").click(function() {
-        newBulletinListItem(generateUUID(), 'Bulletin Title', '');
+        newBulletinListItem(generateUUID(), 'Title', '');
+        if($('#deleteAllBtn').css("visibility") == "hidden") {
+            $('#deleteAllBtn').css({"visibility": "visible", "opacity": "1"}).hide().fadeIn('fast');
+        }
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function(e) {
@@ -23,12 +26,6 @@ $( document ).ready(function() {
         $(".sidebarBulletinTitle").removeClass('activeBulletin');
         $(this).find(".sidebarBulletinTitle").addClass('activeBulletin');
 
-        //apply active styling to bulletin list item
-        $('.bulletinListItem').css('font-weight', '');
-        $(this).css("font-weight", "bold");
-        $('.eye').fadeOut('fast');
-        $(this).find(".eye").fadeIn('fast');
-
         //set bulletin contents
         activeBulletinId = $(this).attr("data-bulletinId");
         let activeIdIndex = getActiveBulletinIdIndex();
@@ -36,7 +33,7 @@ $( document ).ready(function() {
         $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
 
         //if new bulletin, set focus on bulletin title
-        if($(this).find('span').text() == "Bulletin Title") {
+        if($(this).find('span').text() == 'Title') {
             e.stopPropagation();
             $('.cardHeaderTitle').focus();
         }
@@ -47,6 +44,11 @@ $( document ).ready(function() {
             $("#bulletinContainer").show();
         } else {
             $("#bulletinContainer").fadeIn('fast');
+            //apply active styling to bulletin list item
+            $('.bulletinListItem').css('font-weight', '');
+            $(this).css("font-weight", "bold");
+            $('.eye').fadeOut('fast');
+            $(this).find(".eye").fadeIn('fast');
         }
     });
 
@@ -68,10 +70,26 @@ $( document ).ready(function() {
         } else {
             $('#bulletinContainer').fadeOut('fast');
         }
+
+        //if there aren't any bulletins left, hide delete all button
+        if(bulletinIds[0] == undefined || bulletinIds[0] == '') {
+            // duration, opacity, callback
+            $('#deleteAllBtn').fadeTo('fast', 0, function() {
+                $('#deleteAllBtn').css("visibility", "hidden");
+            });
+        }
     });
 
     $("#deleteAllBtn").click(function() {
+
+        $('.col-md-4').show();
+        $('#bulletinContainer').hide();
+
         delBulletins();
+
+        $(this).fadeTo('fast', 0, function() {
+            $(this).css("visibility", "hidden");
+        });
     });
 
     $("#removeBulletinBtn").mouseover(function() {

@@ -63,7 +63,6 @@ function cbSearch(resp) {
 
   if(result === 'null') {
 
-    //let user know they don't have any stored bulletins
   } else {
     //if result is not null, then it should be "return value" or "error message"
     try {
