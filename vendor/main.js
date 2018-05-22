@@ -41,6 +41,11 @@ $( document ).ready(function() {
             e.stopPropagation();
             $('.cardHeaderTitle').focus();
         }
+
+        //if user is on mobile, hide bulletin list and show back button
+        if ($(window).width() < 768) {
+            $('.col-md-4').hide();
+        }
     });
 
     $("#removeBulletinBtn").click(function() {
@@ -50,10 +55,17 @@ $( document ).ready(function() {
         bulletinContents.splice(activeIdIndex, 1);
 
         $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).remove();
-        $('#bulletinContainer').fadeOut('fast');
 
         //set activeBulletinId to null, so updateBulletinArrays isn't called when user clicks on bulletinListItem
         activeBulletinId = null;
+
+        //if user is on mobile, show bulletin list again
+        if ($(window).width() < 768) {
+            $('.col-md-4').show();
+            $('#bulletinContainer').hide();
+        } else {
+            $('#bulletinContainer').fadeOut('fast');
+        }
     });
 
     $("#deleteAllBtn").click(function() {
@@ -87,6 +99,11 @@ $( document ).ready(function() {
     //update the sidebar active bulletin title when editing active bulletin
     $("#bulletinTitle").change(function() {
         $(".activeBulletin").text($("#bulletinTitle").val());
+    });
+
+    $('#bulletinListBtn').click(function() {
+        $('#bulletinCol').hide();
+        $('.col-md-4').show();
     });
 });
 

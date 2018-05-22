@@ -15,6 +15,10 @@
     .mainContent {
         margin: 2%;
     }
+
+    #bulletinListBtn {
+        display: none;
+    }
 }
 
 @include mq('phone') {
