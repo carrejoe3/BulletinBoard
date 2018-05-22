@@ -1,6 +1,7 @@
 @import "components/reset";
 @import "components/typography";
 @import "components/palette";
+@import "components/responsiveStyles";
 
 body {
   font-family: $body-font;
@@ -27,10 +28,8 @@ textarea:focus,
   box-shadow: none;
 }
 
-@media screen and (max-width: 520px) {
-  .card {
-    width: 100% !important;
-  }
+.display-5 {
+  font-size: 1.9rem;
 }
 
 .navbar {
@@ -48,6 +47,11 @@ textarea:focus,
   margin-left: 2%;
 }
 
+.mainContent {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
 .alert {
   font-family: $alert-font;
   font-style: normal;
@@ -55,11 +59,7 @@ textarea:focus,
   color: $orange;
   background-color: $white;
   border-color: $orange;
-  display: flex;
-}
-
-.mainContent {
-  margin: 2%;
+  display: none;
 }
 
 .btn.focus, .btn:focus {
@@ -162,10 +162,6 @@ textarea:focus,
   padding: .375rem .75rem;
 }
 
-#bulletinCol {
-  padding-left: 5px;
-}
-
 #bulletinTitleContainer {
   display: flex;
 }
@@ -214,6 +210,7 @@ textarea:focus,
   font-family: $logo-font;
   font-style: normal;
   font-weight: 900;
+  font-size: 0.9rem;
 }
 
 #alertText {
