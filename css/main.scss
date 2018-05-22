@@ -123,6 +123,10 @@ textarea:focus,
   overflow-y: scroll;
 }
 
+.col-md-4, .col-md-8 {
+  min-height: 0px;
+}
+
 .bulletinListItem {
   list-style-type: none;
   cursor: pointer;

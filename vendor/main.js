@@ -42,7 +42,7 @@ $( document ).ready(function() {
             $('.cardHeaderTitle').focus();
         }
 
-        //if user is on mobile, hide bulletin list and show back button
+        //if user is on mobile, hide bulletin list
         if ($(window).width() < 768) {
             $('.col-md-4').hide();
         }
@@ -102,7 +102,7 @@ $( document ).ready(function() {
     });
 
     $('#bulletinListBtn').click(function() {
-        $('#bulletinCol').hide();
+        $('#bulletinContainer').hide();
         $('.col-md-4').show();
     });
 });
