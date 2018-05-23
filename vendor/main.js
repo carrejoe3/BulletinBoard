@@ -182,6 +182,12 @@ function handleResponse(data) {
 
     //if returned object isnt blank, populate bulletin list
     if(sortedIds[0] !== "") {
+
+        //show delete all button
+        if($('#deleteAllBtn').css("visibility") == "hidden") {
+            $('#deleteAllBtn').css({"visibility": "visible", "opacity": "1"}).hide().fadeIn('fast');
+        }
+
         for(let i in sortedIds) {
 
             //remove content markers
@@ -193,6 +199,12 @@ function handleResponse(data) {
             markerlessContent = replaceAll(markerlessContent, '&nbsp;', ' ');
             newBulletinListItem(sortedIds[i], markerlessTitles, markerlessContent, sortedCreatedDates[i]);
         }
+    } else {
+        //if there aren't any bulletins left, hide delete all button
+        // duration, opacity, callback
+        $('#deleteAllBtn').fadeTo('fast', 0, function() {
+            $('#deleteAllBtn').css("visibility", "hidden");
+        });
     }
 };
 
