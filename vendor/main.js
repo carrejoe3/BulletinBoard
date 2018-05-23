@@ -178,9 +178,14 @@ function handleResponse(data) {
     //if returned object isnt blank, populate bulletin list
     if(sortedIds[0] !== "") {
         for(let i in sortedIds) {
+
             //remove content markers
             let markerlessTitles = replaceAll(sortedTitles[i], '/.t1tle./', '');
             let markerlessContent = replaceAll(sortedContents[i], '/.c0ntent./', '');
+
+            //replace &nbsp with white space
+            markerlessTitles = replaceAll(markerlessTitles, '&nbsp;', ' ');
+            markerlessContent = replaceAll(markerlessContent, '&nbsp;', ' ');
             newBulletinListItem(sortedIds[i], markerlessTitles, markerlessContent);
         }
     }
@@ -193,10 +198,7 @@ function updateBulletinArrays() {
 };
 
 function newBulletinListItem(bulletinId, title, content) {
-    //this can be shorted
-    let x = "<li class='bulletinListItem' data-bulletinId=''><div class='bulletinListItemInnerDiv'><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></div><hr class='listItemBottomBorder'/></li>";
-    x = x.substring(0, 46) + bulletinId + x.substring(46, x.length);
-    $("#bulletinList").append(x);
+    $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='bulletinListItemInnerDiv'><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></div><hr class='listItemBottomBorder'/></li>");
     bulletinIds.push(bulletinId);
     bulletinTitles.push(title);
     bulletinContents.push(content);

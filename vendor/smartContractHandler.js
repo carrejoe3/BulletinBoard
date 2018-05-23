@@ -27,8 +27,8 @@ function saveBulletins(bulletinIds, bulletinTitles, bulletinContents) {
   let callFunction = "set";
 
   for(var i in bulletinContents) {
-    bulletinContents[i] = '/.c0ntent./' + bulletinContents[i] + '/.c0ntent./';
-    bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i] + '/.t1tle./';
+    bulletinContents[i] = '/.c0ntent./' + bulletinContents[i].replace(/ /g, '&nbsp;'); + '/.c0ntent./';
+    bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i].replace(/ /g, '&nbsp;') + '/.t1tle./';
   };
 
   let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\"]";
