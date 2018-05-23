@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1nr5uJetnmYR2MxGSSVB65mcCDkq4KMap9";
+const dappAddress = "n1nzekRFemEhDksJK14vyNJBpZcv5vYXAEX";
 var intervalQuery;
 const nebulas = require("nebulas"),
   Account = nebulas.Account,
@@ -21,7 +21,7 @@ function getBulletins() {
   });
 };
 
-function saveBulletins(bulletinIds, bulletinTitles, bulletinContents) {
+function saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "set";
@@ -31,7 +31,7 @@ function saveBulletins(bulletinIds, bulletinTitles, bulletinContents) {
     bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i].replace(/ /g, '&nbsp;') + '/.t1tle./';
   };
 
-  let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\"]";
+  let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\",\"" + bulletinCreatedDates + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush

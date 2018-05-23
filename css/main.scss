@@ -110,7 +110,7 @@ textarea:focus,
 }
 
 .form-group, .form-control {
-  height: 100%;
+  height: 96%;
 }
 
 .sidebarHeader {
@@ -206,6 +206,15 @@ textarea:focus,
 
 #saveBtn {
   @include boxShadow();
+}
+
+#bulletinCreateDate {
+  resize: none;
+  border: none;
+  background: none;
+  font-style: italic;
+  font-size: 0.8rem;
+  margin-top: 0.6rem;
 }
 
 #bulletinContainer {

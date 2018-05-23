@@ -1,16 +1,17 @@
 let bulletinIds = [];
 let bulletinTitles = [];
 let bulletinContents = [];
+let bulletinCreatedDates = [];
 let activeBulletinId;
 
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
         updateBulletinArrays();
-        saveBulletins(bulletinIds, bulletinTitles, bulletinContents);
+        saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates);
     });
 
     $("#addBulletinBtn").click(function() {
-        newBulletinListItem(generateUUID(), 'Title', '');
+        newBulletinListItem(generateUUID(), 'Title', '', new Date().toLocaleDateString());
         if($('#deleteAllBtn').css("visibility") == "hidden") {
             $('#deleteAllBtn').css({"visibility": "visible", "opacity": "1"}).hide().fadeIn('fast');
         }
@@ -31,6 +32,7 @@ $( document ).ready(function() {
         let activeIdIndex = getActiveBulletinIdIndex();
         $('#bulletinTitle').val(bulletinTitles[activeIdIndex]);
         $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
+        $('#bulletinCreateDate').val('Created: ' + bulletinCreatedDates[activeIdIndex]);
 
         //if new bulletin, set focus on bulletin title
         if($(this).find('span').text() == 'Title') {
@@ -58,6 +60,7 @@ $( document ).ready(function() {
         bulletinIds.splice(activeIdIndex, 1);
         bulletinTitles.splice(activeIdIndex, 1);
         bulletinContents.splice(activeIdIndex, 1);
+        bulletinCreatedDates.splice(activeIdIndex, 1);
 
         $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).remove();
 
@@ -169,11 +172,13 @@ function handleResponse(data) {
     bulletinIds = [];
     bulletinTitles = [];
     bulletinContents = [];
+    bulletinCreatedDates = [];
     $("#bulletinList").empty();
 
     const sortedIds = data.ids.split(',');
     const sortedTitles = data.titles.split('/.t1tle./,/.t1tle./');
     const sortedContents = data.contents.split('/.c0ntent./,/.c0ntent./');
+    const sortedCreatedDates = data.createdDates.split(',');
 
     //if returned object isnt blank, populate bulletin list
     if(sortedIds[0] !== "") {
@@ -186,7 +191,7 @@ function handleResponse(data) {
             //replace &nbsp with white space
             markerlessTitles = replaceAll(markerlessTitles, '&nbsp;', ' ');
             markerlessContent = replaceAll(markerlessContent, '&nbsp;', ' ');
-            newBulletinListItem(sortedIds[i], markerlessTitles, markerlessContent);
+            newBulletinListItem(sortedIds[i], markerlessTitles, markerlessContent, sortedCreatedDates[i]);
         }
     }
 };
@@ -197,11 +202,12 @@ function updateBulletinArrays() {
     bulletinContents.splice(activeIdIndex, 1, $('#bulletinMainContent').val());
 };
 
-function newBulletinListItem(bulletinId, title, content) {
+function newBulletinListItem(bulletinId, title, content, date) {
     $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='bulletinListItemInnerDiv'><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></div><hr class='listItemBottomBorder'/></li>");
     bulletinIds.push(bulletinId);
     bulletinTitles.push(title);
     bulletinContents.push(content);
+    bulletinCreatedDates.push(date);
 };
 
 function replaceAll(str, find, replace) {
