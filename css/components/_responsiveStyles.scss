@@ -32,3 +32,11 @@
         }
     }
 }
+
+@include mq('desktop') {
+    .navbar {
+        .logoContainer {
+            margin-left: 20px;
+        }
+    }
+}
