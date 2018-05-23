@@ -19,6 +19,7 @@ a, a:hover {
 
 footer {
   background-color: $gunMetal;
+  @include boxShadow();
 }
 
 button {
@@ -52,8 +53,8 @@ textarea:focus,
 }
 
 .mainContent {
-  margin-top: 3%;
-  margin-bottom: 3%;
+  margin-top: 4%;
+  margin-bottom: 4%;
 }
 
 .equidistant {
