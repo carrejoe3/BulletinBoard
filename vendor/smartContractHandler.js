@@ -2,11 +2,6 @@
 
 const dappAddress = "n1nzekRFemEhDksJK14vyNJBpZcv5vYXAEX";
 var intervalQuery;
-const nebulas = require("nebulas"),
-  Account = nebulas.Account,
-  neb = new nebulas.Neb();
-neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
-
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
 var serialNumber;
