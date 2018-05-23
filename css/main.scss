@@ -195,17 +195,12 @@ textarea:focus,
   color: $white;
 }
 
-#deleteAllBtn, #bulletinListBtn {
-  margin-left: 1rem;
+#deleteAllBtn, #bulletinListBtn, #saveBtn {
   @include boxShadow();
 }
 
 #deleteAllBtn {
   visibility: hidden;
-}
-
-#saveBtn {
-  @include boxShadow();
 }
 
 #bulletinCreateDate {

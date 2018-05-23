@@ -168,13 +168,15 @@ function helpBannerHandler() {
 };
 
 function handleResponse(data) {
-    //firstly, remove old data from arrays and list
+
+    //remove old data from arrays and list
     bulletinIds = [];
     bulletinTitles = [];
     bulletinContents = [];
     bulletinCreatedDates = [];
     $("#bulletinList").empty();
 
+    //sort bulletins from returned data
     const sortedIds = data.ids.split(',');
     const sortedTitles = data.titles.split('/.t1tle./,/.t1tle./');
     const sortedContents = data.contents.split('/.c0ntent./,/.c0ntent./');
