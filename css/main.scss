@@ -38,6 +38,7 @@ textarea:focus,
 
 .navbar {
   background-color: $gunMetal;
+  @include boxShadow();
 }
 
 .jumbotron {
