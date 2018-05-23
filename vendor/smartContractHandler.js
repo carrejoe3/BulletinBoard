@@ -27,8 +27,8 @@ function saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCr
   let callFunction = "set";
 
   for(var i in bulletinContents) {
-    bulletinContents[i] = '/.c0ntent./' + bulletinContents[i].replace(/ /g, '&nbsp;'); + '/.c0ntent./';
-    bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i].replace(/ /g, '&nbsp;') + '/.t1tle./';
+    //replace new lines with return markers tags
+    bulletinContents[i] = bulletinContents[i].replace(/(?:\r\n|\r|\n)/g, '/.n3wLine./');
   };
 
   let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\",\"" + bulletinCreatedDates + "\"]";

@@ -194,9 +194,9 @@ function handleResponse(data) {
             let markerlessTitles = replaceAll(sortedTitles[i], '/.t1tle./', '');
             let markerlessContent = replaceAll(sortedContents[i], '/.c0ntent./', '');
 
-            //replace &nbsp with white space
-            markerlessTitles = replaceAll(markerlessTitles, '&nbsp;', ' ');
-            markerlessContent = replaceAll(markerlessContent, '&nbsp;', ' ');
+            //replace replace new line markers with new lines
+            markerlessContent = replaceAll(markerlessContent, '/.n3wLine./', '\n');
+
             newBulletinListItem(sortedIds[i], markerlessTitles, markerlessContent, sortedCreatedDates[i]);
         }
     } else {
