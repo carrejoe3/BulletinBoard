@@ -42,6 +42,7 @@ $( document ).ready(function() {
         if ($(window).width() < 768) {
             $('.col-md-4').hide();
             $("#bulletinContainer").show();
+            $('#bulletinListBtn').removeClass('activeBtn');
         } else {
             $("#bulletinContainer").fadeIn('fast');
             //apply active styling to bulletin list item
@@ -78,6 +79,8 @@ $( document ).ready(function() {
                 $('#deleteAllBtn').css("visibility", "hidden");
             });
         }
+
+        $('#bulletinListBtn').addClass('activeBtn');
     });
 
     $("#deleteAllBtn").click(function() {
@@ -90,6 +93,8 @@ $( document ).ready(function() {
         $(this).fadeTo('fast', 0, function() {
             $(this).css("visibility", "hidden");
         });
+
+        $('#bulletinListBtn').addClass('activeBtn');
     });
 
     $("#removeBulletinBtn").mouseover(function() {
@@ -108,7 +113,7 @@ $( document ).ready(function() {
         $(this).find(".bulletinIcon").attr("src", "images/add.png");
     });
 
-    $('#saveBtn, #deleteAllBtn, #bulletinListBtn').hover(function() {
+    $('#saveBtn, #deleteAllBtn').hover(function() {
         $(this).toggleClass('activeBtn');
     });
 
@@ -124,6 +129,7 @@ $( document ).ready(function() {
     $('#bulletinListBtn').click(function() {
         $('#bulletinContainer').hide();
         $('.col-md-4').show();
+        $(this).addClass('activeBtn');
     });
 });
 
