@@ -207,9 +207,10 @@ textarea:focus,
   resize: none;
   border: none;
   background: none;
-  font-style: italic;
   font-size: 0.8rem;
-  margin-top: 0.6rem;
+  padding: .375rem .75rem;
+  width: 100%;
+  text-align: center;
 }
 
 #bulletinContainer {
