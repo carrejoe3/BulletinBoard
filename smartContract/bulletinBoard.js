@@ -1,31 +1,24 @@
 'use strict';
 
 var BulletinBoard = function () {
-    let owner = Blockchain.transaction.from;
-
-    this.getOwner = function() {
-        return owner;
-    }
 };
 
 BulletinBoard.prototype = {
     init: function () {
     },
-    set: function (idList, titles, contents, createdDates, sendTo) {
-
+    set: function (idList, titles, contents, createdDates) {
+        var author = Blockchain.transaction.from;
         titles = titles.trim();
         contents = contents.trim();
-        LocalContractStorage.set(this.getOwner(), {ids: idList, titles: titles, contents: contents, createdDates: createdDates});
-
-        if(null != sendTo) {
-            LocalContractStorage.set(to, {ids: idList, titles: titles, contents: contents, createdDates: createdDates});
-        }
+        LocalContractStorage.set(author, {ids: idList, titles: titles, contents: contents, createdDates: createdDates});
     },
     getBulletins: function () {
-        return LocalContractStorage.get(this.getOwner());
+        var author = Blockchain.transaction.from;
+        return LocalContractStorage.get(author);
     },
     delBulletins: function () {
-        LocalContractStorage.del(this.getOwner());
+        var author = Blockchain.transaction.from;
+        LocalContractStorage.del(author);
     }
 };
 
