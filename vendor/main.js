@@ -35,21 +35,17 @@ $( document ).ready(function() {
         $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
         $('#bulletinCreateDate').val('Created: ' + bulletinCreatedDates[activeIdIndex]);
 
+        //show main bulletin and set focus
+        $("#bulletinCol").fadeIn('fast', function() {
+            $('.cardHeaderTitle').focus();
+            e.stopPropagation();
+        });
+
         //if user is on mobile, hide bulletin list
-        if ($(window).width() < 768) {
+        if (mobileMode()) {
             $('#bulletinListCol').hide();
-            $("#bulletinContainer, #toolbarContainer").show(function() {
-                //set focus on bulletin title when container has been displayed
-                e.stopPropagation();
-                $('.cardHeaderTitle').focus();
-            });
             $('#bulletinListBtn').find('.bulletinIcon').attr('src', 'images/list.png');
         } else {
-            $("#bulletinContainer, #toolbarContainer").fadeIn('fast', function() {
-                //set focus on bulletin title when container has been displayed
-                e.stopPropagation();
-                $('.cardHeaderTitle').focus();
-            });
             //apply active styling to bulletin list item
             $('.bulletinListItem').css('font-weight', '');
             $(this).css("font-weight", "bold");
@@ -71,11 +67,11 @@ $( document ).ready(function() {
         activeBulletinId = null;
 
         //if user is on mobile, show bulletin list again
-        if ($(window).width() < 768) {
+        if (mobileMode()) {
             $('#bulletinListCol').show();
-            $('#bulletinContainer, #toolbarContainer').hide();
+            $('#bulletinCol').hide();
         } else {
-            $('#bulletinContainer, #toolbarContainer').fadeOut('fast');
+            $('#bulletinCol').fadeOut('fast');
         }
 
         //if there aren't any bulletins left, hide delete all button
@@ -93,7 +89,7 @@ $( document ).ready(function() {
     $("#deleteAllBtn").click(function() {
 
         $('#bulletinListCol').show();
-        $('#bulletinContainer, #toolbarContainer').hide();
+        $('#bulletinCol').hide();
 
         delBulletins();
 
@@ -153,10 +149,12 @@ $( document ).ready(function() {
         } else {
             $('#addRecipientBtn').find(".bulletinIcon").attr("src", "images/addRecipient.png");
             $('#recipientAddressContainer').fadeOut('fast', function() {
-                $('#removeBulletinBtn, #saveBtn, #bulletinListBtn').fadeIn('fast');
+                $('#removeBulletinBtn, #saveBtn').fadeIn('fast');
+                if(mobileMode()) {
+                    $('#bulletinListBtn').fadeIn('fast');
+                }
             });
         }
-
         recipientAdded = (recipientAdded == false? true: false);
     });
 
@@ -172,8 +170,8 @@ $( document ).ready(function() {
 
     //bulletin list button handler for small screens
     $('#bulletinListBtn').click(function() {
-        $('#bulletinContainer, #toolbarContainer').hide();
-        $('#bulletinListCol').show();
+        $('#bulletinCol').hide();
+        $('#bulletinListCol').fadeIn('fast');
         $(this).find('.bulletinIcon').attr('src', 'images/listActive.png');
     });
 });
@@ -286,4 +284,8 @@ function generateUUID() {
 
 function getActiveBulletinIdIndex() {
     return bulletinIds.indexOf(activeBulletinId);
+};
+
+function mobileMode() {
+    return $(window).width() < 768;
 };

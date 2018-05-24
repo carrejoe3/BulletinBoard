@@ -83,14 +83,12 @@ textarea:focus,
 
 #toolbarContainer {
   margin-top: 1em;
-  display: none;
 }
 
 #toolbar {
   border-bottom-left-radius: calc(0.25rem - 1px);
   border-bottom-right-radius: calc(0.25rem - 1px);
   display: flex;
-  flex-wrap: wrap;
 }
 
 .card-header {
@@ -200,6 +198,10 @@ textarea:focus,
   resize: none;
 }
 
+#bulletinCol {
+  display: none;
+}
+
 #saveBtn, #deleteAllBtn, #addBulletinBtn, #bulletinListBtn ,#removeBulletinBtn, #addRecipientBtn {
   background-color: $gunMetal;
   color: $white;
@@ -214,13 +216,9 @@ textarea:focus,
   border: none;
   background: none;
   font-size: 0.8rem;
-  padding: .375rem .75rem;
+  padding: .375rem .75rem 0 .75rem;
   width: 100%;
   text-align: center;
-}
-
-#bulletinContainer {
-  display: none;
 }
 
 #recipientAddressContainer {
