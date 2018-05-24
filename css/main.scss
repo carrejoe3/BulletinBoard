@@ -148,6 +148,7 @@ textarea:focus,
 
 .bulletinListContainer {
   overflow-y: scroll;
+  height: 402px;
 }
 
 .col-md-4, .col-md-8 {
@@ -175,6 +176,7 @@ textarea:focus,
   resize: none;
   background-color: transparent;
   vertical-align: middle;
+  flex-grow: 2;
 }
 
 .activeBtn#deleteAllBtn, .activeBtn#saveBtn, .activeBtn#bulletinListBtn {
@@ -223,8 +225,7 @@ textarea:focus,
 
 #recipientAddressContainer {
   display: none;
-  width: 100%;
-  margin-top: .5em;
+  width: 86%;
 }
 
 #recipientAddress {
@@ -232,8 +233,8 @@ textarea:focus,
   border: none;
   background: none;
   color: $white;
-  padding: .75rem .75rem 0 0.5rem;
   flex-grow: 2;
+  padding: 0.4em 0 0 0;
 }
 
 #logoPic {
