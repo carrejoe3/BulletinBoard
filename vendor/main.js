@@ -35,17 +35,21 @@ $( document ).ready(function() {
         $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
         $('#bulletinCreateDate').val('Created: ' + bulletinCreatedDates[activeIdIndex]);
 
-        //set focus on bulletin title
-        e.stopPropagation();
-        $('.cardHeaderTitle').focus();
-
         //if user is on mobile, hide bulletin list
         if ($(window).width() < 768) {
             $('#bulletinListCol').hide();
-            $("#bulletinContainer, #toolbarContainer").show();
+            $("#bulletinContainer, #toolbarContainer").show(function() {
+                //set focus on bulletin title when container has been displayed
+                e.stopPropagation();
+                $('.cardHeaderTitle').focus();
+            });
             $('#bulletinListBtn').find('.bulletinIcon').attr('src', 'images/list.png');
         } else {
-            $("#bulletinContainer, #toolbarContainer").fadeIn('fast');
+            $("#bulletinContainer, #toolbarContainer").fadeIn('fast', function() {
+                //set focus on bulletin title when container has been displayed
+                e.stopPropagation();
+                $('.cardHeaderTitle').focus();
+            });
             //apply active styling to bulletin list item
             $('.bulletinListItem').css('font-weight', '');
             $(this).css("font-weight", "bold");
@@ -141,9 +145,10 @@ $( document ).ready(function() {
         if(recipientAdded == false) {
             $('#addRecipientBtn').find(".bulletinIcon").attr("src", "images/addRecipientActive.png");
             $('#removeBulletinBtn, #saveBtn, #bulletinListBtn').fadeOut('fast', function() {
-                $('#recipientAddressContainer').css("display", "flex").hide().fadeIn('fast');
-                $('#recipientAddress').focus();
-                e.stopPropagation();
+                $('#recipientAddressContainer').css("display", "flex").hide().fadeIn('fast', function() {
+                    $('#recipientAddress').focus();
+                    e.stopPropagation();
+                });
             });
         } else {
             $('#addRecipientBtn').find(".bulletinIcon").attr("src", "images/addRecipient.png");
