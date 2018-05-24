@@ -258,7 +258,7 @@ function updateBulletinArrays() {
 
 //add new bulletin to bulletin list, and push new content to arrays
 function newBulletinListItem(bulletinId, title, content, date) {
-    $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='bulletinListItemInnerDiv'><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></div><hr class='listItemBottomBorder'/></li>");
+    $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='bulletinListItemInnerDiv'><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></div><div id='createdDate'>" + date + "</div><hr class='listItemBottomBorder'/></li>");
     bulletinIds.push(bulletinId);
     bulletinTitles.push(title);
     bulletinContents.push(content);

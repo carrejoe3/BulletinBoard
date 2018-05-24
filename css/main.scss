@@ -153,6 +153,10 @@ textarea:focus,
   min-height: 0px;
 }
 
+#createdDate {
+  font-size: 0.8em;
+}
+
 .bulletinListItem {
   list-style-type: none;
   cursor: pointer;
@@ -209,16 +213,6 @@ textarea:focus,
 
 #deleteAllBtn {
   visibility: hidden;
-}
-
-#bulletinCreateDate {
-  resize: none;
-  border: none;
-  background: none;
-  font-size: 0.8rem;
-  padding: .375rem .75rem 0 .75rem;
-  width: 100%;
-  text-align: center;
 }
 
 #recipientAddressContainer {
