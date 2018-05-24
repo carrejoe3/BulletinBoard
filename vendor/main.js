@@ -42,10 +42,10 @@ $( document ).ready(function() {
         //if user is on mobile, hide bulletin list
         if ($(window).width() < 768) {
             $('#bulletinListCol').hide();
-            $("#bulletinContainer").show();
+            $("#bulletinContainer, #toolbarContainer").show();
             $('#bulletinListBtn').find('.bulletinIcon').attr('src', 'images/list.png');
         } else {
-            $("#bulletinContainer").fadeIn('fast');
+            $("#bulletinContainer, #toolbarContainer").fadeIn('fast');
             //apply active styling to bulletin list item
             $('.bulletinListItem').css('font-weight', '');
             $(this).css("font-weight", "bold");
@@ -69,9 +69,9 @@ $( document ).ready(function() {
         //if user is on mobile, show bulletin list again
         if ($(window).width() < 768) {
             $('#bulletinListCol').show();
-            $('#bulletinContainer').hide();
+            $('#bulletinContainer, #toolbarContainer').hide();
         } else {
-            $('#bulletinContainer').fadeOut('fast');
+            $('#bulletinContainer, #toolbarContainer').fadeOut('fast');
         }
 
         //if there aren't any bulletins left, hide delete all button
@@ -89,7 +89,7 @@ $( document ).ready(function() {
     $("#deleteAllBtn").click(function() {
 
         $('#bulletinListCol').show();
-        $('#bulletinContainer').hide();
+        $('#bulletinContainer, #toolbarContainer').hide();
 
         delBulletins();
 
@@ -165,7 +165,7 @@ $( document ).ready(function() {
 
     //bulletin list button handler for small screens
     $('#bulletinListBtn').click(function() {
-        $('#bulletinContainer').hide();
+        $('#bulletinContainer, #toolbarContainer').hide();
         $('#bulletinListCol').show();
         $(this).find('.bulletinIcon').attr('src', 'images/listActive.png');
     });

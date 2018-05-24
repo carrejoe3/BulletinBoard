@@ -46,6 +46,17 @@
         </div>
       </div>
       <div class="col-md-8" id="bulletinCol">
+        <div class="card" id="bulletinContainer">
+          <div class="card-header" id="bulletinTitleContainer">
+            <textarea class="cardHeaderTitle" id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <textarea class="form-control" id="bulletinMainContent" type="text" rows="10" placeholder="Your text..."></textarea>
+              <textarea id="bulletinCreateDate" type="text" rows="1" disabled></textarea>
+            </div>
+          </div>
+        </div>
         <div class="card" id="toolbarContainer">
           <div class="card-header equidistant" id="toolbar">
             <button type="button" class="btn btn-sm" id="addRecipientBtn" data-toggle="tooltip" data-placement="bottom" title="Add recipient">
@@ -68,17 +79,6 @@
               <button id="sendBtn" class="btn btn-sm" data-toggle="tooltip" data-placement="bottom" title="Send bulletin">
                 <img class="bulletinIcon" src="images/send.png"/>
               </button>
-            </div>
-          </div>
-        </div>
-        <div class="card" id="bulletinContainer">
-          <div class="card-header" id="bulletinTitleContainer">
-            <textarea class="cardHeaderTitle" id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
-          </div>
-          <div class="card-body">
-            <div class="form-group">
-              <textarea class="form-control" id="bulletinMainContent" type="text" rows="10" placeholder="Your text..."></textarea>
-              <textarea id="bulletinCreateDate" type="text" rows="1" disabled></textarea>
             </div>
           </div>
         </div>

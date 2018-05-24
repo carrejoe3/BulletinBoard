@@ -82,7 +82,8 @@ textarea:focus,
 }
 
 #toolbarContainer {
-  margin-bottom: 1em;
+  margin-top: 1em;
+  display: none;
 }
 
 #toolbar {
@@ -117,6 +118,7 @@ textarea:focus,
   border-image-repeat: initial;
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
+  height: 330px;
 }
 
 .form-group {
@@ -175,10 +177,6 @@ textarea:focus,
   vertical-align: middle;
 }
 
-.card-body {
-  height: 100%;
-}
-
 .activeBtn#deleteAllBtn, .activeBtn#saveBtn, .activeBtn#bulletinListBtn {
   color: $orange;
 }
@@ -234,7 +232,7 @@ textarea:focus,
   border: none;
   background: none;
   color: $white;
-  padding: .75rem .75rem 0 .75rem;
+  padding: .75rem .75rem 0 0.5rem;
   flex-grow: 2;
 }
 
