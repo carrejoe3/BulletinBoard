@@ -3,6 +3,7 @@ let bulletinTitles = [];
 let bulletinContents = [];
 let bulletinCreatedDates = [];
 let activeBulletinId;
+let recipientAdded = false;
 
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
@@ -34,17 +35,15 @@ $( document ).ready(function() {
         $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
         $('#bulletinCreateDate').val('Created: ' + bulletinCreatedDates[activeIdIndex]);
 
-        //if new bulletin, set focus on bulletin title
-        if($(this).find('span').text() == 'Title') {
-            e.stopPropagation();
-            $('.cardHeaderTitle').focus();
-        }
+        //set focus on bulletin title
+        e.stopPropagation();
+        $('.cardHeaderTitle').focus();
 
         //if user is on mobile, hide bulletin list
         if ($(window).width() < 768) {
-            $('.col-md-4').hide();
+            $('#bulletinListCol').hide();
             $("#bulletinContainer").show();
-            $('#bulletinListBtn').removeClass('activeBtn');
+            $('#bulletinListBtn').find('.bulletinIcon').attr('src', 'images/list.png');
         } else {
             $("#bulletinContainer").fadeIn('fast');
             //apply active styling to bulletin list item
@@ -69,7 +68,7 @@ $( document ).ready(function() {
 
         //if user is on mobile, show bulletin list again
         if ($(window).width() < 768) {
-            $('.col-md-4').show();
+            $('#bulletinListCol').show();
             $('#bulletinContainer').hide();
         } else {
             $('#bulletinContainer').fadeOut('fast');
@@ -83,12 +82,13 @@ $( document ).ready(function() {
             });
         }
 
-        $('#bulletinListBtn').addClass('activeBtn');
+        $('#bulletinListBtn').find('.bulletinIcon').attr('src', 'images/listActive.png');
     });
 
+    //delete all button handler
     $("#deleteAllBtn").click(function() {
 
-        $('.col-md-4').show();
+        $('#bulletinListCol').show();
         $('#bulletinContainer').hide();
 
         delBulletins();
@@ -97,29 +97,63 @@ $( document ).ready(function() {
             $(this).css("visibility", "hidden");
         });
 
-        $('#bulletinListBtn').addClass('activeBtn');
+        $('#bulletinListBtn').find('.bulletinIcon').attr('src', 'images/listActive.png');
     });
 
+    //set active buttons on hover
     $("#removeBulletinBtn").mouseover(function() {
-        $(this).find(".bulletinIcon").attr("src", "images/minusActive.png");
+        $(this).find(".bulletinIcon").attr("src", "images/rubbishBinActive.png");
     });
-
     $("#removeBulletinBtn").mouseleave(function() {
-        $(this).find(".bulletinIcon").attr("src", "images/minus.png");
+        $(this).find(".bulletinIcon").attr("src", "images/rubbish-bin.png");
     });
-
     $("#addBulletinBtn").mouseover(function() {
         $(this).find(".bulletinIcon").attr("src", "images/addActive.png");
     });
-
     $("#addBulletinBtn").mouseleave(function() {
         $(this).find(".bulletinIcon").attr("src", "images/add.png");
     });
-
-    $('#saveBtn, #deleteAllBtn').hover(function() {
-        $(this).toggleClass('activeBtn');
+    $("#addRecipientBtn").mouseover(function() {
+        if(!recipientAdded) {
+            $(this).find(".bulletinIcon").attr("src", "images/addRecipientActive.png");
+        }
+    });
+    $("#addRecipientBtn").mouseleave(function() {
+        if(!recipientAdded) {
+            $(this).find(".bulletinIcon").attr("src", "images/addRecipient.png");
+        }
+    });
+    $("#saveBtn").mouseover(function() {
+        $(this).find(".bulletinIcon").attr("src", "images/saveActive.png");
+    });
+    $("#saveBtn").mouseleave(function() {
+        $(this).find(".bulletinIcon").attr("src", "images/save.png");
+    });
+    $("#sendBtn").mouseover(function() {
+        $(this).find(".bulletinIcon").attr("src", "images/sendActive.png");
+    });
+    $("#sendBtn").mouseleave(function() {
+        $(this).find(".bulletinIcon").attr("src", "images/send.png");
     });
 
+    //add recipient button handler
+    $('#addRecipientBtn').click(function() {
+
+        if(recipientAdded == false) {
+            $('#addRecipientBtn').find(".bulletinIcon").attr("src", "images/addRecipientActive.png");
+            $('#recipientAddressContainer').css("display", "flex")
+            $('#recipientAddressContainer').hide()
+            $('#recipientAddressContainer').fadeIn('fast');
+            $('#recipientAddress').focus();
+        } else {
+            $('#addRecipientBtn').find(".bulletinIcon").attr("src", "images/addRecipient.png");
+            $('#recipientAddressContainer').fadeOut('fast');
+        }
+
+        recipientAdded = (recipientAdded == false? true: false);
+    });
+
+    //close helper banner button handler
     $('.alertCloseBtn').click(function() {
         $('#helpBanner').fadeOut();
     });
@@ -129,10 +163,11 @@ $( document ).ready(function() {
         $(".activeBulletin").text($("#bulletinTitle").val());
     });
 
+    //bulletin list button handler for small screens
     $('#bulletinListBtn').click(function() {
         $('#bulletinContainer').hide();
-        $('.col-md-4').show();
-        $(this).addClass('activeBtn');
+        $('#bulletinListCol').show();
+        $(this).find('.bulletinIcon').attr('src', 'images/listActive.png');
     });
 });
 
@@ -216,6 +251,7 @@ function updateBulletinArrays() {
     bulletinContents.splice(activeIdIndex, 1, $('#bulletinMainContent').val());
 };
 
+//add new bulletin to bulletin list, and push new content to arrays
 function newBulletinListItem(bulletinId, title, content, date) {
     $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='bulletinListItemInnerDiv'><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></div><hr class='listItemBottomBorder'/></li>");
     bulletinIds.push(bulletinId);

@@ -84,7 +84,6 @@ function funcIntervalQuery() {
       let respObject = JSON.parse(resp)
       console.log("tx result: " + resp)
       if (respObject.code === 0) {
-        // alert(`set ${$("#addressInput").val()} succeed!`)
         clearInterval(intervalQuery)
       }
     })

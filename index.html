@@ -32,7 +32,7 @@
   <div class="mainContent container">
     <div id="helpBanner"></div>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4" id="bulletinListCol">
         <div class="card">
           <div class="card-header sidebarHeader">
             <textarea class="cardHeaderTitle" rows="1" type="text" disabled>Bulletins</textarea>
@@ -46,15 +46,34 @@
         </div>
       </div>
       <div class="col-md-8" id="bulletinCol">
+        <div class="card" id="toolbarContainer">
+          <div class="card-header equidistant" id="toolbar">
+            <button type="button" class="btn btn-sm" id="addRecipientBtn" data-toggle="tooltip" data-placement="bottom" title="Add recipient">
+              <img class="bulletinIcon" src="images/addRecipient.png"/>
+            </button>
+            <button type="button" class="btn btn-sm" id="removeBulletinBtn" data-toggle="tooltip" data-placement="bottom" title="Delete bulletin">
+              <img class="bulletinIcon" src="images/rubbish-bin.png" />
+            </button>
+            <button type="button" id="saveBtn" class="btn btn-sm" data-toggle="tooltip" data-placement="bottom" title="Save bulletins" type="submit">
+              <img class="bulletinIcon" src="images/save.png"/>
+            </button>
+            <button type="button" class="btn btn-sm" id="bulletinListBtn" data-toggle="tooltip" data-placement="bottom" title="Bulletin list">
+              <img class="bulletinIcon" src="images/listActive.png"/>
+            </button>
+            <!-- <button type="button" class="btn btn-sm" id="deleteAllBtn" data-toggle="tooltip" data-placement="bottom" title="Delete all bulletins">
+              <img class="bulletinIcon" src="images/rubbish-bin.png"/>
+            </button> -->
+            <div id="recipientAddressContainer">
+              <textarea class="card-subtitle" id="recipientAddress" rows="1" type="text" placeholder="Recipient wallet address..."></textarea>
+              <button id="sendBtn" class="btn btn-sm" data-toggle="tooltip" data-placement="bottom" title="Send bulletin">
+                <img class="bulletinIcon" src="images/send.png"/>
+              </button>
+            </div>
+          </div>
+        </div>
         <div class="card" id="bulletinContainer">
           <div class="card-header" id="bulletinTitleContainer">
             <textarea class="cardHeaderTitle" id="bulletinTitle" rows="1" type="text">Bulletin Title</textarea>
-            <button type="button" class="btn btn-sm" id="removeBulletinBtn" data-toggle="tooltip" data-placement="bottom" title="Delete bulletin">
-              <img class="bulletinIcon" src="images/minus.png" />
-            </button>
-            <button type="button" class="btn btn-sm" id="addRecipientBtn" data-toggle="tooltip" data-placement="bottom" title="Add recipient">
-              <img class="bulletinIcon" src="images/addRecipient.png" />
-            </button>
           </div>
           <div class="card-body">
             <div class="form-group">
@@ -64,11 +83,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="equidistant">
-      <button type="button" class="btn btn-lg" id="deleteAllBtn" data-toggle="tooltip" data-placement="bottom" title="Delete all bulletins">Delete All</button>
-      <button type="button" class="btn btn-lg activeBtn" id="bulletinListBtn" data-toggle="tooltip" data-placement="bottom" title="Bulletin list">List</button>
-      <button type="button" id="saveBtn" class="btn btn-lg" data-toggle="tooltip" data-placement="bottom" title="Save bulletins" type="submit">Save</button>
     </div>
   </div>
 

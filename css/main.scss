@@ -77,9 +77,19 @@ textarea:focus,
 }
 
 .card {
-  margin-bottom: 1rem;
   border: none;
   @include boxShadow();
+}
+
+#toolbarContainer {
+  margin-bottom: 1em;
+}
+
+#toolbar {
+  border-bottom-left-radius: calc(0.25rem - 1px);
+  border-bottom-right-radius: calc(0.25rem - 1px);
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .card-header {
@@ -109,8 +119,8 @@ textarea:focus,
   border-bottom-left-radius: 0.25rem;
 }
 
-.form-group, .form-control {
-  height: 96%;
+.form-group {
+  margin-bottom: 0;
 }
 
 .sidebarHeader {
@@ -153,7 +163,7 @@ textarea:focus,
 }
 
 .cardHeaderTitle {
-  width: 100%;
+  width: 85%;
   font-size: 1.5rem;
   line-height: 1.2;
   color: $white;
@@ -166,7 +176,7 @@ textarea:focus,
 }
 
 .card-body {
-  height: 350px;
+  height: 100%;
 }
 
 .activeBtn#deleteAllBtn, .activeBtn#saveBtn, .activeBtn#bulletinListBtn {
@@ -195,16 +205,8 @@ textarea:focus,
   color: $white;
 }
 
-#deleteAllBtn, #bulletinListBtn, #saveBtn {
-  @include boxShadow();
-}
-
 #deleteAllBtn {
   visibility: hidden;
-}
-
-#addRecipientBtn {
-  margin-left: 1em;
 }
 
 #bulletinCreateDate {
@@ -221,9 +223,19 @@ textarea:focus,
   display: none;
 }
 
-#addressInput {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
+#recipientAddressContainer {
+  display: none;
+  width: 100%;
+  margin-top: .5em;
+}
+
+#recipientAddress {
+  resize: none;
+  border: none;
+  background: none;
+  color: $white;
+  padding: .75rem .75rem 0 .75rem;
+  flex-grow: 2;
 }
 
 #logoPic {
@@ -249,6 +261,10 @@ textarea:focus,
   font-style: normal;
   font-weight: 900;
   font-size: 0.9rem;
+}
+
+#helpBanner {
+  display: none;
 }
 
 #alertText {
