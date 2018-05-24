@@ -190,7 +190,7 @@ textarea:focus,
   resize: none;
 }
 
-#saveBtn, #deleteAllBtn, #addBulletinBtn, #bulletinListBtn ,#removeBulletinBtn {
+#saveBtn, #deleteAllBtn, #addBulletinBtn, #bulletinListBtn ,#removeBulletinBtn, #addRecipientBtn {
   background-color: $gunMetal;
   color: $white;
 }
@@ -201,6 +201,10 @@ textarea:focus,
 
 #deleteAllBtn {
   visibility: hidden;
+}
+
+#addRecipientBtn {
+  margin-left: 1em;
 }
 
 #bulletinCreateDate {
