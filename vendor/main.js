@@ -8,7 +8,7 @@ let recipientAdded = false;
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
         updateBulletinArrays();
-        saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates);
+        saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates, null);
     });
 
     $("#addBulletinBtn").click(function() {
@@ -164,7 +164,7 @@ $( document ).ready(function() {
     $('#sendBtn').click(function() {
         updateBulletinArrays();
         let id = getActiveBulletinIdIndex();
-        sendBulletin(activeBulletinId, bulletinTitles[id], bulletinContents[id], bulletinCreatedDates[id], $('#recipientAddress').val());
+        // sendBulletin(activeBulletinId, bulletinTitles[id], bulletinContents[id], bulletinCreatedDates[id], $('#recipientAddress').val());
     });
 
     //close helper banner button handler

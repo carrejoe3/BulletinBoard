@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1sDscbhw8LSQxTXuv3zcs1bfuqr882RGwK";
+const dappAddress = "n1jriYrxF3msGMV4m5PzxHgq4pNEof3MX6u";
 var intervalQuery;
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
@@ -16,38 +16,18 @@ function getBulletins() {
   });
 };
 
-function saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates) {
+function saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates, owner) {
   let to = dappAddress;
   let value = "0";
-  let callFunction = "set";
+  let callFunction = "setBulletins";
 
-  for(var i in bulletinContents) {
+  for (var i in bulletinContents) {
     //add markers
     bulletinContents[i] = '/.c0ntent./' + bulletinContents[i].replace(/(?:\r\n|\r|\n)/g, '/.n3wLine./') + '/.c0ntent./';
     bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i] + '/.t1tle./';
   };
 
-  let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\",\"" + bulletinCreatedDates + "\"]";
-
-  serialNumber = nebPay.call(to, value, callFunction, callArgs, {
-    listener: cbPush
-  });
-
-  intervalQuery = setInterval(function () {
-    funcIntervalQuery();
-  }, 5000);
-};
-
-function sendBulletin(bulletinId, bulletinTitle, bulletinContent, bulletinCreatedDate, sendTo) {
-  let to = dappAddress;
-  let value = "0";
-  let callFunction = "send";
-
-  //add markers
-  bulletinContent = '/.c0ntent./' + bulletinContent.replace(/(?:\r\n|\r|\n)/g, '/.n3wLine./') + '/.c0ntent./';
-  bulletinTitle = '/.t1tle./' + bulletinTitle + '/.t1tle./';
-
-  let callArgs = "[\"" + bulletinId + "\",\"" + bulletinTitle + "\",\"" + bulletinContent + "\",\"" + bulletinCreatedDate + "\",\"" + sendTo + "\"]";
+  let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\",\"" + bulletinCreatedDates + "\",\"" + owner + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush
@@ -77,8 +57,8 @@ function cbSearch(resp) {
   var result = resp.result;
   console.log("return of rpc call: " + JSON.stringify(result));
 
-  if(result === 'null') {
-
+  if (result == 'null' || typeof result == 'undefined') {
+    console.log('No bulletins found for this wallet address');
   } else {
     //if result is not null, then it should be "return value" or "error message"
     try {
