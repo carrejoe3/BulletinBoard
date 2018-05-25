@@ -158,6 +158,13 @@ $( document ).ready(function() {
         recipientAdded = (recipientAdded == false? true: false);
     });
 
+    //send button handler
+    $('#sendBtn').click(function() {
+        updateBulletinArrays();
+        let id = getActiveBulletinIdIndex();
+        sendBulletin(activeBulletinId, bulletinTitles[id], bulletinContents[id], bulletinCreatedDates[id], $('#recipientAddress').val());
+    });
+
     //close helper banner button handler
     $('.alertCloseBtn').click(function() {
         $('#helpBanner').fadeOut();

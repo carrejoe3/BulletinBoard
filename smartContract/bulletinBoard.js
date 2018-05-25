@@ -12,6 +12,10 @@ BulletinBoard.prototype = {
         contents = contents.trim();
         LocalContractStorage.set(author, {ids: idList, titles: titles, contents: contents, createdDates: createdDates});
     },
+    send: function (id, title, content, createdDate, sendTo) {
+        var author = Blockchain.transaction.from;
+        LocalContractStorage.set(sendTo, {ids: id, titles: title, contents: content, createdDates: createdDate, author: author});
+    },
     getBulletins: function () {
         var author = Blockchain.transaction.from;
         return LocalContractStorage.get(author);
