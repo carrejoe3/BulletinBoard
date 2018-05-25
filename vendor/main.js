@@ -33,7 +33,6 @@ $( document ).ready(function() {
         let activeIdIndex = getActiveBulletinIdIndex();
         $('#bulletinTitle').val(bulletinTitles[activeIdIndex]);
         $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
-        $('#bulletinCreateDate').val('Created: ' + bulletinCreatedDates[activeIdIndex]);
 
         //show main bulletin and set focus
         $("#bulletinCol").fadeIn('fast', function() {
@@ -44,7 +43,7 @@ $( document ).ready(function() {
         //if user is on mobile, hide bulletin list
         if (mobileMode()) {
             $('#bulletinListCol').hide();
-            $('#bulletinListBtn').find('.bulletinIcon').attr('src', 'images/list.png');
+            changeIconImageSource('#bulletinListBtn', "images/list.png");
         } else {
             //apply active styling to bulletin list item
             $('.bulletinListItem').css('font-weight', '');
@@ -52,6 +51,8 @@ $( document ).ready(function() {
             $('.eye').fadeOut('fast');
             $(this).find(".eye").fadeIn('fast');
         }
+
+        disableEnableBulletinSpecificButtons('enable');
     });
 
     $("#removeBulletinBtn").click(function() {
@@ -82,7 +83,8 @@ $( document ).ready(function() {
             });
         }
 
-        $('#bulletinListBtn').find('.bulletinIcon').attr('src', 'images/listActive.png');
+        changeIconImageSource('#bulletinListBtn', "images/listActive.png");
+        disableEnableBulletinSpecificButtons('disable');
     });
 
     //delete all button handler
@@ -97,49 +99,49 @@ $( document ).ready(function() {
             $(this).css("visibility", "hidden");
         });
 
-        $('#bulletinListBtn').find('.bulletinIcon').attr('src', 'images/listActive.png');
+        changeIconImageSource('#bulletinListBtn', "images/listActive.png");
     });
 
     //set active buttons on hover
     $("#removeBulletinBtn").mouseover(function() {
-        $(this).find(".bulletinIcon").attr("src", "images/rubbishBinActive.png");
+        changeIconImageSource(this, "images/rubbishBinActive.png");
     });
     $("#removeBulletinBtn").mouseleave(function() {
-        $(this).find(".bulletinIcon").attr("src", "images/rubbish-bin.png");
+        changeIconImageSource(this, "images/rubbish-bin.png");
     });
     $("#addBulletinBtn").mouseover(function() {
-        $(this).find(".bulletinIcon").attr("src", "images/addActive.png");
+        changeIconImageSource(this, "images/addActive.png");
     });
     $("#addBulletinBtn").mouseleave(function() {
-        $(this).find(".bulletinIcon").attr("src", "images/add.png");
+        changeIconImageSource(this, "images/add.png");
     });
     $("#addRecipientBtn").mouseover(function() {
         if(!recipientAdded) {
-            $(this).find(".bulletinIcon").attr("src", "images/addRecipientActive.png");
+            changeIconImageSource(this, "images/addRecipientActive.png");
         }
     });
     $("#addRecipientBtn").mouseleave(function() {
         if(!recipientAdded) {
-            $(this).find(".bulletinIcon").attr("src", "images/addRecipient.png");
+            changeIconImageSource(this, "images/addRecipient.png");
         }
     });
     $("#saveBtn").mouseover(function() {
-        $(this).find(".bulletinIcon").attr("src", "images/saveActive.png");
+        changeIconImageSource(this, "images/saveActive.png");
     });
     $("#saveBtn").mouseleave(function() {
-        $(this).find(".bulletinIcon").attr("src", "images/save.png");
+        changeIconImageSource(this, "images/save.png");
     });
     $("#sendBtn").mouseover(function() {
-        $(this).find(".bulletinIcon").attr("src", "images/sendActive.png");
+        changeIconImageSource(this, "images/sendActive.png");
     });
     $("#sendBtn").mouseleave(function() {
-        $(this).find(".bulletinIcon").attr("src", "images/send.png");
+        changeIconImageSource(this, "images/send.png");
     });
 
     //add recipient button handler
     $('#addRecipientBtn').click(function(e) {
         if(recipientAdded == false) {
-            $('#addRecipientBtn').find(".bulletinIcon").attr("src", "images/addRecipientActive.png");
+            changeIconImageSource('#addRecipientBtn', "images/addRecipientActive.png");
             $('#removeBulletinBtn, #saveBtn, #bulletinListBtn').fadeOut('fast', function() {
                 $('#recipientAddressContainer').css("display", "flex").hide().fadeIn('fast', function() {
                     $('#recipientAddress').focus();
@@ -147,7 +149,7 @@ $( document ).ready(function() {
                 });
             });
         } else {
-            $('#addRecipientBtn').find(".bulletinIcon").attr("src", "images/addRecipient.png");
+            changeIconImageSource('#addRecipientBtn', "images/addRecipient.png");
             $('#recipientAddressContainer').fadeOut('fast', function() {
                 $('#removeBulletinBtn, #saveBtn').fadeIn('fast');
                 if(mobileMode()) {
@@ -179,7 +181,8 @@ $( document ).ready(function() {
     $('#bulletinListBtn').click(function() {
         $('#bulletinCol').hide();
         $('#bulletinListCol').fadeIn('fast');
-        $(this).find('.bulletinIcon').attr('src', 'images/listActive.png');
+        changeIconImageSource(this, 'images/listActive.png');
+        disableEnableBulletinSpecificButtons('disable');
     });
 });
 
@@ -295,4 +298,27 @@ function getActiveBulletinIdIndex() {
 
 function mobileMode() {
     return $(window).width() < 768;
+};
+
+function disableEnableBulletinSpecificButtons(ind) {
+    if(ind == 'disable') {
+        disableButton('#addRecipientBtn');
+        disableButton('#removeBulletinBtn');
+        changeIconImageSource('#removeBulletinBtn', 'images/rubbish-bin.png');
+    } else {
+        enableButton('#addRecipientBtn');
+        enableButton('#removeBulletinBtn');
+    }
+};
+
+function disableButton(button) {
+    $(button).prop('disabled', true);
+};
+
+function enableButton(button) {
+    $(button).prop('disabled', false);
+};
+
+function changeIconImageSource(element, source) {
+    $(element).find(".bulletinIcon").attr("src", source);
 };
