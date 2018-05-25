@@ -116,7 +116,7 @@ textarea:focus,
   border-image-repeat: initial;
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
-  height: 330px;
+  height: 402px;
 }
 
 .form-group {
@@ -149,7 +149,12 @@ textarea:focus,
   height: 402px;
 }
 
-.col-md-4, .col-md-8 {
+.col-12 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.col-md-4, .col-md-8, .col-12 {
   min-height: 0px;
 }
 
