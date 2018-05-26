@@ -142,12 +142,18 @@ $( document ).ready(function() {
     $('#addRecipientBtn').click(function(e) {
         if(recipientAdded == false) {
             changeIconImageSource('#addRecipientBtn', "images/addRecipientActive.png");
-            $('#removeBulletinBtn, #saveBtn, #bulletinListBtn').slideToggle('fast', function() {
-                $('#recipientAddressContainer').fadeTo( "fast" , 1, function() {
-                    $('#recipientAddress').focus();
-                    e.stopPropagation();
+
+            //if mobile mode, also slideToggle bulletin list button
+            if(mobileMode()) {
+                $('#removeBulletinBtn, #saveBtn, #bulletinListBtn').slideToggle('fast', function() {
+                    fadeInRecipientAddress(e);
                 });
-            });
+            } else {
+                $('#removeBulletinBtn, #saveBtn').slideToggle('fast', function() {
+                    fadeInRecipientAddress(e);
+                });
+            }
+
         } else {
             changeIconImageSource('#addRecipientBtn', "images/addRecipient.png");
             $('#recipientAddressContainer').fadeOut('fast', function() {
@@ -321,4 +327,11 @@ function enableButton(button) {
 
 function changeIconImageSource(element, source) {
     $(element).find(".bulletinIcon").attr("src", source);
+};
+
+function fadeInRecipientAddress(e) {
+    $('#recipientAddressContainer').fadeTo( "fast" , 1, function() {
+        $('#recipientAddress').focus();
+        e.stopPropagation();
+    });
 };
