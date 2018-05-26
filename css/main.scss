@@ -200,6 +200,10 @@ textarea:focus,
   display: flex;
 }
 
+#sendBtn {
+  display: none;
+}
+
 #bulletinList {
   padding: .375rem .75rem;
 }
@@ -229,7 +233,7 @@ textarea:focus,
 
 #recipientAddressContainer {
   display: none;
-  width: 86%;
+  width: 100%;
 }
 
 #recipientAddress {
@@ -239,6 +243,7 @@ textarea:focus,
   width: 82%;
   color: $white;
   vertical-align: middle;
+  padding-top: .3em;
 }
 
 #logoPic {

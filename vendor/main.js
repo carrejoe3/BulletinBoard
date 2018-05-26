@@ -145,18 +145,18 @@ $( document ).ready(function() {
 
             //if mobile mode, also slideToggle bulletin list button
             if(mobileMode()) {
-                $('#removeBulletinBtn, #saveBtn, #bulletinListBtn').slideToggle('fast', function() {
+                $('#removeBulletinBtn, #saveBtn, #bulletinListBtn').fadeOut('fast', function() {
                     fadeInRecipientAddress(e);
                 });
             } else {
-                $('#removeBulletinBtn, #saveBtn').slideToggle('fast', function() {
+                $('#removeBulletinBtn, #saveBtn').fadeOut('fast', function() {
                     fadeInRecipientAddress(e);
                 });
             }
 
         } else {
             changeIconImageSource('#addRecipientBtn', "images/addRecipient.png");
-            $('#recipientAddressContainer').fadeOut('fast', function() {
+            $('#recipientAddressContainer, #sendBtn').fadeOut('fast', function() {
                 $('#removeBulletinBtn, #saveBtn').fadeIn('fast');
                 if(mobileMode()) {
                     $('#bulletinListBtn').fadeIn('fast');
@@ -330,7 +330,7 @@ function changeIconImageSource(element, source) {
 };
 
 function fadeInRecipientAddress(e) {
-    $('#recipientAddressContainer').fadeTo( "fast" , 1, function() {
+    $('#recipientAddressContainer, #sendBtn').fadeTo( "fast" , 1, function() {
         $('#recipientAddress').focus();
         e.stopPropagation();
     });
