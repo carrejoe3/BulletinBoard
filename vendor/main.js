@@ -142,8 +142,8 @@ $( document ).ready(function() {
     $('#addRecipientBtn').click(function(e) {
         if(recipientAdded == false) {
             changeIconImageSource('#addRecipientBtn', "images/addRecipientActive.png");
-            $('#removeBulletinBtn, #saveBtn, #bulletinListBtn').fadeOut('fast', function() {
-                $('#recipientAddressContainer').css("display", "flex").hide().fadeIn('fast', function() {
+            $('#removeBulletinBtn, #saveBtn, #bulletinListBtn').slideToggle('fast', function() {
+                $('#recipientAddressContainer').fadeTo( "fast" , 1, function() {
                     $('#recipientAddress').focus();
                     e.stopPropagation();
                 });

@@ -50,6 +50,7 @@ textarea:focus,
 
 .container.logoContainer {
   display: flex;
+  margin-left: 0;
 }
 
 .mainContent {
@@ -79,6 +80,10 @@ textarea:focus,
 .card {
   border: none;
   @include boxShadow();
+}
+
+.text-white {
+  font-size: 0.7em;
 }
 
 #toolbarContainer {
@@ -231,9 +236,9 @@ textarea:focus,
   resize: none;
   border: none;
   background: none;
+  width: 82%;
   color: $white;
-  flex-grow: 2;
-  padding: 0.4em 0 0 0;
+  vertical-align: middle;
 }
 
 #logoPic {
