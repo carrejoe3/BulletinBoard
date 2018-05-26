@@ -42,3 +42,9 @@
         transform: skew(8deg) rotate(3deg);
     }
 }
+
+@mixin oneLine() {
+    white-space: nowrap;
+    overflow: hidden;
+    resize: none;
+}

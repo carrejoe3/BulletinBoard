@@ -212,6 +212,10 @@ textarea:focus,
   display: flex;
 }
 
+#bulletinTitle {
+  @include oneLine();
+}
+
 #bulletinMainContent {
   border: none;
   resize: none;
@@ -231,19 +235,23 @@ textarea:focus,
   visibility: hidden;
 }
 
+#addRecipientBtn {
+  margin-right: 2%;
+}
+
 #recipientAddressContainer {
   display: none;
   width: 100%;
 }
 
 #recipientAddress {
-  resize: none;
   border: none;
   background: none;
   width: 82%;
   color: $white;
   vertical-align: middle;
   padding-top: .3em;
+  @include oneLine();
 }
 
 #logoPic {
