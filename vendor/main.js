@@ -1,14 +1,17 @@
-let bulletinIds = [];
-let bulletinTitles = [];
-let bulletinContents = [];
-let bulletinCreatedDates = [];
 let activeBulletinId;
 let recipientAdded = false;
+let bulletins = {
+    ids: [],
+    titles: [],
+    contents: [],
+    createdDates: []
+};
 
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
         updateBulletinArrays();
-        saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates, null);
+        bulletins = addMarkers(bulletins);
+        saveBulletins(bulletins);
     });
 
     $("#addBulletinBtn").click(function() {
@@ -28,8 +31,8 @@ $( document ).ready(function() {
         //set bulletin contents
         activeBulletinId = $(this).attr("data-bulletinId");
         let activeIdIndex = getActiveBulletinIdIndex();
-        $('#bulletinTitle').val(bulletinTitles[activeIdIndex]);
-        $('#bulletinMainContent').val(bulletinContents[activeIdIndex]);
+        $('#bulletinTitle').val(bulletins.titles[activeIdIndex]);
+        $('#bulletinMainContent').val(bulletins.contents[activeIdIndex]);
 
         //show main bulletin and set focus
         $("#bulletinCol").fadeIn('fast', function() {
@@ -54,10 +57,11 @@ $( document ).ready(function() {
 
     $("#removeBulletinBtn").click(function() {
         let activeIdIndex = getActiveBulletinIdIndex();
-        bulletinIds.splice(activeIdIndex, 1);
-        bulletinTitles.splice(activeIdIndex, 1);
-        bulletinContents.splice(activeIdIndex, 1);
-        bulletinCreatedDates.splice(activeIdIndex, 1);
+
+        bulletins.ids.splice(activeIdIndex, 1);
+        bulletins.titles.splice(activeIdIndex, 1);
+        bulletins.contents.splice(activeIdIndex, 1);
+        bulletins.createdDates.splice(activeIdIndex, 1);
 
         $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).remove();
 
@@ -176,10 +180,10 @@ window.addEventListener("load", function () {
         $('#helpBanner').append('<div class="alert" role="alert"><div id="alertText">WebExtensionWallet detected!</div><button class="btn btn-sm alertCloseBtn" type="button"><img class="bulletinIcon" src="images/cancel.png" /></button></div></div>');
 
         //remove old data from arrays and list
-        bulletinIds = [];
-        bulletinTitles = [];
-        bulletinContents = [];
-        bulletinCreatedDates = [];
+        bulletins.ids = [];
+        bulletins.titles = [];
+        bulletins.contents = [];
+        bulletins.createdDates = [];
         $("#bulletinList").empty();
 
         getBulletins();
@@ -192,7 +196,7 @@ function helpBannerHandler() {
     let helpIndex = 0;
 
     //if user has no bulletins, add help message to array
-    if(bulletinIds[0] == 'undefined' || bulletinIds[0] == '') {
+    if(bulletins.ids[0] == 'undefined' || bulletins.ids[0] == '') {
         helpMessages.push('Click + to add your first bulletin');
     }
 
@@ -220,10 +224,10 @@ function sendBulletinsHandler(data) {
 
     //add bulletin we want to send to bulletin object
     index = getActiveBulletinIdIndex();
-    recipientBulletins.ids.unshift(bulletinIds[index]);
-    recipientBulletins.titles.unshift(bulletinTitles[index]);
-    recipientBulletins.contents.unshift(bulletinContents[index]);
-    recipientBulletins.createdDates.unshift(bulletinCreatedDates[index]);
+    recipientBulletins.ids.unshift(bulletins.ids[index]);
+    recipientBulletins.titles.unshift(bulletins.titles[index]);
+    recipientBulletins.contents.unshift(bulletins.contents[index]);
+    recipientBulletins.createdDates.unshift(bulletins.createdDates[index]);
 
     recipientBulletins = addMarkers(recipientBulletins);
 
@@ -232,17 +236,17 @@ function sendBulletinsHandler(data) {
 
 function updateBulletinArrays() {
     let activeIdIndex = getActiveBulletinIdIndex();
-    bulletinTitles.splice(activeIdIndex, 1, $('#bulletinTitle').val());
-    bulletinContents.splice(activeIdIndex, 1, $('#bulletinMainContent').val());
+    bulletins.titles.splice(activeIdIndex, 1, $('#bulletinTitle').val());
+    bulletins.contents.splice(activeIdIndex, 1, $('#bulletinMainContent').val());
 };
 
 //add new bulletin to bulletin list, and push new content to arrays
 function newBulletinListItem(bulletinId, title, content, date) {
     $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='bulletinListItemInnerDiv'><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></div><div id='createdDate'>" + date + "</div><hr class='listItemBottomBorder'/></li>");
-    bulletinIds.push(bulletinId);
-    bulletinTitles.push(title);
-    bulletinContents.push(content);
-    bulletinCreatedDates.push(date);
+    bulletins.ids.push(bulletinId);
+    bulletins.titles.push(title);
+    bulletins.contents.push(content);
+    bulletins.createdDates.push(date);
 };
 
 function replaceAll(str, find, replace) {
@@ -263,7 +267,7 @@ function generateUUID() {
 };
 
 function getActiveBulletinIdIndex() {
-    return bulletinIds.indexOf(activeBulletinId);
+    return bulletins.ids.indexOf(activeBulletinId);
 };
 
 function mobileMode() {

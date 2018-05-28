@@ -26,17 +26,10 @@ function getRecipientBulletins(owner) {
   });
 };
 
-function saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates) {
+function saveBulletins(bulletins) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "setBulletins";
-
-  for (var i in bulletinContents) {
-    //add markers
-    bulletinContents[i] = '/.c0ntent./' + bulletinContents[i].replace(/(?:\r\n|\r|\n)/g, '/.n3wLine./') + '/.c0ntent./';
-    bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i] + '/.t1tle./';
-  };
-
   let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\",\"" + bulletinCreatedDates + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
