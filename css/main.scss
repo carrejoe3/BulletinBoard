@@ -191,7 +191,7 @@ textarea:focus,
   flex-grow: 2;
 }
 
-.activeBtn#deleteAllBtn, .activeBtn#saveBtn, .activeBtn#bulletinListBtn {
+.activeBtn#saveBtn, .activeBtn#bulletinListBtn {
   color: $orange;
 }
 
@@ -225,13 +225,9 @@ textarea:focus,
   display: none;
 }
 
-#saveBtn, #deleteAllBtn, #addBulletinBtn, #bulletinListBtn ,#removeBulletinBtn, #addRecipientBtn {
+#saveBtn, #addBulletinBtn, #bulletinListBtn ,#removeBulletinBtn, #addRecipientBtn {
   background-color: $gunMetal;
   color: $white;
-}
-
-#deleteAllBtn {
-  visibility: hidden;
 }
 
 #addRecipientBtn {
