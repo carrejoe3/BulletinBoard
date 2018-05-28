@@ -48,18 +48,11 @@ function saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCr
   }, 5000);
 };
 
-function sendBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates, sendTo) {
+function sendBulletins(recipientBulletins, sendTo) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "sendBulletins";
-
-  for (var i in bulletinContents) {
-    //add markers
-    bulletinContents[i] = '/.c0ntent./' + bulletinContents[i].replace(/(?:\r\n|\r|\n)/g, '/.n3wLine./') + '/.c0ntent./';
-    bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i] + '/.t1tle./';
-  };
-
-  let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\",\"" + bulletinCreatedDates + "\",\"" + sendTo + "\"]";
+  let callArgs = "[\"" + recipientBulletins.ids + "\",\"" + recipientBulletins.titles + "\",\"" + recipientBulletins.contents + "\",\"" + recipientBulletins.createdDates + "\",\"" + sendTo + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush

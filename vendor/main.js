@@ -227,7 +227,7 @@ function sendBulletinsHandler(data) {
 
     recipientBulletins = addMarkers(recipientBulletins);
 
-    sendBulletins(recipientBulletins.ids, recipientBulletins.titles, recipientBulletins.contents, recipientBulletins.createdDates, $('#recipientAddress').val());
+    sendBulletins(recipientBulletins, $('#recipientAddress').val());
 };
 
 function updateBulletinArrays() {
