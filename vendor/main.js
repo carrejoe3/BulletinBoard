@@ -170,7 +170,7 @@ $( document ).ready(function() {
     $('#sendBtn').click(function() {
         updateBulletinArrays();
         let id = getActiveBulletinIdIndex();
-        // sendBulletin(activeBulletinId, bulletinTitles[id], bulletinContents[id], bulletinCreatedDates[id], $('#recipientAddress').val());
+        sendBulletinsHandler(activeBulletinId, bulletinTitles[id], bulletinContents[id], bulletinCreatedDates[id], $('#recipientAddress').val());
     });
 
     //close helper banner button handler
@@ -232,31 +232,20 @@ function handleResponse(data) {
     bulletinCreatedDates = [];
     $("#bulletinList").empty();
 
-    //sort bulletins from returned data
-    const sortedIds = data.ids.split(',');
-    const sortedTitles = data.titles.split('/.t1tle./,/.t1tle./');
-    const sortedContents = data.contents.split('/.c0ntent./,/.c0ntent./');
-    const sortedCreatedDates = data.createdDates.split(',');
-
-    //if returned object isnt blank, populate bulletin list
-    if(sortedIds[0] !== "") {
+    //if at least one bulletin id is found, split and sort them
+    if(data.ids !== "" || data.ids !== null) {
 
         //show delete all button
         if($('#deleteAllBtn').css("visibility") == "hidden") {
             $('#deleteAllBtn').css({"visibility": "visible", "opacity": "1"}).hide().fadeIn('fast');
         }
 
-        for(let i in sortedIds) {
+        bulletins = splitReturnedBulletinData(data);
+        bulletins = removeMarkers(bulletins);
 
-            //remove content markers
-            let markerlessTitles = replaceAll(sortedTitles[i], '/.t1tle./', '');
-            let markerlessContent = replaceAll(sortedContents[i], '/.c0ntent./', '');
-
-            //replace replace new line markers with new lines
-            markerlessContent = replaceAll(markerlessContent, '/.n3wLine./', '\n');
-
-            newBulletinListItem(sortedIds[i], markerlessTitles, markerlessContent, sortedCreatedDates[i]);
-        }
+        for (let i in bulletins.ids) {
+            newBulletinListItem(bulletins.ids[i], bulletins.titles[i], bulletins.contents[i], bulletins.createdDates[i]);
+        };
     } else {
         //if there aren't any bulletins left, hide delete all button
         // duration, opacity, callback
@@ -264,6 +253,27 @@ function handleResponse(data) {
             $('#deleteAllBtn').css("visibility", "hidden");
         });
     }
+};
+
+function sendBulletinsHandler(id, title, content, createdDate, sendTo) {
+
+    splitReturnedBulletinData(data);
+
+    for(let i in recipientIds) {
+
+        //remove content markers
+        recipientTitles[i] = replaceAll(recipient[i], '/.t1tle./', '');
+        recipientContents[i] = replaceAll(recipient[i], '/.c0ntent./', '');
+        recipientContents[i] = replaceAll(recipient[i], '/.n3wLine./', '\n');
+    }
+
+    //add bulletin we want to went to recipient arrays
+    recipientIds.push(id);
+    recipientTitles.push(title);
+    recipientContents.push(content);
+    recipientCreatedDates.push(createdDate);
+
+    sendBulletins(recipientIds, recipientTitles, recipientContents, recipientCreatedDates, sendTo);
 };
 
 function updateBulletinArrays() {
@@ -334,4 +344,26 @@ function fadeInRecipientAddress(e) {
         $('#recipientAddress').focus();
         e.stopPropagation();
     });
+};
+
+function splitReturnedBulletinData(data) {
+    let bulletins = {
+        ids: data.ids.split(','),
+        titles: data.titles.split('/.t1tle./,/.t1tle./'),
+        contents: data.contents.split('/.c0ntent./,/.c0ntent./'),
+        createdDates: data.createdDates.split(',')
+    }
+    return bulletins;
+};
+
+function removeMarkers(bulletinsObj) {
+    bulletinsObj.titles = bulletinsObj.titles.map(function(titles) {
+        return replaceAll(titles, '/.t1tle./', '');
+    });
+    bulletinsObj.contents = bulletinsObj.contents.map(function(contents) {
+        let markerlessContent = replaceAll(contents, '/.c0ntent./', '');
+        markerlessContent = replaceAll(markerlessContent, '/.n3wLine./');
+        return markerlessContent;
+    });
+    return bulletinsObj;
 };
