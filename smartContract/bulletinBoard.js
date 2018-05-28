@@ -6,16 +6,16 @@ var BulletinBoard = function () {
 BulletinBoard.prototype = {
     init: function () {
     },
-    setBulletins: function (idList, titles, contents, createdDates) {
+    setBulletins: function (idList, titles, contents, createdDates, authors) {
         var author = Blockchain.transaction.from;
         titles = titles.trim();
         contents = contents.trim();
-        LocalContractStorage.set(author, {ids: idList, titles: titles, contents: contents, createdDates: createdDates});
+        LocalContractStorage.set(author, {ids: idList, titles: titles, contents: contents, createdDates: createdDates, authors: authors});
     },
-    sendBulletins: function (idList, titles, contents, createdDates, sendTo) {
+    sendBulletins: function (idList, titles, contents, createdDates, authors, sendTo) {
         titles = titles.trim();
         contents = contents.trim();
-        LocalContractStorage.set(sendTo, {ids: idList, titles: titles, contents: contents, createdDates: createdDates});
+        LocalContractStorage.set(sendTo, {ids: idList, titles: titles, contents: contents, createdDates: createdDates, authors: authors});
     },
     getBulletins: function () {
         var author = Blockchain.transaction.from;
@@ -33,4 +33,4 @@ BulletinBoard.prototype = {
 module.exports = BulletinBoard;
 
 //params for webwallet
-["idList", "titles", "contents", "createdDates", "sendTo"]
+["idList", "titles", "contents", "createdDates", "authors", "sendTo"]

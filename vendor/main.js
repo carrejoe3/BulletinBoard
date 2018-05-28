@@ -1,10 +1,12 @@
 let activeBulletinId;
+let walletAddress;
 let recipientAdded = false;
 let bulletins = {
     ids: [],
     titles: [],
     contents: [],
-    createdDates: []
+    createdDates: [],
+    authors: []
 };
 
 $( document ).ready(function() {
@@ -15,7 +17,7 @@ $( document ).ready(function() {
     });
 
     $("#addBulletinBtn").click(function() {
-        newBulletinListItem(generateUUID(), 'Title', '', new Date().toLocaleDateString());
+        newBulletinListItem(generateUUID(), 'Title', '', new Date().toLocaleDateString(), walletAddress);
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function(e) {
@@ -62,6 +64,7 @@ $( document ).ready(function() {
         bulletins.titles.splice(activeIdIndex, 1);
         bulletins.contents.splice(activeIdIndex, 1);
         bulletins.createdDates.splice(activeIdIndex, 1);
+        bulletins.authors.splice(activeIdIndex, 1);
 
         $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).remove();
 
@@ -184,8 +187,10 @@ window.addEventListener("load", function () {
         bulletins.titles = [];
         bulletins.contents = [];
         bulletins.createdDates = [];
+        bulletins.authors = [];
         $("#bulletinList").empty();
 
+        getAccountData();
         getBulletins();
         helpBannerHandler();
     }
@@ -214,7 +219,7 @@ function handleResponse(data) {
     bulletins = removeMarkers(bulletins);
 
     for (let i in bulletins.ids) {
-        newBulletinListItem(bulletins.ids[i], bulletins.titles[i], bulletins.contents[i], bulletins.createdDates[i]);
+        newBulletinListItem(bulletins.ids[i], bulletins.titles[i], bulletins.contents[i], bulletins.createdDates[i], bulletins.authors[i]);
     };
 };
 
@@ -228,6 +233,8 @@ function sendBulletinsHandler(data) {
     recipientBulletins.titles.unshift(bulletins.titles[index]);
     recipientBulletins.contents.unshift(bulletins.contents[index]);
     recipientBulletins.createdDates.unshift(bulletins.createdDates[index]);
+    getAccountData();
+    recipientBulletins.authors.unshift(bulletins.authors[index]);
 
     recipientBulletins = addMarkers(recipientBulletins);
 
@@ -241,12 +248,14 @@ function updateBulletinArrays() {
 };
 
 //add new bulletin to bulletin list, and push new content to arrays
-function newBulletinListItem(bulletinId, title, content, date) {
-    $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='bulletinListItemInnerDiv'><span class='sidebarBulletinTitle'>" + title + "</span><img class='eye' src='images/eye.png'/></div><div id='createdDate'>" + date + "</div><hr class='listItemBottomBorder'/></li>");
+function newBulletinListItem(bulletinId, title, content, date, authorId) {
+    author = authorId == walletAddress? 'You': authorId;
+    $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>" + title + "</span><div class='bulletinListSmallText'>" + 'Created: ' + date + "</div><div class='bulletinListSmallText'>" + 'Author: '+ author + "</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
     bulletins.ids.push(bulletinId);
     bulletins.titles.push(title);
     bulletins.contents.push(content);
     bulletins.createdDates.push(date);
+    bulletins.authors.push(authorId);
 };
 
 function replaceAll(str, find, replace) {
@@ -309,7 +318,8 @@ function splitReturnedBulletinData(data) {
         ids: data.ids.split(','),
         titles: data.titles.split('/.t1tle./,/.t1tle./'),
         contents: data.contents.split('/.c0ntent./,/.c0ntent./'),
-        createdDates: data.createdDates.split(',')
+        createdDates: data.createdDates.split(','),
+        authors: data.authors.split(',')
     }
     return bulletins;
 };
@@ -334,3 +344,39 @@ function addMarkers(bulletinsObj) {
       };
     return bulletinsObj;
 };
+
+function getAccountData() {
+    window.postMessage({
+        "target": "contentscript",
+        "data":{
+        },
+        "method": "getAccount",
+    }, "*");
+
+    //remove first to avoid duplicate listeners being created
+    window.removeEventListener('message', function(e) {
+        // e.detail contains the transferred data
+        console.log("recived by page:" + e + ", e.data:"+ JSON.stringify(e.data));
+        if(null != e.data.data.account){
+            walletAddress = e.data.data.account;
+        }
+    });
+
+    // listen message from contentscript
+    window.addEventListener('message', function(e) {
+        // e.detail contains the transferred data
+        console.log("recived by page:" + e + ", e.data:"+ JSON.stringify(e.data));
+        if(null != e.data.data.account){
+            walletAddress = e.data.data.account;
+        }
+        // if(!!e.data.data.txhash){
+        //     document.getElementById("txResult").innerHTML = "Transaction hash\n" +  JSON.stringify(e.data.data.txhash,null,'\t');
+        // }
+        // if(!!e.data.data.receipt){
+        //     document.getElementById("txResult").innerHTML = "Transaction Receipt\n" +  JSON.stringify(e.data.data.receipt,null,'\t');
+        // }
+        // if(!!e.data.data.neb_call){
+        //     document.getElementById("txResult").innerHTML = "return of call\n" +  JSON.stringify(e.data.data.neb_call,null,'\t');
+        // }
+    });
+}

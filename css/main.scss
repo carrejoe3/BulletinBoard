@@ -134,6 +134,7 @@ textarea:focus,
 
 .sidebarBulletinTitle {
   flex-grow: 2;
+  font-size: 1.1em;
 }
 
 .bulletinIcon {
@@ -163,18 +164,21 @@ textarea:focus,
   min-height: 0px;
 }
 
-#createdDate {
+.bulletinListSmallText {
   font-size: 0.8em;
 }
 
 .bulletinListItem {
   list-style-type: none;
   cursor: pointer;
-}
 
-.bulletinListItemInnerDiv {
-  align-items: center;
-  display: flex;
+  .col-10 {
+    padding-right: 0;
+  }
+
+  .col-2 {
+    padding-left: 0;
+  }
 }
 
 .cardHeaderTitle {
@@ -201,10 +205,6 @@ textarea:focus,
 
 #sendBtn {
   display: none;
-}
-
-#bulletinList {
-  padding: .375rem .75rem;
 }
 
 #bulletinTitleContainer {
