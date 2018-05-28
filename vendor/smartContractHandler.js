@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1f2jkWJjgCejLyHykwrcoKEvFjn79iZUCE";
+const dappAddress = "n1rrFroGF1tUXcrReiwMdk9YkfX6KcXWJ5L";
 var intervalQuery;
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
@@ -54,7 +54,7 @@ function cbPush(resp) {
 
 function cbSearch(resp) {
   //resp is an object, resp.result is a JSON string
-  var result = resp.result;
+  let result = resp.result;
   console.log("return of rpc call: " + JSON.stringify(result));
 
   if (result == 'null' || typeof result == 'undefined') {
@@ -66,7 +66,6 @@ function cbSearch(resp) {
     } catch (err) {
       console.log(err);
     }
-
     handleResponse(result);
   }
 };
@@ -75,7 +74,7 @@ function cbDelete(resp) {
   console.log("response of deletion: " + JSON.stringify(resp));
   $("#bulletinList").empty();
   $("#bulletinContainer").fadeOut('fast');
-}
+};
 
 function funcIntervalQuery() {
   //search transaction result from server (result upload to server by app)

@@ -76,7 +76,7 @@ $( document ).ready(function() {
         }
 
         //if there aren't any bulletins left, hide delete all button
-        if(bulletinIds[0] == undefined || bulletinIds[0] == '') {
+        if(bulletinIds[0] == 'undefined' || bulletinIds[0] == '') {
             // duration, opacity, callback
             $('#deleteAllBtn').fadeTo('fast', 0, function() {
                 $('#deleteAllBtn').css("visibility", "hidden");
@@ -210,7 +210,7 @@ function helpBannerHandler() {
     let helpIndex = 0;
 
     //if user has no bulletins, add help message to array
-    if(bulletinIds[0] == undefined || bulletinIds[0] == '') {
+    if(bulletinIds[0] == 'undefined' || bulletinIds[0] == '') {
         helpMessages.push('Click + to add your first bulletin');
     }
 
@@ -224,7 +224,6 @@ function helpBannerHandler() {
 };
 
 function handleResponse(data) {
-
     //remove old data from arrays and list
     bulletinIds = [];
     bulletinTitles = [];
@@ -232,46 +231,23 @@ function handleResponse(data) {
     bulletinCreatedDates = [];
     $("#bulletinList").empty();
 
-    //if at least one bulletin id is found, split and sort them
-    if(data.ids !== "" || data.ids !== null) {
+    bulletins = splitReturnedBulletinData(data);
+    bulletins = removeMarkers(bulletins);
 
-        //show delete all button
-        if($('#deleteAllBtn').css("visibility") == "hidden") {
-            $('#deleteAllBtn').css({"visibility": "visible", "opacity": "1"}).hide().fadeIn('fast');
-        }
-
-        bulletins = splitReturnedBulletinData(data);
-        bulletins = removeMarkers(bulletins);
-
-        for (let i in bulletins.ids) {
-            newBulletinListItem(bulletins.ids[i], bulletins.titles[i], bulletins.contents[i], bulletins.createdDates[i]);
-        };
-    } else {
-        //if there aren't any bulletins left, hide delete all button
-        // duration, opacity, callback
-        $('#deleteAllBtn').fadeTo('fast', 0, function() {
-            $('#deleteAllBtn').css("visibility", "hidden");
-        });
-    }
+    for (let i in bulletins.ids) {
+        newBulletinListItem(bulletins.ids[i], bulletins.titles[i], bulletins.contents[i], bulletins.createdDates[i]);
+    };
 };
 
 function sendBulletinsHandler(id, title, content, createdDate, sendTo) {
+    recipientBulletins = splitReturnedBulletinData(data);
+    recipientBulletins = removeMarkers(recipientBulletins);
 
-    splitReturnedBulletinData(data);
-
-    for(let i in recipientIds) {
-
-        //remove content markers
-        recipientTitles[i] = replaceAll(recipient[i], '/.t1tle./', '');
-        recipientContents[i] = replaceAll(recipient[i], '/.c0ntent./', '');
-        recipientContents[i] = replaceAll(recipient[i], '/.n3wLine./', '\n');
-    }
-
-    //add bulletin we want to went to recipient arrays
-    recipientIds.push(id);
-    recipientTitles.push(title);
-    recipientContents.push(content);
-    recipientCreatedDates.push(createdDate);
+    //add bulletin we want to send to bulletin object
+    recipientBulletins.ids.unshift(id);
+    recipientBulletins.titles.unshift(title);
+    recipientBulletins.contents.unshift(content);
+    recipientBulletins.createdDates.unshift(createdDate);
 
     sendBulletins(recipientIds, recipientTitles, recipientContents, recipientCreatedDates, sendTo);
 };
