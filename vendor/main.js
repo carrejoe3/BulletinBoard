@@ -169,8 +169,7 @@ $( document ).ready(function() {
     //send button handler
     $('#sendBtn').click(function() {
         updateBulletinArrays();
-        let id = getActiveBulletinIdIndex();
-        sendBulletinsHandler(activeBulletinId, bulletinTitles[id], bulletinContents[id], bulletinCreatedDates[id], $('#recipientAddress').val());
+        getRecipientBulletins($('#recipientAddress').val());
     });
 
     //close helper banner button handler
@@ -199,7 +198,16 @@ window.addEventListener("load", function () {
         $('#helpBanner').append('<div class="alert" role="alert"><div>Please install <a href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> to use Bulletin Board</div></div>');
         $('#bulletinMainContent, #addBulletinBtn, #bulletinTitle, #deleteAllBtn, #saveBtn, #bulletinListBtn').prop('disabled', true);
     } else {
+        //set help banner
         $('#helpBanner').append('<div class="alert" role="alert"><div id="alertText">WebExtensionWallet detected!</div><button class="btn btn-sm alertCloseBtn" type="button"><img class="bulletinIcon" src="images/cancel.png" /></button></div></div>');
+
+        //remove old data from arrays and list
+        bulletinIds = [];
+        bulletinTitles = [];
+        bulletinContents = [];
+        bulletinCreatedDates = [];
+        $("#bulletinList").empty();
+
         getBulletins();
         helpBannerHandler();
     }
@@ -224,13 +232,6 @@ function helpBannerHandler() {
 };
 
 function handleResponse(data) {
-    //remove old data from arrays and list
-    bulletinIds = [];
-    bulletinTitles = [];
-    bulletinContents = [];
-    bulletinCreatedDates = [];
-    $("#bulletinList").empty();
-
     bulletins = splitReturnedBulletinData(data);
     bulletins = removeMarkers(bulletins);
 
@@ -239,17 +240,20 @@ function handleResponse(data) {
     };
 };
 
-function sendBulletinsHandler(id, title, content, createdDate, sendTo) {
+function sendBulletinsHandler(data) {
     recipientBulletins = splitReturnedBulletinData(data);
     recipientBulletins = removeMarkers(recipientBulletins);
 
     //add bulletin we want to send to bulletin object
-    recipientBulletins.ids.unshift(id);
-    recipientBulletins.titles.unshift(title);
-    recipientBulletins.contents.unshift(content);
-    recipientBulletins.createdDates.unshift(createdDate);
+    index = getActiveBulletinIdIndex();
+    recipientBulletins.ids.unshift(bulletinIds[index]);
+    recipientBulletins.titles.unshift(bulletinTitles[index]);
+    recipientBulletins.contents.unshift(bulletinContents[index]);
+    recipientBulletins.createdDates.unshift(bulletinCreatedDates[index]);
 
-    sendBulletins(recipientIds, recipientTitles, recipientContents, recipientCreatedDates, sendTo);
+    console.log(recipientBulletins);
+
+    sendBulletins(recipientBulletins.ids, recipientBulletins.titles, recipientBulletins.contents, recipientBulletins.createdDates, $('#recipientAddress').val());
 };
 
 function updateBulletinArrays() {
@@ -337,9 +341,10 @@ function removeMarkers(bulletinsObj) {
         return replaceAll(titles, '/.t1tle./', '');
     });
     bulletinsObj.contents = bulletinsObj.contents.map(function(contents) {
-        let markerlessContent = replaceAll(contents, '/.c0ntent./', '');
-        markerlessContent = replaceAll(markerlessContent, '/.n3wLine./');
-        return markerlessContent;
+        return replaceAll(contents, '/.c0ntent./', '');
+    });
+    bulletinsObj.contents = bulletinsObj.contents.map(function(contents) {
+        return replaceAll(contents, '/.n3wLine./', '\n');
     });
     return bulletinsObj;
 };

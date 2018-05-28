@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1rrFroGF1tUXcrReiwMdk9YkfX6KcXWJ5L";
+const dappAddress = "n1hYwcTgtKvktkeThaz1iZTaaBZ2dcdYxPE";
 var intervalQuery;
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
@@ -16,7 +16,17 @@ function getBulletins() {
   });
 };
 
-function saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates, owner) {
+function getRecipientBulletins(owner) {
+  let value = "0";
+  let callFunction = "getRecipientBulletins";
+  let callArgs = "[\"" + owner + "\"]";
+
+  nebPay.simulateCall(dappAddress, value, callFunction, callArgs, {
+    listener: cbSend
+  });
+};
+
+function saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "setBulletins";
@@ -27,7 +37,29 @@ function saveBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCr
     bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i] + '/.t1tle./';
   };
 
-  let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\",\"" + bulletinCreatedDates + "\",\"" + owner + "\"]";
+  let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\",\"" + bulletinCreatedDates + "\"]";
+
+  serialNumber = nebPay.call(to, value, callFunction, callArgs, {
+    listener: cbPush
+  });
+
+  intervalQuery = setInterval(function () {
+    funcIntervalQuery();
+  }, 5000);
+};
+
+function sendBulletins(bulletinIds, bulletinTitles, bulletinContents, bulletinCreatedDates, sendTo) {
+  let to = dappAddress;
+  let value = "0";
+  let callFunction = "sendBulletins";
+
+  for (var i in bulletinContents) {
+    //add markers
+    bulletinContents[i] = '/.c0ntent./' + bulletinContents[i].replace(/(?:\r\n|\r|\n)/g, '/.n3wLine./') + '/.c0ntent./';
+    bulletinTitles[i] = '/.t1tle./' + bulletinTitles[i] + '/.t1tle./';
+  };
+
+  let callArgs = "[\"" + bulletinIds + "\",\"" + bulletinTitles + "\",\"" + bulletinContents + "\",\"" + bulletinCreatedDates + "\",\"" + sendTo + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush
@@ -74,6 +106,24 @@ function cbDelete(resp) {
   console.log("response of deletion: " + JSON.stringify(resp));
   $("#bulletinList").empty();
   $("#bulletinContainer").fadeOut('fast');
+};
+
+function cbSend(resp) {
+    //resp is an object, resp.result is a JSON string
+    let result = resp.result;
+    console.log("return of rpc call: " + JSON.stringify(result));
+
+    if (result == 'null' || typeof result == 'undefined') {
+      console.log('No bulletins found for this wallet address');
+    } else {
+      //if result is not null, then it should be "return value" or "error message"
+      try {
+        result = JSON.parse(result);
+      } catch (err) {
+        console.log(err);
+      }
+      sendBulletinsHandler(result);
+    }
 };
 
 function funcIntervalQuery() {
