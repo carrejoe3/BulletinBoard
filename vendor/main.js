@@ -229,16 +229,18 @@ function sendBulletinsHandler(data) {
 
     //add bulletin we want to send to bulletin object
     index = getActiveBulletinIdIndex();
-    recipientBulletins.ids.unshift(bulletins.ids[index]);
+    recipientBulletins.ids.unshift(generateUUID());
     recipientBulletins.titles.unshift(bulletins.titles[index]);
     recipientBulletins.contents.unshift(bulletins.contents[index]);
     recipientBulletins.createdDates.unshift(bulletins.createdDates[index]);
     getAccountData();
-    recipientBulletins.authors.unshift(bulletins.authors[index]);
+    recipientBulletins.authors.unshift(walletAddress);
 
     recipientBulletins = addMarkers(recipientBulletins);
 
     sendBulletins(recipientBulletins, $('#recipientAddress').val());
+    //get bulletins in case user has sent themselves bulletin
+    getBulletins();
 };
 
 function updateBulletinArrays() {
