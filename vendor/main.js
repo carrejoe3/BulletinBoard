@@ -13,7 +13,14 @@ $( document ).ready(function() {
     $("#saveBtn").click(function() {
         updateBulletinArrays();
         bulletins = addMarkers(bulletins);
-        saveBulletins(bulletins);
+
+        if(!isNull(bulletins.ids[0])) {
+            saveBulletins(bulletins);
+            alert(bulletins.ids[0]);
+        } else {
+            delBulletins();
+            alert('delete');
+        }
     });
 
     $("#addBulletinBtn").click(function() {
@@ -63,7 +70,7 @@ $( document ).ready(function() {
         }
 
         disableEnableBulletinSpecificButtons('enable');
-        e.preventDefault();
+        e.stopPropagation();
     });
 
     $("#removeBulletinBtn").click(function() {
@@ -234,7 +241,7 @@ function handleResponse(data) {
 
 function sendBulletinsHandler(data) {
     let recipientBulletins;
-    if(resultIsNull(data)) {
+    if(isNull(data)) {
         recipientBulletins = {
             ids: [],
             titles: [],
@@ -399,6 +406,6 @@ function getAccountData() {
     });
 }
 
-function resultIsNull(result) {
+function isNull(result) {
     return result == 'null' || typeof result == 'undefined' || result == '';
 }
