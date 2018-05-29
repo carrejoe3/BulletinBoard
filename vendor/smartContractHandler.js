@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1gS8Eknvqhf6ebVRZRvHRR8u3wCisQZC3u";
+const dappAddress = "n1kUHDzTomGNBnvYARgvataqWcRAjjaZMfJ";
 var intervalQuery;
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
@@ -56,18 +56,8 @@ function sendBulletins(recipientBulletins, sendTo) {
   }, 5000);
 };
 
-function delBulletins() {
-  let value = "0";
-  let callFunction = "delBulletins";
-  let callArgs = "[]";
-
-  nebPay.call(dappAddress, value, callFunction, callArgs, {
-    listener: cbDelete
-  });
-};
-
 function cbPush(resp) {
-  console.log("response of push: " + JSON.stringify(resp))
+  console.log("response of push: " + JSON.stringify(resp));
 };
 
 function cbSearch(resp) {

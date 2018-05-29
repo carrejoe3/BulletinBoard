@@ -17,7 +17,20 @@ $( document ).ready(function() {
     });
 
     $("#addBulletinBtn").click(function() {
-        newBulletinListItem(generateUUID(), 'Title', '', new Date().toLocaleDateString(), walletAddress);
+        let newId = generateUUID();
+        let newTitle = 'Title';
+        let newDate = new Date().toLocaleDateString();
+
+        newBulletinListItem(newId, newTitle, '', newDate, walletAddress);
+
+        //push new bulletin data to bulletin object
+        bulletins.ids.push(newId);
+        bulletins.titles.push(newTitle);
+        bulletins.contents.push('');
+        bulletins.createdDates.push(newDate);
+        bulletins.authors.push(walletAddress);
+
+        alert(JSON.stringify(bulletins));
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function(e) {
@@ -55,10 +68,13 @@ $( document ).ready(function() {
         }
 
         disableEnableBulletinSpecificButtons('enable');
+        e.preventDefault();
     });
 
     $("#removeBulletinBtn").click(function() {
         let activeIdIndex = getActiveBulletinIdIndex();
+
+        alert(bulletins.titles[activeIdIndex]);
 
         bulletins.ids.splice(activeIdIndex, 1);
         bulletins.titles.splice(activeIdIndex, 1);
@@ -182,14 +198,6 @@ window.addEventListener("load", function () {
         //set help banner
         $('#helpBanner').append('<div class="alert" role="alert"><div id="alertText">WebExtensionWallet detected!</div><button class="btn btn-sm alertCloseBtn" type="button"><img class="bulletinIcon" src="images/cancel.png" /></button></div></div>');
 
-        //remove old data from arrays and list
-        bulletins.ids = [];
-        bulletins.titles = [];
-        bulletins.contents = [];
-        bulletins.createdDates = [];
-        bulletins.authors = [];
-        $("#bulletinList").empty();
-
         getAccountData();
         getBulletins();
         helpBannerHandler();
@@ -215,6 +223,14 @@ function helpBannerHandler() {
 };
 
 function handleResponse(data) {
+    //remove old data from arrays and list
+    bulletins.ids = [];
+    bulletins.titles = [];
+    bulletins.contents = [];
+    bulletins.createdDates = [];
+    bulletins.authors = [];
+    $("#bulletinList").empty();
+
     bulletins = splitReturnedBulletinData(data);
     bulletins = removeMarkers(bulletins);
 
@@ -239,8 +255,6 @@ function sendBulletinsHandler(data) {
     recipientBulletins = addMarkers(recipientBulletins);
 
     sendBulletins(recipientBulletins, $('#recipientAddress').val());
-    //get bulletins in case user has sent themselves bulletin
-    getBulletins();
 };
 
 function updateBulletinArrays() {
@@ -249,15 +263,10 @@ function updateBulletinArrays() {
     bulletins.contents.splice(activeIdIndex, 1, $('#bulletinMainContent').val());
 };
 
-//add new bulletin to bulletin list, and push new content to arrays
+//add new bulletin to bulletin list
 function newBulletinListItem(bulletinId, title, content, date, authorId) {
     author = authorId == walletAddress? 'You': authorId;
     $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>" + title + "</span><div class='bulletinListSmallText'>" + 'Created: ' + date + "</div><div class='bulletinListSmallText'>" + 'Author: '+ author + "</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
-    bulletins.ids.push(bulletinId);
-    bulletins.titles.push(title);
-    bulletins.contents.push(content);
-    bulletins.createdDates.push(date);
-    bulletins.authors.push(authorId);
 };
 
 function replaceAll(str, find, replace) {
