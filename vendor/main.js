@@ -233,8 +233,19 @@ function handleResponse(data) {
 };
 
 function sendBulletinsHandler(data) {
-    recipientBulletins = splitReturnedBulletinData(data);
-    recipientBulletins = removeMarkers(recipientBulletins);
+    let recipientBulletins;
+    if(resultIsNull(data)) {
+        recipientBulletins = {
+            ids: [],
+            titles: [],
+            contents: [],
+            createdDates: [],
+            authors: []
+        }
+    } else {
+        recipientBulletins = splitReturnedBulletinData(data);
+        recipientBulletins = removeMarkers(recipientBulletins);
+    }
 
     //add bulletin we want to send to bulletin object
     index = getActiveBulletinIdIndex();
@@ -386,4 +397,8 @@ function getAccountData() {
         //     document.getElementById("txResult").innerHTML = "return of call\n" +  JSON.stringify(e.data.data.neb_call,null,'\t');
         // }
     });
+}
+
+function resultIsNull(result) {
+    return result == 'null' || typeof result == 'undefined' || result == '';
 }

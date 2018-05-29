@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1kUHDzTomGNBnvYARgvataqWcRAjjaZMfJ";
+const dappAddress = "n1yfpgbJoErBCAQdhi8Hmndt2ivjdU7ix7c";
 var intervalQuery;
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
@@ -65,7 +65,7 @@ function cbSearch(resp) {
   let result = resp.result;
   console.log("return of rpc call: " + JSON.stringify(result));
 
-  if (result == 'null' || typeof result == 'undefined' || result == '') {
+  if (resultIsNull(result)) {
     console.log('No bulletins found for this wallet address');
   } else {
     //if result is not null, then it should be "return value" or "error message"
@@ -89,7 +89,7 @@ function cbSend(resp) {
     let result = resp.result;
     console.log("return of rpc call: " + JSON.stringify(result));
 
-    if (result == 'null' || typeof result == 'undefined') {
+    if (resultIsNull(result)) {
       console.log('No bulletins found for this wallet address');
     } else {
       //if result is not null, then it should be "return value" or "error message"
@@ -98,8 +98,8 @@ function cbSend(resp) {
       } catch (err) {
         console.log(err);
       }
-      sendBulletinsHandler(result);
     }
+    sendBulletinsHandler(result);
 };
 
 function funcIntervalQuery() {
