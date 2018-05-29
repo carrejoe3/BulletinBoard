@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1qne8hCWYhPUdxvVGvzqUJpB5unaZ3En3o";
+const dappAddress = "n1gS8Eknvqhf6ebVRZRvHRR8u3wCisQZC3u";
 var intervalQuery;
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
@@ -75,7 +75,7 @@ function cbSearch(resp) {
   let result = resp.result;
   console.log("return of rpc call: " + JSON.stringify(result));
 
-  if (result == 'null' || typeof result == 'undefined') {
+  if (result == 'null' || typeof result == 'undefined' || result == '') {
     console.log('No bulletins found for this wallet address');
   } else {
     //if result is not null, then it should be "return value" or "error message"

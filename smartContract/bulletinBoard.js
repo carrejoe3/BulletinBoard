@@ -23,10 +23,6 @@ BulletinBoard.prototype = {
     },
     getRecipientBulletins: function (owner) {
         return LocalContractStorage.get(owner);
-    },
-    delBulletins: function () {
-        var author = Blockchain.transaction.from;
-        LocalContractStorage.del(author);
     }
 };
 
