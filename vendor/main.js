@@ -29,15 +29,10 @@ $( document ).ready(function() {
         bulletins.contents.push('');
         bulletins.createdDates.push(newDate);
         bulletins.authors.push(walletAddress);
-
-        alert(JSON.stringify(bulletins));
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function(e) {
-        //activeBulletinId is initially null and after bulletin has been removed
-        if(null != activeBulletinId) {
-            updateBulletinArrays();
-        };
+        updateBulletinArrays();
 
         //apply active styling to main bulletin container
         $(".sidebarBulletinTitle").removeClass('activeBulletin');
@@ -73,8 +68,6 @@ $( document ).ready(function() {
 
     $("#removeBulletinBtn").click(function() {
         let activeIdIndex = getActiveBulletinIdIndex();
-
-        alert(bulletins.titles[activeIdIndex]);
 
         bulletins.ids.splice(activeIdIndex, 1);
         bulletins.titles.splice(activeIdIndex, 1);
@@ -258,9 +251,12 @@ function sendBulletinsHandler(data) {
 };
 
 function updateBulletinArrays() {
-    let activeIdIndex = getActiveBulletinIdIndex();
-    bulletins.titles.splice(activeIdIndex, 1, $('#bulletinTitle').val());
-    bulletins.contents.splice(activeIdIndex, 1, $('#bulletinMainContent').val());
+    //activeBulletinId is initially null and after bulletin has been removed
+    if(null != activeBulletinId) {
+        let activeIdIndex = getActiveBulletinIdIndex();
+        bulletins.titles.splice(activeIdIndex, 1, $('#bulletinTitle').val());
+        bulletins.contents.splice(activeIdIndex, 1, $('#bulletinMainContent').val());
+    };
 };
 
 //add new bulletin to bulletin list
