@@ -35,16 +35,11 @@ $( document ).ready(function() {
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function(e) {
+        $('#bottomHelpBannerText').hide();
+        $('#loader').css('display', 'flex');
         updateBulletinArrays();
-
-        //apply active styling to main bulletin container
-        $(".sidebarBulletinTitle").removeClass('activeBulletin');
-        $(this).find(".sidebarBulletinTitle").addClass('activeBulletin');
-
         activeBulletinId = $(this).attr("data-bulletinId");
         getBulletin(activeBulletinId);
-
-        disableEnableBulletinSpecificButtons('enable');
         e.stopPropagation();
     });
 
@@ -140,11 +135,7 @@ $( document ).ready(function() {
     //send button handler
     $('#sendBtn').click(function() {
         updateBulletinArrays();
-        if($('#recipientAddress').val() != walletAddress) {
-            getRecipientBulletins($('#recipientAddress').val());
-        } else {
-            alert('Cannot send bulletin to yourself');
-        }
+        validateWalletAddress($('#recipientAddress').val());
     });
 
     //close helper banner button handler
@@ -218,6 +209,15 @@ function handleBulletinsResponse(data) {
 };
 
 function handleBulletinResponse(data) {
+    //apply active styling to main bulletin container
+    $(".sidebarBulletinTitle").removeClass('activeBulletin');
+    $(this).find(".sidebarBulletinTitle").addClass('activeBulletin');
+
+    //loader and enable buttons
+    $('#loader').css('display', 'none');
+    $('#bottomHelpBannerText').hide();
+    disableEnableBulletinSpecificButtons('enable');
+
     //set bulletin contents
     let activeIdIndex = getActiveBulletinIdIndex();
     $('#bulletinMainContent').val(data);
@@ -257,7 +257,7 @@ function sendBulletinsHandler(data) {
 
     //add bulletin we want to send to bulletin object
     index = getActiveBulletinIdIndex();
-    recipientBulletins.ids.unshift(generateUUID());
+    recipientBulletins.ids.unshift(bulletins.ids[index]);
     recipientBulletins.titles.unshift(bulletins.titles[index]);
     recipientBulletins.createdDates.unshift(bulletins.createdDates[index]);
     getAccountData();
@@ -402,3 +402,20 @@ function getAccountData() {
 function isNull(result) {
     return result == 'null' || typeof result == 'undefined' || result == '';
 }
+
+function validateWalletAddress(address) {
+    if (address == walletAddress) {
+        $('#loader').hide();
+        $('#bottomHelpBannerText')
+            .text('Cannot send bulletin to yourself.')
+            .show();
+    } else if (address.length != 35 || isNull(address)) {
+        $('#loader').hide();
+        $('#bottomHelpBannerText')
+            .text('Please enter a valid wallet address.')
+            .show();
+    } else {
+        getRecipientBulletins($('#recipientAddress').val());
+        $('#bottomHelpBannerText').hide();
+    }
+};
