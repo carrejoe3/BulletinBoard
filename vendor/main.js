@@ -16,10 +16,8 @@ $( document ).ready(function() {
 
         if(!isNull(bulletins.ids[0])) {
             saveBulletins(bulletins);
-            alert(bulletins.ids[0]);
         } else {
             delBulletins();
-            alert('delete');
         }
     });
 
