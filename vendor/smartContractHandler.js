@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1scqTP5niqP2dgCrgFPD4bpPpqZs3mFf69";
+const dappAddress = "n1jFYgY7ZUrovErjM9dNJ3Qt3f1RQQxc4Gq";
 var intervalQuery;
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
@@ -87,6 +87,7 @@ function cbSearch(resp) {
 
   if (isNull(result)) {
     console.log('No bulletins found for this wallet address');
+    $('#loader').css('display', 'none');
   } else {
     //if result is not null, then it should be "return value" or "error message"
     try {
