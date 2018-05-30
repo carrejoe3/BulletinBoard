@@ -6,16 +6,16 @@ var BulletinBoard = function () {
 BulletinBoard.prototype = {
     init: function () {
     },
-    setBulletins: function (idList, titles, contents, createdDates, authors) {
+    setBulletins: function (idList, titles, createdDates, authors, bulletinId, content) {
         var author = Blockchain.transaction.from;
         titles = titles.trim();
-        contents = contents.trim();
-        LocalContractStorage.set(author, {ids: idList, titles: titles, contents: contents, createdDates: createdDates, authors: authors});
+        content = content.trim();
+        LocalContractStorage.set(author, {ids: idList, titles: titles, createdDates: createdDates, authors: authors});
+        LocalContractStorage.set(bulletinId, content);
     },
-    sendBulletins: function (idList, titles, contents, createdDates, authors, sendTo) {
+    sendBulletins: function (idList, titles, createdDates, authors, sendTo) {
         titles = titles.trim();
-        contents = contents.trim();
-        LocalContractStorage.set(sendTo, {ids: idList, titles: titles, contents: contents, createdDates: createdDates, authors: authors});
+        LocalContractStorage.set(sendTo, {ids: idList, titles: titles, createdDates: createdDates, authors: authors});
     },
     getBulletins: function () {
         var author = Blockchain.transaction.from;
@@ -24,13 +24,16 @@ BulletinBoard.prototype = {
     getRecipientBulletins: function (owner) {
         return LocalContractStorage.get(owner);
     },
+    getBulletin: function(bulletinId) {
+        return LocalContractStorage.get(bulletinId);
+    },
     delBulletins: function () {
         var author = Blockchain.transaction.from;
         LocalContractStorage.del(author);
-    },
+    }
 };
 
 module.exports = BulletinBoard;
 
 //params for deploying
-["idList", "titles", "contents", "createdDates", "authors", "sendTo"]
+["idList", "titles", "createdDates", "authors", "sendTo", "bulletinId", "content"]

@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1iPDiEkRHTRET8aUWmY14ECCGFkDwPoXGi";
+const dappAddress = "n1scqTP5niqP2dgCrgFPD4bpPpqZs3mFf69";
 var intervalQuery;
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
@@ -26,11 +26,21 @@ function getRecipientBulletins(owner) {
   });
 };
 
-function saveBulletins(bulletins) {
+function getBulletin(bulletinId) {
+  let value = "0";
+  let callFunction = "getBulletin";
+  let callArgs = "[\"" + bulletinId + "\"]";
+
+  nebPay.simulateCall(dappAddress, value, callFunction, callArgs, {
+    listener: cbBulletinSearch
+  });
+};
+
+function saveBulletins(bulletins, bulletinId, content) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "setBulletins";
-  let callArgs = "[\"" + bulletins.ids + "\",\"" + bulletins.titles + "\",\"" + bulletins.contents + "\",\"" + bulletins.createdDates + "\",\"" + bulletins.authors + "\"]";
+  let callArgs = "[\"" + bulletins.ids + "\",\"" + bulletins.titles + "\",\"" + bulletins.createdDates + "\",\"" + bulletins.authors + "\",\"" + bulletinId + "\",\"" + content + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush
@@ -45,7 +55,7 @@ function sendBulletins(recipientBulletins, sendTo) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "sendBulletins";
-  let callArgs = "[\"" + recipientBulletins.ids + "\",\"" + recipientBulletins.titles + "\",\"" + recipientBulletins.contents + "\",\"" + recipientBulletins.createdDates + "\",\"" + recipientBulletins.authors + "\",\"" + sendTo + "\"]";
+  let callArgs = "[\"" + recipientBulletins.ids + "\",\"" + recipientBulletins.titles + "\",\"" + recipientBulletins.createdDates + "\",\"" + recipientBulletins.authors + "\",\"" + sendTo + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush
@@ -84,7 +94,25 @@ function cbSearch(resp) {
     } catch (err) {
       console.log(err);
     }
-    handleResponse(result);
+    handleBulletinsResponse(result);
+  }
+};
+
+function cbBulletinSearch(resp) {
+  //resp is an object, resp.result is a JSON string
+  let result = resp.result;
+  console.log("return of rpc call: " + JSON.stringify(result));
+
+  if (isNull(result)) {
+    console.log('No bulletin content found');
+  } else {
+    //if result is not null, then it should be "return value" or "error message"
+    try {
+      result = JSON.parse(result);
+    } catch (err) {
+      console.log(err);
+    }
+    handleBulletinResponse(result);
   }
 };
 

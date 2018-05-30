@@ -4,7 +4,6 @@ let recipientAdded = false;
 let bulletins = {
     ids: [],
     titles: [],
-    contents: [],
     createdDates: [],
     authors: []
 };
@@ -15,7 +14,7 @@ $( document ).ready(function() {
         bulletins = addMarkers(bulletins);
 
         if(!isNull(bulletins.ids[0])) {
-            saveBulletins(bulletins);
+            saveBulletins(bulletins, activeBulletinId, $('#bulletinMainContent').val());
         } else {
             delBulletins();
         }
@@ -26,12 +25,11 @@ $( document ).ready(function() {
         let newTitle = 'Title';
         let newDate = new Date().toLocaleDateString();
 
-        newBulletinListItem(newId, newTitle, '', newDate, walletAddress);
+        newBulletinListItem(newId, newTitle, newDate, walletAddress);
 
         //push new bulletin data to bulletin object
         bulletins.ids.push(newId);
         bulletins.titles.push(newTitle);
-        bulletins.contents.push('');
         bulletins.createdDates.push(newDate);
         bulletins.authors.push(walletAddress);
     });
@@ -43,29 +41,8 @@ $( document ).ready(function() {
         $(".sidebarBulletinTitle").removeClass('activeBulletin');
         $(this).find(".sidebarBulletinTitle").addClass('activeBulletin');
 
-        //set bulletin contents
         activeBulletinId = $(this).attr("data-bulletinId");
-        let activeIdIndex = getActiveBulletinIdIndex();
-        $('#bulletinTitle').val(bulletins.titles[activeIdIndex]);
-        $('#bulletinMainContent').val(bulletins.contents[activeIdIndex]);
-
-        //show main bulletin and set focus
-        $("#bulletinCol").fadeIn('fast', function() {
-            $('.cardHeaderTitle').focus();
-            e.stopPropagation();
-        });
-
-        //if user is on mobile, hide bulletin list
-        if (mobileMode()) {
-            $('#bulletinListCol').hide();
-            changeIconImageSource('#bulletinListBtn', "images/list.png");
-        } else {
-            //apply active styling to bulletin list item
-            $('.bulletinListItem').css('font-weight', '');
-            $(this).css("font-weight", "bold");
-            $('.eye').fadeOut('fast');
-            $(this).find(".eye").fadeIn('fast');
-        }
+        getBulletin(activeBulletinId);
 
         disableEnableBulletinSpecificButtons('enable');
         e.stopPropagation();
@@ -76,7 +53,6 @@ $( document ).ready(function() {
 
         bulletins.ids.splice(activeIdIndex, 1);
         bulletins.titles.splice(activeIdIndex, 1);
-        bulletins.contents.splice(activeIdIndex, 1);
         bulletins.createdDates.splice(activeIdIndex, 1);
         bulletins.authors.splice(activeIdIndex, 1);
 
@@ -164,7 +140,11 @@ $( document ).ready(function() {
     //send button handler
     $('#sendBtn').click(function() {
         updateBulletinArrays();
-        getRecipientBulletins($('#recipientAddress').val());
+        if($('#recipientAddress').val() != walletAddress) {
+            getRecipientBulletins($('#recipientAddress').val());
+        } else {
+            alert('Cannot send bulletin to yourself');
+        }
     });
 
     //close helper banner button handler
@@ -221,11 +201,10 @@ function helpBannerHandler() {
     }, 4000 );
 };
 
-function handleResponse(data) {
+function handleBulletinsResponse(data) {
     //remove old data from arrays and list
     bulletins.ids = [];
     bulletins.titles = [];
-    bulletins.contents = [];
     bulletins.createdDates = [];
     bulletins.authors = [];
     $("#bulletinList").empty();
@@ -234,8 +213,32 @@ function handleResponse(data) {
     bulletins = removeMarkers(bulletins);
 
     for (let i in bulletins.ids) {
-        newBulletinListItem(bulletins.ids[i], bulletins.titles[i], bulletins.contents[i], bulletins.createdDates[i], bulletins.authors[i]);
+        newBulletinListItem(bulletins.ids[i], bulletins.titles[i], bulletins.createdDates[i], bulletins.authors[i]);
     };
+};
+
+function handleBulletinResponse(data) {
+    //set bulletin contents
+    let activeIdIndex = getActiveBulletinIdIndex();
+    $('#bulletinMainContent').val(data);
+    $('#bulletinTitle').val(bulletins.titles[activeIdIndex]);
+
+    //show main bulletin and set focus
+    $("#bulletinCol").fadeIn('fast', function() {
+        $('.cardHeaderTitle').focus();
+    });
+
+    //if user is on mobile, hide bulletin list
+    if (mobileMode()) {
+        $('#bulletinListCol').hide();
+        changeIconImageSource('#bulletinListBtn', "images/list.png");
+    } else {
+        //apply active styling to bulletin list item
+        $('.bulletinListItem').css('font-weight', '');
+        $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).css("font-weight", "bold");
+        $('.eye').fadeOut('fast');
+        $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).find(".eye").fadeIn('fast');
+    }
 };
 
 function sendBulletinsHandler(data) {
@@ -244,7 +247,6 @@ function sendBulletinsHandler(data) {
         recipientBulletins = {
             ids: [],
             titles: [],
-            contents: [],
             createdDates: [],
             authors: []
         }
@@ -257,7 +259,6 @@ function sendBulletinsHandler(data) {
     index = getActiveBulletinIdIndex();
     recipientBulletins.ids.unshift(generateUUID());
     recipientBulletins.titles.unshift(bulletins.titles[index]);
-    recipientBulletins.contents.unshift(bulletins.contents[index]);
     recipientBulletins.createdDates.unshift(bulletins.createdDates[index]);
     getAccountData();
     recipientBulletins.authors.unshift(walletAddress);
@@ -272,12 +273,11 @@ function updateBulletinArrays() {
     if(null != activeBulletinId) {
         let activeIdIndex = getActiveBulletinIdIndex();
         bulletins.titles.splice(activeIdIndex, 1, $('#bulletinTitle').val());
-        bulletins.contents.splice(activeIdIndex, 1, $('#bulletinMainContent').val());
     };
 };
 
 //add new bulletin to bulletin list
-function newBulletinListItem(bulletinId, title, content, date, authorId) {
+function newBulletinListItem(bulletinId, title, date, authorId) {
     author = authorId == walletAddress? 'You': authorId;
     $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>" + title + "</span><div class='bulletinListSmallText'>" + 'Created: ' + date + "</div><div class='bulletinListSmallText'>" + 'Author: '+ author + "</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
 };
@@ -311,10 +311,12 @@ function disableEnableBulletinSpecificButtons(ind) {
     if(ind == 'disable') {
         disableButton('#addRecipientBtn');
         disableButton('#removeBulletinBtn');
+        disableButton('#saveBtn');
         changeIconImageSource('#removeBulletinBtn', 'images/rubbish-bin.png');
     } else {
         enableButton('#addRecipientBtn');
         enableButton('#removeBulletinBtn');
+        enableButton('#saveBtn');
     }
 };
 
@@ -341,7 +343,6 @@ function splitReturnedBulletinData(data) {
     let bulletins = {
         ids: data.ids.split(','),
         titles: data.titles.split('/.t1tle./,/.t1tle./'),
-        contents: data.contents.split('/.c0ntent./,/.c0ntent./'),
         createdDates: data.createdDates.split(','),
         authors: data.authors.split(',')
     }
@@ -352,18 +353,11 @@ function removeMarkers(bulletinsObj) {
     bulletinsObj.titles = bulletinsObj.titles.map(function(titles) {
         return replaceAll(titles, '/.t1tle./', '');
     });
-    bulletinsObj.contents = bulletinsObj.contents.map(function(contents) {
-        return replaceAll(contents, '/.c0ntent./', '');
-    });
-    bulletinsObj.contents = bulletinsObj.contents.map(function(contents) {
-        return replaceAll(contents, '/.n3wLine./', '\n');
-    });
     return bulletinsObj;
 };
 
 function addMarkers(bulletinsObj) {
     for (var i in bulletinsObj.ids) {
-        bulletinsObj.contents[i] = '/.c0ntent./' + bulletinsObj.contents[i].replace(/(?:\r\n|\r|\n)/g, '/.n3wLine./') + '/.c0ntent./';
         bulletinsObj.titles[i] = '/.t1tle./' + bulletinsObj.titles[i] + '/.t1tle./';
       };
     return bulletinsObj;
