@@ -286,7 +286,7 @@ textarea:focus,
   min-height: 1.5em;
 
   #loader {
-    display: none;
+    display: flex;
 
     li {
       list-style: none;

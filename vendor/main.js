@@ -193,11 +193,10 @@ function helpBannerHandler() {
 };
 
 function handleBulletinsResponse(data) {
+    $('#loader').hide();
+
     //remove old data from arrays and list
-    bulletins.ids = [];
-    bulletins.titles = [];
-    bulletins.createdDates = [];
-    bulletins.authors = [];
+    bulletins = [];
     $("#bulletinList").empty();
 
     bulletins = splitReturnedBulletinData(data);
