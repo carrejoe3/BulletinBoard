@@ -242,15 +242,8 @@ function handleBulletinResponse(data) {
 };
 
 function sendBulletinsHandler(data) {
-    let recipientBulletins;
-    if(isNull(data)) {
-        recipientBulletins = {
-            ids: [],
-            titles: [],
-            createdDates: [],
-            authors: []
-        }
-    } else {
+    let recipientBulletins = new Object();
+    if(!isNull(data)) {
         recipientBulletins = splitReturnedBulletinData(data);
         recipientBulletins = removeMarkers(recipientBulletins);
     }
