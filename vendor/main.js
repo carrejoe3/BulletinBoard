@@ -292,7 +292,7 @@ function updateBulletinArrays() {
 //add new bulletin to bulletin list
 function newBulletinListItem(bulletinId, title, date, authorId, newInd) {
     author = authorId == walletAddress? 'You': authorId;
-    $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "' + data-newInd='" + newInd + "'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>" + title + "</span><div class='bulletinListSmallText'>" + 'Created: ' + date + "</div><div class='bulletinListSmallText'>" + 'Author: '+ author + "</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
+    $("#bulletinList").prepend("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "' + data-newInd='" + newInd + "'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>" + title + "</span><div class='bulletinListSmallText'>" + 'Created: ' + date + "</div><div class='bulletinListSmallText'>" + 'Author: '+ author + "</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
 };
 
 function replaceAll(str, find, replace) {
