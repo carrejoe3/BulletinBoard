@@ -57,13 +57,7 @@ $( document ).ready(function() {
         //set activeBulletinId to null, so updateBulletinArrays isn't called when user clicks on bulletinListItem
         activeBulletinId = null;
 
-        //if user is on mobile, show bulletin list again
-        if (mobileMode()) {
-            $('#bulletinListCol').show();
-            $('#bulletinCol').hide();
-        } else {
-            $('#bulletinCol').fadeOut('fast');
-        }
+        hideBulletinContainer();
 
         changeIconImageSource('#bulletinListBtn', "images/listActive.png");
         disableEnableBulletinSpecificButtons('disable');
@@ -108,6 +102,12 @@ $( document ).ready(function() {
     $("#sendBtn").mouseleave(function() {
         changeIconImageSource(this, "images/send.png");
     });
+    $("#refreshBtn").mouseover(function() {
+        changeIconImageSource(this, "images/refreshActive.png");
+    });
+    $("#refreshBtn").mouseleave(function() {
+        changeIconImageSource(this, "images/refresh.png");
+    });
 
     //add recipient button handler
     $('#addRecipientBtn').click(function(e) {
@@ -116,11 +116,11 @@ $( document ).ready(function() {
 
             //if mobile mode, also slideToggle bulletin list button
             if(mobileMode()) {
-                $('#removeBulletinBtn, #saveBtn, #bulletinListBtn').fadeOut('fast', function() {
+                $('#removeBulletinBtn, #saveBtn, #bulletinListBtn, #refreshBtn').fadeOut('fast', function() {
                     fadeInRecipientAddress(e);
                 });
             } else {
-                $('#removeBulletinBtn, #saveBtn').fadeOut('fast', function() {
+                $('#removeBulletinBtn, #saveBtn, #refreshBtn').fadeOut('fast', function() {
                     fadeInRecipientAddress(e);
                 });
             }
@@ -128,7 +128,7 @@ $( document ).ready(function() {
         } else {
             changeIconImageSource('#addRecipientBtn', "images/addRecipient.png");
             $('#recipientAddressContainer, #sendBtn').fadeOut('fast', function() {
-                $('#removeBulletinBtn, #saveBtn').fadeIn('fast');
+                $('#removeBulletinBtn, #saveBtn, #refreshBtn').fadeIn('fast');
                 if(mobileMode()) {
                     $('#bulletinListBtn').fadeIn('fast');
                 }
@@ -146,6 +146,12 @@ $( document ).ready(function() {
     //close helper banner button handler
     $('.alertCloseBtn').click(function() {
         $('#helpBanner').fadeOut();
+    });
+
+    $('#refreshBtn').click(function() {
+        $('#loader').css('display', 'flex');
+        hideBulletinContainer();
+        getBulletins();
     });
 
     //update the sidebar active bulletin title when editing active bulletin
@@ -205,7 +211,7 @@ function helpBannerHandler() {
 };
 
 function handleBulletinsResponse(data) {
-    $('#loader').hide();
+    $('#loader').fadeOut('fast');
 
     //remove old data from arrays and list
     bulletins = [];
@@ -221,7 +227,7 @@ function handleBulletinsResponse(data) {
 
 function handleBulletinResponse(data) {
     //loader and enable buttons
-    $('#loader').css('display', 'none');
+    $('#loader').fadeOut('fast');
     $('#bottomHelpBannerText').hide();
     disableEnableBulletinSpecificButtons('enable');
 
@@ -428,17 +434,26 @@ function isNull(result) {
 
 function validateWalletAddress(address) {
     if (address == walletAddress) {
-        $('#loader').hide();
+        $('#loader').fadeOut('fast');
         $('#bottomHelpBannerText')
             .text('Cannot send bulletin to yourself.')
             .show();
     } else if (address.length != 35 || isNull(address)) {
-        $('#loader').hide();
+        $('#loader').fadeOut('fast');
         $('#bottomHelpBannerText')
             .text('Please enter a valid wallet address.')
             .show();
     } else {
         getRecipientBulletins($('#recipientAddress').val());
         $('#bottomHelpBannerText').hide();
+    }
+};
+
+function hideBulletinContainer() {
+    if (mobileMode()) {
+        $('#bulletinListCol').show();
+        $('#bulletinCol').hide();
+    } else {
+        $('#bulletinCol').fadeOut('fast');
     }
 };
