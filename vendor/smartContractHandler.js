@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1htjmU96AJJ2tVDGCdoSLLEgrbVZqH2hD3";
+const dappAddress = "n1zztvm5ttGapmYGxhZ7TG1kq1j1UApg48n";
 var intervalQuery;
 var NebPay = require("nebpay");
 var nebPay = new NebPay();

@@ -41,3 +41,6 @@ module.exports = BulletinBoard;
 
 //params for deploying
 ["idList", "titles", "createdDates", "authors", "sendTo", "bulletinId", "content"]
+
+//tx hash
+ea1123208746fa0c2a592ffdec49ab3b638abb9f22b597bd1d9c7716205657e0
