@@ -1,6 +1,6 @@
 "use strict";
 
-const dappAddress = "n1hJ47yQ6LssGSe4DTBLsQd5jQ3DC25MUho";
+const dappAddress = "n1zV21EMKQXR3TU4vNrKF5rtRNc31xLnJ1S";
 var intervalQuery;
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
@@ -51,11 +51,11 @@ function saveBulletins(bulletins, bulletinId, content) {
   }, 5000);
 };
 
-function sendBulletins(recipientBulletins, sendTo) {
+function sendBulletins(recipientBulletins, sendTo, bulletinId, content) {
   let to = dappAddress;
   let value = "0";
   let callFunction = "sendBulletins";
-  let callArgs = "[\"" + recipientBulletins.ids + "\",\"" + recipientBulletins.titles + "\",\"" + recipientBulletins.createdDates + "\",\"" + recipientBulletins.authors + "\",\"" + sendTo + "\"]";
+  let callArgs = "[\"" + recipientBulletins.ids + "\",\"" + recipientBulletins.titles + "\",\"" + recipientBulletins.createdDates + "\",\"" + recipientBulletins.authors + "\",\"" + sendTo + "\",\"" + bulletinId + "\",\"" + content + "\"]";
 
   serialNumber = nebPay.call(to, value, callFunction, callArgs, {
     listener: cbPush

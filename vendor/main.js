@@ -265,11 +265,13 @@ function sendBulletinsHandler(data) {
     }
 
     //if recipient already has bulletin we want to send
-    if(recipientBulletins.ids.includes(bulletins.ids[index])) {
-        $('#bottomHelpBannerText').text('Recipient already has this bulletin!');
+    if(recipientBulletins.ids.includes(activeBulletinId)) {
+        $('#bottomHelpBannerText')
+            .text('Recipient already has this bulletin!')
+            .show();
     } else {
         //add bulletin we want to send to bulletin object
-        recipientBulletins.ids.unshift(bulletins.ids[index]);
+        recipientBulletins.ids.unshift(activeBulletinId);
         recipientBulletins.titles.unshift(bulletins.titles[index]);
         recipientBulletins.createdDates.unshift(bulletins.createdDates[index]);
         getAccountData();
@@ -277,7 +279,7 @@ function sendBulletinsHandler(data) {
 
         recipientBulletins = addTitleMarkers(recipientBulletins);
 
-        sendBulletins(recipientBulletins, $('#recipientAddress').val());
+        sendBulletins(recipientBulletins, $('#recipientAddress').val(), activeBulletinId, addContentMarkers($('#bulletinMainContent').val()));
     }
 };
 
