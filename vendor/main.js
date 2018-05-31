@@ -1,12 +1,7 @@
 let activeBulletinId;
 let walletAddress;
 let recipientAdded = false;
-let bulletins = {
-    ids: [],
-    titles: [],
-    createdDates: [],
-    authors: []
-};
+let bulletins = new bulletinsObj();
 
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
@@ -25,7 +20,7 @@ $( document ).ready(function() {
         let newTitle = 'Title';
         let newDate = new Date().toLocaleDateString();
 
-        newBulletinListItem(newId, newTitle, newDate, walletAddress);
+        newBulletinListItem(newId, newTitle, newDate, walletAddress, true);
 
         //push new bulletin data to bulletin object
         bulletins.ids.push(newId);
@@ -39,7 +34,13 @@ $( document ).ready(function() {
         $('#loader').css('display', 'flex');
         updateBulletinArrays();
         activeBulletinId = $(this).attr("data-bulletinId");
-        getBulletin(activeBulletinId);
+
+        //if bulletin is new, skip getBulletins and call handleResponse immediately
+        if($(this).attr("data-newInd") == 'true') {
+            handleBulletinResponse(null);
+        } else {
+            getBulletin(activeBulletinId);
+        }
         e.stopPropagation();
     });
 
@@ -174,6 +175,13 @@ window.addEventListener("load", function () {
     }
 });
 
+function bulletinsObj() {
+    this.ids = [];
+    this.titles = [];
+    this.createdDates = [];
+    this.authors = [];
+};
+
 function helpBannerHandler() {
     let helpMessages = ['None of your changes will be committed until you click save!', 'WebExtensionWallet detected!'];
     let helpIndex = 0;
@@ -203,7 +211,7 @@ function handleBulletinsResponse(data) {
     bulletins = removeMarkers(bulletins);
 
     for (let i in bulletins.ids) {
-        newBulletinListItem(bulletins.ids[i], bulletins.titles[i], bulletins.createdDates[i], bulletins.authors[i]);
+        newBulletinListItem(bulletins.ids[i], bulletins.titles[i], bulletins.createdDates[i], bulletins.authors[i], false);
     };
 };
 
@@ -219,7 +227,13 @@ function handleBulletinResponse(data) {
 
     //set bulletin contents
     let activeIdIndex = getActiveBulletinIdIndex();
-    $('#bulletinMainContent').val(data);
+
+    if(isNull(data)) {
+        $('#bulletinMainContent').val('');
+    } else {
+        $('#bulletinMainContent').val(data);
+    }
+
     $('#bulletinTitle').val(bulletins.titles[activeIdIndex]);
 
     //show main bulletin and set focus
@@ -241,23 +255,30 @@ function handleBulletinResponse(data) {
 };
 
 function sendBulletinsHandler(data) {
-    let recipientBulletins = new Object();
+    index = getActiveBulletinIdIndex();
+    let recipientBulletins = new bulletinsObj();
+
+    //if recipient has some bulletins, process them
     if(!isNull(data)) {
         recipientBulletins = splitReturnedBulletinData(data);
         recipientBulletins = removeMarkers(recipientBulletins);
     }
 
-    //add bulletin we want to send to bulletin object
-    index = getActiveBulletinIdIndex();
-    recipientBulletins.ids.unshift(bulletins.ids[index]);
-    recipientBulletins.titles.unshift(bulletins.titles[index]);
-    recipientBulletins.createdDates.unshift(bulletins.createdDates[index]);
-    getAccountData();
-    recipientBulletins.authors.unshift(walletAddress);
+    //if recipient already has bulletin we want to send
+    if(recipientBulletins.ids.includes(bulletins.ids[index])) {
+        $('#bottomHelpBannerText').text('Recipient already has this bulletin!');
+    } else {
+        //add bulletin we want to send to bulletin object
+        recipientBulletins.ids.unshift(bulletins.ids[index]);
+        recipientBulletins.titles.unshift(bulletins.titles[index]);
+        recipientBulletins.createdDates.unshift(bulletins.createdDates[index]);
+        getAccountData();
+        recipientBulletins.authors.unshift(walletAddress);
 
-    recipientBulletins = addMarkers(recipientBulletins);
+        recipientBulletins = addMarkers(recipientBulletins);
 
-    sendBulletins(recipientBulletins, $('#recipientAddress').val());
+        sendBulletins(recipientBulletins, $('#recipientAddress').val());
+    }
 };
 
 function updateBulletinArrays() {
@@ -269,9 +290,9 @@ function updateBulletinArrays() {
 };
 
 //add new bulletin to bulletin list
-function newBulletinListItem(bulletinId, title, date, authorId) {
+function newBulletinListItem(bulletinId, title, date, authorId, newInd) {
     author = authorId == walletAddress? 'You': authorId;
-    $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>" + title + "</span><div class='bulletinListSmallText'>" + 'Created: ' + date + "</div><div class='bulletinListSmallText'>" + 'Author: '+ author + "</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
+    $("#bulletinList").append("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "' + data-newInd='" + newInd + "'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>" + title + "</span><div class='bulletinListSmallText'>" + 'Created: ' + date + "</div><div class='bulletinListSmallText'>" + 'Author: '+ author + "</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
 };
 
 function replaceAll(str, find, replace) {
