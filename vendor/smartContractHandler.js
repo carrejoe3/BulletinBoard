@@ -106,6 +106,7 @@ function cbBulletinSearch(resp) {
 
   if (isNull(result)) {
     console.log('No bulletin content found');
+    handleBulletinResponse(null);
   } else {
     //if result is not null, then it should be "return value" or "error message"
     try {

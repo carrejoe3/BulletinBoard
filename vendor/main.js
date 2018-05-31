@@ -34,6 +34,7 @@ $( document ).ready(function() {
         //if bulletin is new, skip getBulletins and call handleResponse immediately
         if($(this).attr("data-newInd") == 'true') {
             handleBulletinResponse(null);
+            $('#bulletinTitle').val('Title');
         } else {
             getBulletin(activeBulletinId);
         }
