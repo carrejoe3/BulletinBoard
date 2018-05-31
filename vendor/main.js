@@ -6,13 +6,9 @@ let bulletins = new bulletinsObj();
 $( document ).ready(function() {
     $("#saveBtn").click(function() {
         updateBulletinArrays();
-        bulletins = addMarkers(bulletins);
+        bulletins = addTitleMarkers(bulletins);
 
-        if(!isNull(bulletins.ids[0])) {
-            saveBulletins(bulletins, activeBulletinId, $('#bulletinMainContent').val());
-        } else {
-            delBulletins();
-        }
+        saveBulletins(bulletins, activeBulletinId, addContentMarkers($('#bulletinMainContent').val()));
     });
 
     $("#addBulletinBtn").click(function() {
@@ -41,6 +37,9 @@ $( document ).ready(function() {
         } else {
             getBulletin(activeBulletinId);
         }
+
+        $(".sidebarBulletinTitle").removeClass('activeBulletin');
+        $(this).find(".sidebarBulletinTitle").addClass('activeBulletin');
         e.stopPropagation();
     });
 
@@ -67,6 +66,10 @@ $( document ).ready(function() {
 
         changeIconImageSource('#bulletinListBtn', "images/listActive.png");
         disableEnableBulletinSpecificButtons('disable');
+
+        if(isNull(bulletins.ids[0])) {
+            delBulletins();
+        }
     });
 
     //set active buttons on hover
@@ -145,9 +148,9 @@ $( document ).ready(function() {
     });
 
     //update the sidebar active bulletin title when editing active bulletin
-    $("#bulletinTitle").change(function() {
-        $(".activeBulletin").text($("#bulletinTitle").val());
-    });
+    // $("#bulletinTitle").change(function() {
+    //     $(".activeBulletin").text($("#bulletinTitle").val());
+    // });
 
     //bulletin list button handler for small screens
     $('#bulletinListBtn').click(function() {
@@ -208,7 +211,7 @@ function handleBulletinsResponse(data) {
     $("#bulletinList").empty();
 
     bulletins = splitReturnedBulletinData(data);
-    bulletins = removeMarkers(bulletins);
+    bulletins = removeTitleMarkers(bulletins);
 
     for (let i in bulletins.ids) {
         newBulletinListItem(bulletins.ids[i], bulletins.titles[i], bulletins.createdDates[i], bulletins.authors[i], false);
@@ -216,10 +219,6 @@ function handleBulletinsResponse(data) {
 };
 
 function handleBulletinResponse(data) {
-    //apply active styling to main bulletin container
-    $(".sidebarBulletinTitle").removeClass('activeBulletin');
-    $(this).find(".sidebarBulletinTitle").addClass('activeBulletin');
-
     //loader and enable buttons
     $('#loader').css('display', 'none');
     $('#bottomHelpBannerText').hide();
@@ -231,7 +230,7 @@ function handleBulletinResponse(data) {
     if(isNull(data)) {
         $('#bulletinMainContent').val('');
     } else {
-        $('#bulletinMainContent').val(data);
+        $('#bulletinMainContent').val(removeContentMarkers(data));
     }
 
     $('#bulletinTitle').val(bulletins.titles[activeIdIndex]);
@@ -261,7 +260,7 @@ function sendBulletinsHandler(data) {
     //if recipient has some bulletins, process them
     if(!isNull(data)) {
         recipientBulletins = splitReturnedBulletinData(data);
-        recipientBulletins = removeMarkers(recipientBulletins);
+        recipientBulletins = removeTitleMarkers(recipientBulletins);
     }
 
     //if recipient already has bulletin we want to send
@@ -275,7 +274,7 @@ function sendBulletinsHandler(data) {
         getAccountData();
         recipientBulletins.authors.unshift(walletAddress);
 
-        recipientBulletins = addMarkers(recipientBulletins);
+        recipientBulletins = addTitleMarkers(recipientBulletins);
 
         sendBulletins(recipientBulletins, $('#recipientAddress').val());
     }
@@ -362,18 +361,26 @@ function splitReturnedBulletinData(data) {
     return bulletins;
 };
 
-function removeMarkers(bulletinsObj) {
+function removeTitleMarkers(bulletinsObj) {
     bulletinsObj.titles = bulletinsObj.titles.map(function(titles) {
         return replaceAll(titles, '/.t1tle./', '');
     });
     return bulletinsObj;
 };
 
-function addMarkers(bulletinsObj) {
+function removeContentMarkers(content) {
+    return replaceAll(content, '/.n3wLine./', '\n');
+};
+
+function addTitleMarkers(bulletinsObj) {
     for (var i in bulletinsObj.ids) {
         bulletinsObj.titles[i] = '/.t1tle./' + bulletinsObj.titles[i] + '/.t1tle./';
       };
     return bulletinsObj;
+};
+
+function addContentMarkers(content) {
+    return content.replace(/(?:\r\n|\r|\n)/g, '/.n3wLine./');
 };
 
 function getAccountData() {
@@ -413,7 +420,7 @@ function getAccountData() {
 }
 
 function isNull(result) {
-    return result == 'null' || typeof result == 'undefined' || result == '';
+    return result == 'null' || typeof result == 'undefined' || result == '' || result == null;
 }
 
 function validateWalletAddress(address) {
