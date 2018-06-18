@@ -80,6 +80,16 @@ $( document ).ready(function() {
     $("#addBulletinBtn").mouseleave(function() {
         changeIconImageSource(this, "images/add.png");
     });
+    $("#infoBtn").mouseover(function() {
+        if(!recipientAdded) {
+            changeIconImageSource(this, "images/infoActive.png");
+        }
+    });
+    $("#infoBtn").mouseleave(function() {
+        if(!recipientAdded) {
+            changeIconImageSource(this, "images/info.png");
+        }
+    });
     $("#addRecipientBtn").mouseover(function() {
         if(!recipientAdded) {
             changeIconImageSource(this, "images/addRecipientActive.png");
@@ -135,6 +145,12 @@ $( document ).ready(function() {
             });
         }
         recipientAdded = (recipientAdded == false? true: false);
+    });
+
+    //info button handler
+    $('#infoBtn').click(function() {
+        //hide bulletin main content and display info panel
+        //also hide bulletin list if on mobile
     });
 
     //send button handler
