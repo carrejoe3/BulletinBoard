@@ -26,6 +26,7 @@ $( document ).ready(function() {
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function(e) {
+        $('#infoCol').hide();
         $('#bottomHelpBannerText').hide();
         $('#loader').css('display', 'flex');
         updateBulletinArrays();
@@ -149,8 +150,18 @@ $( document ).ready(function() {
 
     //info button handler
     $('#infoBtn').click(function() {
-        //hide bulletin main content and display info panel
         //also hide bulletin list if on mobile
+        $('#bulletinCol').fadeOut('fast', function() {
+            if($('#infoCol').css('display') == 'block') {
+                $('#infoCol').fadeOut('fast');
+                $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).css("font-weight", "bold");
+                $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).find(".eye").fadeIn('fast');
+            } else {
+                $('#infoCol').fadeIn('fast');
+                $('.eye').fadeOut('fast');
+                $('.bulletinListItem').css('font-weight', '');
+            }
+        })
     });
 
     //send button handler

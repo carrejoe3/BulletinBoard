@@ -206,22 +206,22 @@ textarea:focus,
   display: none;
 }
 
-#bulletinTitleContainer {
+.bulletinTitleContainer {
   display: flex;
 }
 
-#bulletinTitle {
+.bulletinTitle {
   @include oneLine();
 }
 
-#bulletinMainContent {
+.bulletinMainContent {
   border: none;
   resize: none;
   height: 100%;
   padding: 0;
 }
 
-#bulletinCol {
+#bulletinCol, #infoCol {
   display: none;
 }
 
