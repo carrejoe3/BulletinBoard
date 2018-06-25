@@ -1,5 +1,6 @@
 let activeBulletinId;
 let walletAddress;
+let infoActive = false;
 let recipientAdded = false;
 let bulletins = new bulletinsObj();
 
@@ -26,7 +27,11 @@ $( document ).ready(function() {
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function(e) {
+        //toggle info panel off
+        infoActive = false;
         $('#infoCol').hide();
+        changeIconImageSource($('#infoBtn'), "images/info.png");
+
         $('#bottomHelpBannerText').hide();
         $('#loader').css('display', 'flex');
         updateBulletinArrays();
@@ -82,13 +87,13 @@ $( document ).ready(function() {
         changeIconImageSource(this, "images/add.png");
     });
     $("#infoBtn").mouseover(function() {
-        if(!recipientAdded) {
-            changeIconImageSource(this, "images/infoActive.png");
+        if(!infoActive) {
+            changeIconImageSource($('#infoBtn'), "images/infoActive.png");
         }
     });
     $("#infoBtn").mouseleave(function() {
-        if(!recipientAdded) {
-            changeIconImageSource(this, "images/info.png");
+        if(!infoActive) {
+            changeIconImageSource($('#infoBtn'), "images/info.png");
         }
     });
     $("#addRecipientBtn").mouseover(function() {
@@ -150,13 +155,21 @@ $( document ).ready(function() {
 
     //info button handler
     $('#infoBtn').click(function() {
+        infoActive = (infoActive == false? true: false);
         //also hide bulletin list if on mobile
         $('#bulletinCol').fadeOut('fast', function() {
-            if($('#infoCol').css('display') == 'block') {
-                $('#infoCol').fadeOut('fast');
-                $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).css("font-weight", "bold");
-                $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).find(".eye").fadeIn('fast');
+            if(!infoActive) {
+                $('#infoCol').fadeOut('fast', function() {
+                    //make active bulletin actively styled again if it exists
+                    if(!isNull(activeBulletinId)) {
+                        $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).css("font-weight", "bold");
+                        $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).find(".eye").fadeIn('fast');
+                        $('#bulletinCol').fadeIn('fast');
+                    }
+                });
+                changeIconImageSource(this, "images/info.png");
             } else {
+                changeIconImageSource(this, "images/infoActive.png");
                 $('#infoCol').fadeIn('fast');
                 $('.eye').fadeOut('fast');
                 $('.bulletinListItem').css('font-weight', '');
