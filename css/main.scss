@@ -202,6 +202,11 @@ textarea:focus,
   display: flex;
 }
 
+.siteLink {
+  color: $orange;
+  text-decoration: underline;
+}
+
 #sendBtn {
   display: none;
 }
@@ -214,18 +219,31 @@ textarea:focus,
   @include oneLine();
 }
 
-#bulletinMainContent, #infoMainContent {
+#bulletinMainContent, .infoMainContent {
   border: none;
   resize: none;
-  height: 100%;
   padding: 0;
+}
+
+#infoGrid {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-rows: 8% 20% 30% 5% 5%;
+}
+
+#tutorialBtn:hover {
+  color: $orange;
+}
+
+#bulletinMainContent {
+  height: 100%;
 }
 
 #bulletinCol, #infoCol {
   display: none;
 }
 
-#saveBtn, #addBulletinBtn, #bulletinListBtn ,#removeBulletinBtn, #addRecipientBtn {
+#saveBtn, #addBulletinBtn, #bulletinListBtn ,#removeBulletinBtn, #addRecipientBtn, #tutorialBtn {
   background-color: $gunMetal;
   color: $white;
 }
