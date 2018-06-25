@@ -207,10 +207,6 @@ textarea:focus,
   text-decoration: underline;
 }
 
-#sendBtn {
-  display: none;
-}
-
 .bulletinTitleContainer {
   display: flex;
 }
@@ -239,7 +235,7 @@ textarea:focus,
   height: 100%;
 }
 
-#bulletinCol, #infoCol {
+#bulletinCol, #infoCol, #tutorialBtn, #sendBtn, .tutorialText, #helpBanner {
   display: none;
 }
 
@@ -286,10 +282,6 @@ textarea:focus,
   font-style: normal;
   font-weight: 900;
   font-size: 0.9rem;
-}
-
-#helpBanner {
-  display: none;
 }
 
 #alertText {

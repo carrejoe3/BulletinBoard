@@ -23,6 +23,12 @@
     #bulletinListBtn {
         display: none;
     }
+
+    .infoMainContent {
+        #tutorialBtn, .tutorialText {
+            display: block;
+        }
+    }
 }
 
 @include mq('phone') {
