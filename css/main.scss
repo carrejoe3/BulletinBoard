@@ -210,11 +210,11 @@ textarea:focus,
   display: flex;
 }
 
-.bulletinTitle {
+#bulletinTitle, #infoTitle {
   @include oneLine();
 }
 
-.bulletinMainContent {
+#bulletinMainContent, #infoMainContent {
   border: none;
   resize: none;
   height: 100%;

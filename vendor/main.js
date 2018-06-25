@@ -132,11 +132,11 @@ $(document).ready(function () {
 
             //if mobile mode, also slideToggle bulletin list button
             if (mobileMode()) {
-                $('#removeBulletinBtn, #saveBtn, #bulletinListBtn, #refreshBtn').fadeOut('fast', function () {
+                $('#infoBtn, #removeBulletinBtn, #saveBtn, #bulletinListBtn, #refreshBtn').fadeOut('fast', function () {
                     fadeInRecipientAddress(e);
                 });
             } else {
-                $('#removeBulletinBtn, #saveBtn, #refreshBtn').fadeOut('fast', function () {
+                $('#infoBtn, #removeBulletinBtn, #saveBtn, #refreshBtn').fadeOut('fast', function () {
                     fadeInRecipientAddress(e);
                 });
             }
@@ -144,7 +144,7 @@ $(document).ready(function () {
         } else {
             changeIconImageSource('#addRecipientBtn', "images/addRecipient.png");
             $('#recipientAddressContainer, #sendBtn').fadeOut('fast', function () {
-                $('#removeBulletinBtn, #saveBtn, #refreshBtn').fadeIn('fast');
+                $('#infoBtn, #removeBulletinBtn, #saveBtn, #refreshBtn').fadeIn('fast');
                 if (mobileMode()) {
                     $('#bulletinListBtn').fadeIn('fast');
                 }
