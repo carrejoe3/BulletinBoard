@@ -198,32 +198,15 @@ tr.introjs-showElement > th {
  Changed by Afshin Mehrabani
 */
 .introjs-button {
-  box-sizing: content-box;
-  position: relative;
-  overflow: visible;
+  padding: .375rem .75rem;
   display: inline-block;
-  padding: 0.3em 0.8em;
   border: 1px solid #d4d4d4;
-  margin: 0;
-  text-decoration: none;
-  text-shadow: 1px 1px 0 #fff;
-  font: 11px/normal sans-serif;
-  color: #333;
+  line-height: 1.5;
+  color: #fff;
   white-space: nowrap;
   cursor: pointer;
-  outline: none;
-  background-color: #ececec;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f4f4f4), to(#ececec));
-  background-image: -moz-linear-gradient(#f4f4f4, #ececec);
-  background-image: -o-linear-gradient(#f4f4f4, #ececec);
-  background-image: linear-gradient(#f4f4f4, #ececec);
-  -webkit-background-clip: padding;
-  -moz-background-clip: padding;
-  -o-background-clip: padding-box;
-  /*background-clip: padding-box;*/ /* commented out due to Opera 11.10 bug */
-  -webkit-border-radius: 0.2em;
-  -moz-border-radius: 0.2em;
-  border-radius: 0.2em;
+  background-color: #2d3142;
+  border-radius: 0.25rem;
   /* IE hacks */
   zoom: 1;
   *display: inline;
@@ -231,17 +214,8 @@ tr.introjs-showElement > th {
 }
 
 .introjs-button:hover {
-  border-color: #bcbcbc;
+  color: rgba(239, 131, 84, 1);
   text-decoration: none;
-  box-shadow: 0px 1px 1px #e3e3e3;
-}
-
-.introjs-button:focus,
-.introjs-button:active {
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ececec), to(#f4f4f4));
-  background-image: -moz-linear-gradient(#ececec, #f4f4f4);
-  background-image: -o-linear-gradient(#ececec, #f4f4f4);
-  background-image: linear-gradient(#ececec, #f4f4f4);
 }
 
 /* overrides extra padding on button elements in Firefox */
@@ -253,7 +227,6 @@ tr.introjs-showElement > th {
 .introjs-skipbutton {
   box-sizing: content-box;
   margin-right: 5px;
-  color: #7a7a7a;
 }
 
 .introjs-prevbutton {
@@ -293,7 +266,7 @@ tr.introjs-showElement > th {
 }
 
 .introjs-hidden {
-     display: none;
+  display: none;
 }
 
 .introjs-bullets {
@@ -325,10 +298,10 @@ tr.introjs-showElement > th {
   cursor: pointer;
 }
 .introjs-bullets ul li a:hover {
-  background: #999;
+  background: rgba(239, 131, 84, 1);
 }
 .introjs-bullets ul li a.active {
-  background: #999;
+  background: rgba(239, 131, 84, 1);
 }
 
 .introjs-progress {
@@ -371,8 +344,8 @@ tr.introjs-showElement > th {
   cursor: pointer;
 }
 .introjs-hint:focus {
-    border: 0;
-    outline: 0;
+  border: 0;
+  outline: 0;
 }
 .introjs-hidehint {
   display: none;
