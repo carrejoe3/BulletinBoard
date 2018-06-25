@@ -37,7 +37,7 @@
         <div class="card">
           <div class="card-header sidebarHeader">
             <textarea class="cardHeaderTitle" rows="1" type="text" disabled>Bulletins</textarea>
-            <button type="button" id="addBulletinBtn" class="btn btn-sm" data-toggle="tooltip" data-placement="bottom" title="Add new bulletin" data-intro='Add new bulletins by clicking +.'>
+            <button type="button" id="addBulletinBtn" class="btn btn-sm" data-toggle="tooltip" data-placement="bottom" title="Add new bulletin" data-intro='Add new bulletins by clicking +.' data-disable-interaction="true">
               <img class="bulletinIcon" src="images/add.png" />
             </button>
           </div>
@@ -66,18 +66,19 @@
           <div class="card-body">
             <div class="form-group" id="infoGrid">
               <div class="form-control infoMainContent">Thank you for using Bulletin Board!</div>
-              <div class="form-control infoMainContent">If this is your first time here, click the tutorial button to find out how it all works.
+              <div class="form-control infoMainContent">If this is your first time here, click the tutorial button below to find out how it all works.
               </div>
               <div class="form-control infoMainContent">
                 <button type="button" id="tutorialBtn" class="btn btn-md" data-toggle="tooltip" data-placement="bottom" title="Play tutorial">
                   Tutorial
                 </button>
               </div>
+              <div class="form-control infoMainContent"><hr></div>
               <div class="form-control infoMainContent">-View this project on 
                 <a href="https://github.com/carrejoe3/BulletinBoard" target="_blank" class="siteLink">Github.</a>
               </div>
-              <div class="form-control infoMainContent">-Please visit
-                <a href="http://www.joecarre.co.uk" target="_blank" class="siteLink">my site</a> for contact information.
+              <div class="form-control infoMainContent">-Visit
+                <a href="http://www.joecarre.co.uk" target="_blank" class="siteLink">my site</a> for contact info.
               </div>
             </div>
           </div>
@@ -88,19 +89,19 @@
       <div class="col-md-12">
         <div class="card" id="toolbarContainer">
           <div class="card-header equidistant" id="toolbar">
-            <button type="button" class="btn btn-sm" id="infoBtn" data-toggle="tooltip" data-placement="bottom" data-step="10" title="Info" data-intro='View more information about the project by clicking the info button.'>
+            <button type="button" class="btn btn-sm" id="infoBtn" data-toggle="tooltip" data-placement="bottom" data-step="10" title="Info" data-intro='View more information about the project by clicking the info button.' data-disable-interaction="true">
               <img class="bulletinIcon" src="images/info.png"/>
             </button>
-            <button type="button" class="btn btn-sm" id="addRecipientBtn" data-toggle="tooltip" data-placement="bottom" title="Send bulletin" data-step="9" data-intro='Share the currently selected bulletin with a friend and work together. Just enter their wallet address.' disabled>
+            <button type="button" class="btn btn-sm" id="addRecipientBtn" data-toggle="tooltip" data-placement="bottom" title="Send bulletin" data-step="9" data-intro='Share the currently selected bulletin with a friend and work together. Just enter their wallet address.' data-disable-interaction="true" disabled>
               <img class="bulletinIcon" src="images/addRecipient.png"/>
             </button>
-            <button type="button" class="btn btn-sm" id="refreshBtn" data-toggle="tooltip" data-placement="bottom" title="Refresh" data-step="8" data-intro='Retrieve bulletins from blockchain at anytime by clicking this button. Please note this will overwrite any unsaved bulletins.'>
+            <button type="button" class="btn btn-sm" id="refreshBtn" data-toggle="tooltip" data-placement="bottom" title="Refresh" data-step="8" data-intro='Retrieve bulletins from blockchain at anytime by clicking this button. Please note this will overwrite any unsaved bulletins.' data-disable-interaction="true">
               <img class="bulletinIcon" src="images/refresh.png"/>
             </button>
-            <button type="button" class="btn btn-sm" id="removeBulletinBtn" data-toggle="tooltip" data-placement="bottom" title="Delete bulletin" data-step="7" data-intro='Delete the currently selected bulletin.' disabled>
+            <button type="button" class="btn btn-sm" id="removeBulletinBtn" data-toggle="tooltip" data-placement="bottom" title="Delete bulletin" data-step="7" data-intro='Delete the currently selected bulletin.' data-disable-interaction="true" disabled>
               <img class="bulletinIcon" src="images/rubbish-bin.png" />
             </button>
-            <button type="button" id="saveBtn" class="btn btn-sm" data-toggle="tooltip" data-placement="bottom" title="Save bulletin" type="submit" data-step="6" data-intro="Save the currently selected bulletin by clicking the save button. Remember to save before navigating between bulletins, otherwise your changes won't be saved" disabled>
+            <button type="button" id="saveBtn" class="btn btn-sm" data-toggle="tooltip" data-placement="bottom" title="Save bulletin" type="submit" data-step="6" data-intro="Save the currently selected bulletin by clicking the save button. Remember to save before navigating between bulletins, otherwise your changes won't be saved" data-disable-interaction="true" disabled>
               <img class="bulletinIcon" src="images/save.png"/>
             </button>
             <button type="button" class="btn btn-sm" id="bulletinListBtn" data-toggle="tooltip" data-placement="bottom" title="Show bulletin list">

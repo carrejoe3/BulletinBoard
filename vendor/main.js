@@ -3,6 +3,7 @@ let walletAddress;
 let infoActive = false;
 let recipientAdded = false;
 let bulletins = new bulletinsObj();
+let myIntro = introJs();
 
 $(document).ready(function () {
     $("#saveBtn").click(function () {
@@ -213,14 +214,7 @@ $(document).ready(function () {
 
     //tutorial button handler
     $('#tutorialBtn').click(function() {
-        $("#bulletinList").prepend("<li class='bulletinListItem temporaryBulletin' data-intro='You can view a bulletins contents by selecting it from this list. Active bulletins are marked with the eye icon.' data-bulletinId='temp' data-newInd='true'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>Example</span><div class='bulletinListSmallText'>" + 'Created: ' + new Date().toLocaleDateString() + "</div><div class='bulletinListSmallText'>Author: Tutorial</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
-
-        introJs().start();
-        $('.temporaryBulletin').trigger('click');
-
-        introJs().onexit(function() {
-            $('.temporaryBulletin').remove();
-        });
+        startTutorial();
     });
 });
 
@@ -238,7 +232,17 @@ window.addEventListener("load", function () {
         getAccountData();
         getBulletins();
         helpBannerHandler();
+        //play tutorial if user is brand new
+        if (localStorage.getItem('newUserInd') == null) {
+            startTutorial();
+            localStorage.setItem('newUserInd', false);
+        };
     }
+});
+
+myIntro.onexit(function() {
+    $('.temporaryBulletin').remove();
+    hideBulletinContainer();
 });
 
 function bulletinsObj() {
@@ -521,4 +525,11 @@ function hideBulletinContainer() {
 function hideBulletinList() {
     $('#bulletinListCol').hide();
     changeIconImageSource('#bulletinListBtn', "images/list.png");
+};
+
+function startTutorial() {
+    $("#bulletinList").prepend("<li class='bulletinListItem temporaryBulletin' data-intro='You can view a bulletins contents by selecting it from this list. Active bulletins are marked with the eye icon.' data-bulletinId='temp' data-newInd='true' data-disable-interaction='true'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>Example</span><div class='bulletinListSmallText'>" + 'Created: ' + new Date().toLocaleDateString() + "</div><div class='bulletinListSmallText'>Author: Tutorial</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
+
+    myIntro.start();
+    $('.temporaryBulletin').trigger('click');
 };
