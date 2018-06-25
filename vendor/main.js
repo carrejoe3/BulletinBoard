@@ -210,6 +210,18 @@ $(document).ready(function () {
     $('#bulletinListBtn').click(function () {
         hideBulletinContainer();
     });
+
+    //tutorial button handler
+    $('#tutorialBtn').click(function() {
+        $("#bulletinList").prepend("<li class='bulletinListItem temporaryBulletin' data-intro='You can view a bulletins contents by selecting it from this list. Active bulletins are marked with the eye icon.' data-bulletinId='temp' data-newInd='true'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>Example</span><div class='bulletinListSmallText'>" + 'Created: ' + new Date().toLocaleDateString() + "</div><div class='bulletinListSmallText'>Author: Tutorial</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
+
+        introJs().start();
+        $('.temporaryBulletin').trigger('click');
+
+        introJs().onexit(function() {
+            $('.temporaryBulletin').remove();
+        });
+    });
 });
 
 //WebWalletExtension detection
