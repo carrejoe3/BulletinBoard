@@ -4,15 +4,15 @@ let infoActive = false;
 let recipientAdded = false;
 let bulletins = new bulletinsObj();
 
-$( document ).ready(function() {
-    $("#saveBtn").click(function() {
+$(document).ready(function () {
+    $("#saveBtn").click(function () {
         updateBulletinArrays();
         bulletins = addTitleMarkers(bulletins);
 
         saveBulletins(bulletins, activeBulletinId, addContentMarkers($('#bulletinMainContent').val()));
     });
 
-    $("#addBulletinBtn").click(function() {
+    $("#addBulletinBtn").click(function () {
         let newId = generateUUID();
         let newTitle = 'Title';
         let newDate = new Date().toLocaleDateString();
@@ -26,7 +26,7 @@ $( document ).ready(function() {
         bulletins.authors.push(walletAddress);
     });
 
-    $("#bulletinList").on("click", ".bulletinListItem", function(e) {
+    $("#bulletinList").on("click", ".bulletinListItem", function (e) {
         //toggle info panel off
         infoActive = false;
         $('#infoCol').hide();
@@ -38,7 +38,7 @@ $( document ).ready(function() {
         activeBulletinId = $(this).attr("data-bulletinId");
 
         //if bulletin is new, skip getBulletins and call handleResponse immediately
-        if($(this).attr("data-newInd") == 'true') {
+        if ($(this).attr("data-newInd") == 'true') {
             handleBulletinResponse(null);
             $('#bulletinTitle').val('Title');
         } else {
@@ -50,7 +50,7 @@ $( document ).ready(function() {
         e.stopPropagation();
     });
 
-    $("#removeBulletinBtn").click(function() {
+    $("#removeBulletinBtn").click(function () {
         let activeIdIndex = getActiveBulletinIdIndex();
 
         bulletins.ids.splice(activeIdIndex, 1);
@@ -68,127 +68,134 @@ $( document ).ready(function() {
         changeIconImageSource('#bulletinListBtn', "images/listActive.png");
         disableEnableBulletinSpecificButtons('disable');
 
-        if(isNull(bulletins.ids[0])) {
+        if (isNull(bulletins.ids[0])) {
             delBulletins();
         }
     });
 
     //set active buttons on hover
-    $("#removeBulletinBtn").mouseover(function() {
+    $("#removeBulletinBtn").mouseover(function () {
         changeIconImageSource(this, "images/rubbishBinActive.png");
     });
-    $("#removeBulletinBtn").mouseleave(function() {
+    $("#removeBulletinBtn").mouseleave(function () {
         changeIconImageSource(this, "images/rubbish-bin.png");
     });
-    $("#addBulletinBtn").mouseover(function() {
+    $("#addBulletinBtn").mouseover(function () {
         changeIconImageSource(this, "images/addActive.png");
     });
-    $("#addBulletinBtn").mouseleave(function() {
+    $("#addBulletinBtn").mouseleave(function () {
         changeIconImageSource(this, "images/add.png");
     });
-    $("#infoBtn").mouseover(function() {
-        if(!infoActive) {
+    $("#infoBtn").mouseover(function () {
+        if (!infoActive) {
             changeIconImageSource($('#infoBtn'), "images/infoActive.png");
         }
     });
-    $("#infoBtn").mouseleave(function() {
-        if(!infoActive) {
+    $("#infoBtn").mouseleave(function () {
+        if (!infoActive) {
             changeIconImageSource($('#infoBtn'), "images/info.png");
         }
     });
-    $("#addRecipientBtn").mouseover(function() {
-        if(!recipientAdded) {
+    $("#addRecipientBtn").mouseover(function () {
+        if (!recipientAdded) {
             changeIconImageSource(this, "images/addRecipientActive.png");
         }
     });
-    $("#addRecipientBtn").mouseleave(function() {
-        if(!recipientAdded) {
+    $("#addRecipientBtn").mouseleave(function () {
+        if (!recipientAdded) {
             changeIconImageSource(this, "images/addRecipient.png");
         }
     });
-    $("#saveBtn").mouseover(function() {
+    $("#saveBtn").mouseover(function () {
         changeIconImageSource(this, "images/saveActive.png");
     });
-    $("#saveBtn").mouseleave(function() {
+    $("#saveBtn").mouseleave(function () {
         changeIconImageSource(this, "images/save.png");
     });
-    $("#sendBtn").mouseover(function() {
+    $("#sendBtn").mouseover(function () {
         changeIconImageSource(this, "images/sendActive.png");
     });
-    $("#sendBtn").mouseleave(function() {
+    $("#sendBtn").mouseleave(function () {
         changeIconImageSource(this, "images/send.png");
     });
-    $("#refreshBtn").mouseover(function() {
+    $("#refreshBtn").mouseover(function () {
         changeIconImageSource(this, "images/refreshActive.png");
     });
-    $("#refreshBtn").mouseleave(function() {
+    $("#refreshBtn").mouseleave(function () {
         changeIconImageSource(this, "images/refresh.png");
     });
 
     //add recipient button handler
-    $('#addRecipientBtn').click(function(e) {
-        if(recipientAdded == false) {
+    $('#addRecipientBtn').click(function (e) {
+        if (recipientAdded == false) {
             changeIconImageSource('#addRecipientBtn', "images/addRecipientActive.png");
 
             //if mobile mode, also slideToggle bulletin list button
-            if(mobileMode()) {
-                $('#removeBulletinBtn, #saveBtn, #bulletinListBtn, #refreshBtn').fadeOut('fast', function() {
+            if (mobileMode()) {
+                $('#removeBulletinBtn, #saveBtn, #bulletinListBtn, #refreshBtn').fadeOut('fast', function () {
                     fadeInRecipientAddress(e);
                 });
             } else {
-                $('#removeBulletinBtn, #saveBtn, #refreshBtn').fadeOut('fast', function() {
+                $('#removeBulletinBtn, #saveBtn, #refreshBtn').fadeOut('fast', function () {
                     fadeInRecipientAddress(e);
                 });
             }
 
         } else {
             changeIconImageSource('#addRecipientBtn', "images/addRecipient.png");
-            $('#recipientAddressContainer, #sendBtn').fadeOut('fast', function() {
+            $('#recipientAddressContainer, #sendBtn').fadeOut('fast', function () {
                 $('#removeBulletinBtn, #saveBtn, #refreshBtn').fadeIn('fast');
-                if(mobileMode()) {
+                if (mobileMode()) {
                     $('#bulletinListBtn').fadeIn('fast');
                 }
             });
         }
-        recipientAdded = (recipientAdded == false? true: false);
+        recipientAdded = (recipientAdded == false ? true : false);
     });
 
     //info button handler
-    $('#infoBtn').click(function() {
-        infoActive = (infoActive == false? true: false);
-        //also hide bulletin list if on mobile
-        $('#bulletinCol').fadeOut('fast', function() {
-            if(!infoActive) {
-                $('#infoCol').fadeOut('fast', function() {
-                    //make active bulletin actively styled again if it exists
-                    if(!isNull(activeBulletinId)) {
-                        $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).css("font-weight", "bold");
-                        $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).find(".eye").fadeIn('fast');
-                        $('#bulletinCol').fadeIn('fast');
+    $('#infoBtn').click(function () {
+        infoActive = (infoActive == false ? true : false);
+        if (mobileMode()) hideBulletinList();
+        $('#bulletinCol').fadeOut('fast', function () {
+            if (!infoActive) {
+                $('#infoCol').fadeOut('fast', function () {
+                    if (mobileMode()) {
+                        $('#bulletinListCol').show();
+                        changeIconImageSource($('#bulletinListBtn'), 'images/listActive.png');
+                    } else {
+                        //make active bulletin actively styled again if it exists
+                        if (!isNull(activeBulletinId)) {
+                            $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).css("font-weight", "bold");
+                            $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).find(".eye").fadeIn('fast');
+                            $('#bulletinCol').fadeIn('fast');
+                            disableEnableBulletinSpecificButtons('enable');
+                        }
                     }
                 });
-                changeIconImageSource(this, "images/info.png");
+                changeIconImageSource($('#infoBtn'), "images/info.png");
             } else {
-                changeIconImageSource(this, "images/infoActive.png");
+                changeIconImageSource($('#infoBtn'), "images/infoActive.png");
                 $('#infoCol').fadeIn('fast');
                 $('.eye').fadeOut('fast');
                 $('.bulletinListItem').css('font-weight', '');
+                disableEnableBulletinSpecificButtons('disable');
             }
         })
     });
 
     //send button handler
-    $('#sendBtn').click(function() {
+    $('#sendBtn').click(function () {
         updateBulletinArrays();
         validateWalletAddress($('#recipientAddress').val());
     });
 
     //close helper banner button handler
-    $('.alertCloseBtn').click(function() {
+    $('.alertCloseBtn').click(function () {
         $('#helpBanner').fadeOut();
     });
 
-    $('#refreshBtn').click(function() {
+    $('#refreshBtn').click(function () {
         $('#loader').css('display', 'flex');
         hideBulletinContainer();
         getBulletins();
@@ -200,11 +207,8 @@ $( document ).ready(function() {
     // });
 
     //bulletin list button handler for small screens
-    $('#bulletinListBtn').click(function() {
-        $('#bulletinCol').hide();
-        $('#bulletinListCol').fadeIn('fast');
-        changeIconImageSource(this, 'images/listActive.png');
-        disableEnableBulletinSpecificButtons('disable');
+    $('#bulletinListBtn').click(function () {
+        hideBulletinContainer();
     });
 });
 
@@ -237,17 +241,17 @@ function helpBannerHandler() {
     let helpIndex = 0;
 
     //if user has no bulletins, add help message to array
-    if(bulletins.ids[0] == 'undefined' || bulletins.ids[0] == '') {
+    if (bulletins.ids[0] == 'undefined' || bulletins.ids[0] == '') {
         helpMessages.push('Click + to add your first bulletin');
     }
 
     //change help message
-    window.setInterval(function() {
-        $('#alertText').fadeOut(function() {
+    window.setInterval(function () {
+        $('#alertText').fadeOut(function () {
             $(this).text(helpMessages[helpIndex]).fadeIn();
-            helpIndex >= helpMessages.length - 1? helpIndex = 0: helpIndex++;
+            helpIndex >= helpMessages.length - 1 ? helpIndex = 0 : helpIndex++;
         })
-    }, 4000 );
+    }, 4000);
 };
 
 function handleBulletinsResponse(data) {
@@ -274,7 +278,7 @@ function handleBulletinResponse(data) {
     //set bulletin contents
     let activeIdIndex = getActiveBulletinIdIndex();
 
-    if(isNull(data)) {
+    if (isNull(data)) {
         $('#bulletinMainContent').val('');
     } else {
         $('#bulletinMainContent').val(removeContentMarkers(data));
@@ -283,14 +287,13 @@ function handleBulletinResponse(data) {
     $('#bulletinTitle').val(bulletins.titles[activeIdIndex]);
 
     //show main bulletin and set focus
-    $("#bulletinCol").fadeIn('fast', function() {
+    $("#bulletinCol").fadeIn('fast', function () {
         $('.cardHeaderTitle').focus();
     });
 
     //if user is on mobile, hide bulletin list
     if (mobileMode()) {
-        $('#bulletinListCol').hide();
-        changeIconImageSource('#bulletinListBtn', "images/list.png");
+        hideBulletinList();
     } else {
         //apply active styling to bulletin list item
         $('.bulletinListItem').css('font-weight', '');
@@ -305,13 +308,13 @@ function sendBulletinsHandler(data) {
     let recipientBulletins = new bulletinsObj();
 
     //if recipient has some bulletins, process them
-    if(!isNull(data)) {
+    if (!isNull(data)) {
         recipientBulletins = splitReturnedBulletinData(data);
         recipientBulletins = removeTitleMarkers(recipientBulletins);
     }
 
     //if recipient already has bulletin we want to send
-    if(recipientBulletins.ids.includes(activeBulletinId)) {
+    if (recipientBulletins.ids.includes(activeBulletinId)) {
         $('#bottomHelpBannerText')
             .text('Recipient already has this bulletin!')
             .show();
@@ -331,7 +334,7 @@ function sendBulletinsHandler(data) {
 
 function updateBulletinArrays() {
     //activeBulletinId is initially null and after bulletin has been removed
-    if(null != activeBulletinId) {
+    if (null != activeBulletinId) {
         let activeIdIndex = getActiveBulletinIdIndex();
         bulletins.titles.splice(activeIdIndex, 1, $('#bulletinTitle').val());
     };
@@ -339,8 +342,8 @@ function updateBulletinArrays() {
 
 //add new bulletin to bulletin list
 function newBulletinListItem(bulletinId, title, date, authorId, newInd) {
-    author = authorId == walletAddress? 'You': authorId;
-    $("#bulletinList").prepend("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "' + data-newInd='" + newInd + "'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>" + title + "</span><div class='bulletinListSmallText'>" + 'Created: ' + date + "</div><div class='bulletinListSmallText'>" + 'Author: '+ author + "</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
+    author = authorId == walletAddress ? 'You' : authorId;
+    $("#bulletinList").prepend("<li class='bulletinListItem' data-bulletinId='" + bulletinId + "' + data-newInd='" + newInd + "'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>" + title + "</span><div class='bulletinListSmallText'>" + 'Created: ' + date + "</div><div class='bulletinListSmallText'>" + 'Author: ' + author + "</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
 };
 
 function replaceAll(str, find, replace) {
@@ -369,7 +372,7 @@ function mobileMode() {
 };
 
 function disableEnableBulletinSpecificButtons(ind) {
-    if(ind == 'disable') {
+    if (ind == 'disable') {
         disableButton('#addRecipientBtn');
         disableButton('#removeBulletinBtn');
         disableButton('#saveBtn');
@@ -394,7 +397,7 @@ function changeIconImageSource(element, source) {
 };
 
 function fadeInRecipientAddress(e) {
-    $('#recipientAddressContainer, #sendBtn').fadeTo( "fast" , 1, function() {
+    $('#recipientAddressContainer, #sendBtn').fadeTo("fast", 1, function () {
         $('#recipientAddress').focus();
         e.stopPropagation();
     });
@@ -411,7 +414,7 @@ function splitReturnedBulletinData(data) {
 };
 
 function removeTitleMarkers(bulletinsObj) {
-    bulletinsObj.titles = bulletinsObj.titles.map(function(titles) {
+    bulletinsObj.titles = bulletinsObj.titles.map(function (titles) {
         return replaceAll(titles, '/.t1tle./', '');
     });
     return bulletinsObj;
@@ -424,7 +427,7 @@ function removeContentMarkers(content) {
 function addTitleMarkers(bulletinsObj) {
     for (var i in bulletinsObj.ids) {
         bulletinsObj.titles[i] = '/.t1tle./' + bulletinsObj.titles[i] + '/.t1tle./';
-      };
+    };
     return bulletinsObj;
 };
 
@@ -435,25 +438,24 @@ function addContentMarkers(content) {
 function getAccountData() {
     window.postMessage({
         "target": "contentscript",
-        "data":{
-        },
+        "data": {},
         "method": "getAccount",
     }, "*");
 
     //remove first to avoid duplicate listeners being created
-    window.removeEventListener('message', function(e) {
+    window.removeEventListener('message', function (e) {
         // e.detail contains the transferred data
-        console.log("recived by page:" + e + ", e.data:"+ JSON.stringify(e.data));
-        if(null != e.data.data.account){
+        console.log("recived by page:" + e + ", e.data:" + JSON.stringify(e.data));
+        if (null != e.data.data.account) {
             walletAddress = e.data.data.account;
         }
     });
 
     // listen message from contentscript
-    window.addEventListener('message', function(e) {
+    window.addEventListener('message', function (e) {
         // e.detail contains the transferred data
-        console.log("recived by page:" + e + ", e.data:"+ JSON.stringify(e.data));
-        if(null != e.data.data.account){
+        console.log("recived by page:" + e + ", e.data:" + JSON.stringify(e.data));
+        if (null != e.data.data.account) {
             walletAddress = e.data.data.account;
         }
         // if(!!e.data.data.txhash){
@@ -490,10 +492,21 @@ function validateWalletAddress(address) {
 };
 
 function hideBulletinContainer() {
+    infoActive = false;
+    $('#infoCol').hide();
     if (mobileMode()) {
-        $('#bulletinListCol').show();
         $('#bulletinCol').hide();
+        $('#bulletinListCol').show();
     } else {
         $('#bulletinCol').fadeOut('fast');
     }
+
+    changeIconImageSource($('#infoBtn'), 'images/info.png');
+    changeIconImageSource($('#bulletinListBtn'), 'images/listActive.png');
+    disableEnableBulletinSpecificButtons('disable');
+};
+
+function hideBulletinList() {
+    $('#bulletinListCol').hide();
+    changeIconImageSource('#bulletinListBtn', "images/list.png");
 };
