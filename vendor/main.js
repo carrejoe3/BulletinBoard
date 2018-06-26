@@ -28,11 +28,7 @@ $(document).ready(function () {
     });
 
     $("#bulletinList").on("click", ".bulletinListItem", function (e) {
-        //toggle info panel off
-        infoActive = false;
-        $('#infoCol').hide();
-        changeIconImageSource($('#infoBtn'), "images/info.png");
-
+        hideInfoPanel();
         $('#bottomHelpBannerText').hide();
         $('#loader').css('display', 'flex');
         updateBulletinArrays();
@@ -171,13 +167,13 @@ $(document).ready(function () {
                             $('#bulletinList').find(`[data-bulletinid='${activeBulletinId}']`).find(".eye").fadeIn('fast');
                             $('#bulletinCol').fadeIn('fast');
                             disableEnableBulletinSpecificButtons('enable');
+                            console.log('active id: ' + activeBulletinId);
                         }
                     }
                 });
                 changeIconImageSource($('#infoBtn'), "images/info.png");
             } else {
-                changeIconImageSource($('#infoBtn'), "images/infoActive.png");
-                $('#infoCol').fadeIn('fast');
+                showInfoPanel();
                 $('.eye').fadeOut('fast');
                 $('.bulletinListItem').css('font-weight', '');
                 disableEnableBulletinSpecificButtons('disable');
@@ -243,6 +239,7 @@ window.addEventListener("load", function () {
 myIntro.onexit(function() {
     $('.temporaryBulletin').remove();
     hideBulletinContainer();
+    showInfoPanel();
 });
 
 function bulletinsObj() {
@@ -508,16 +505,8 @@ function validateWalletAddress(address) {
 };
 
 function hideBulletinContainer() {
-    infoActive = false;
-    $('#infoCol').hide();
-    if (mobileMode()) {
-        $('#bulletinCol').hide();
-        $('#bulletinListCol').show();
-    } else {
-        $('#bulletinCol').fadeOut('fast');
-    }
-
-    changeIconImageSource($('#infoBtn'), 'images/info.png');
+    $('#bulletinCol').hide();
+    if (mobileMode()) $('#bulletinListCol').show();
     changeIconImageSource($('#bulletinListBtn'), 'images/listActive.png');
     disableEnableBulletinSpecificButtons('disable');
 };
@@ -528,8 +517,20 @@ function hideBulletinList() {
 };
 
 function startTutorial() {
-    $("#bulletinList").prepend("<li class='bulletinListItem temporaryBulletin' data-intro='You can view a bulletins contents by selecting it from this list. Active bulletins are marked with the eye icon.' data-bulletinId='temp' data-newInd='true' data-disable-interaction='true'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>Example</span><div class='bulletinListSmallText'>" + 'Created: ' + new Date().toLocaleDateString() + "</div><div class='bulletinListSmallText'>Author: Tutorial</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
+    $("#bulletinList").prepend("<li class='bulletinListItem temporaryBulletin' data-intro='You can view a bulletins contents by selecting it from this list. Active bulletins are marked with the eye icon.' data-newInd='true' data-disable-interaction='true'><div class='row'><div class='col-10'><span class='sidebarBulletinTitle'>Example</span><div class='bulletinListSmallText'>" + 'Created: ' + new Date().toLocaleDateString() + "</div><div class='bulletinListSmallText'>Author: Tutorial</div></div><div class='col-2'><img class='eye' src='images/eye.png'/></div></div><hr class='listItemBottomBorder'/></li>");
 
     myIntro.start();
     $('.temporaryBulletin').trigger('click');
+};
+
+function showInfoPanel() {
+    changeIconImageSource($('#infoBtn'), "images/infoActive.png");
+    $('#infoCol').fadeIn('fast');
+    infoActive = true;
+};
+
+function hideInfoPanel() {
+    infoActive = false;
+    $('#infoCol').hide();
+    changeIconImageSource($('#infoBtn'), 'images/info.png');
 };
