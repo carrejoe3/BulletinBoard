@@ -229,7 +229,7 @@ window.addEventListener("load", function () {
         getBulletins();
         helpBannerHandler();
         //play tutorial if user is brand new
-        if (localStorage.getItem('newUserInd') == null) {
+        if (localStorage.getItem('newUserInd') == null && !mobileMode()) {
             startTutorial();
             localStorage.setItem('newUserInd', false);
         };
