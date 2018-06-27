@@ -209,7 +209,7 @@ $(document).ready(function () {
     });
 
     //tutorial button handler
-    $('#tutorialBtn').click(function() {
+    $('#tutorialBtn').click(function () {
         startTutorial();
     });
 });
@@ -236,7 +236,7 @@ window.addEventListener("load", function () {
     }
 });
 
-myIntro.onexit(function() {
+myIntro.onexit(function () {
     $('.temporaryBulletin').remove();
     hideBulletinContainer();
     showInfoPanel();
@@ -449,43 +449,14 @@ function addContentMarkers(content) {
 };
 
 function getAccountData() {
-    window.postMessage({
-        "target": "contentscript",
-        "data": {},
-        "method": "getAccount",
-    }, "*");
-
-    //remove first to avoid duplicate listeners being created
-    window.removeEventListener('message', function (e) {
-        // e.detail contains the transferred data
-        console.log("recived by page:" + e + ", e.data:" + JSON.stringify(e.data));
-        if (null != e.data.data.account) {
-            walletAddress = e.data.data.account;
-        }
+    NasExtWallet.getUserAddress(function (addr) {
+        walletAddress = addr;
     });
-
-    // listen message from contentscript
-    window.addEventListener('message', function (e) {
-        // e.detail contains the transferred data
-        console.log("recived by page:" + e + ", e.data:" + JSON.stringify(e.data));
-        if (null != e.data.data.account) {
-            walletAddress = e.data.data.account;
-        }
-        // if(!!e.data.data.txhash){
-        //     document.getElementById("txResult").innerHTML = "Transaction hash\n" +  JSON.stringify(e.data.data.txhash,null,'\t');
-        // }
-        // if(!!e.data.data.receipt){
-        //     document.getElementById("txResult").innerHTML = "Transaction Receipt\n" +  JSON.stringify(e.data.data.receipt,null,'\t');
-        // }
-        // if(!!e.data.data.neb_call){
-        //     document.getElementById("txResult").innerHTML = "return of call\n" +  JSON.stringify(e.data.data.neb_call,null,'\t');
-        // }
-    });
-}
+};
 
 function isNull(result) {
     return result == 'null' || typeof result == 'undefined' || result == '' || result == null;
-}
+};
 
 function validateWalletAddress(address) {
     if (address == walletAddress) {
@@ -533,4 +504,13 @@ function hideInfoPanel() {
     infoActive = false;
     $('#infoCol').hide();
     changeIconImageSource($('#infoBtn'), 'images/info.png');
+};
+
+function transactionFeedbackHandler(response) {
+    if (response == "success") {
+        $('#bottomHelpBannerText').text('Bulletin saved.');
+    } else {
+        $('#bottomHelpBannerText').text('Save unsuccessful.');
+    }
+    $('#bottomHelpBannerText').fadeIn();
 };

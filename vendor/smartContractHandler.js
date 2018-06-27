@@ -149,6 +149,7 @@ function funcIntervalQuery() {
       //resp is a JSON string
       let respObject = JSON.parse(resp)
       console.log("tx result: " + resp)
+      transactionFeedbackHandler(respObject.msg);
       if (respObject.code === 0) {
         clearInterval(intervalQuery)
       }

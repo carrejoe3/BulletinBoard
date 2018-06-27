@@ -291,9 +291,9 @@ textarea:focus,
 
 #bottomHelpBanner {
   color: $orange;
-  font-style: italic;
   margin-top: 1em;
   min-height: 1.5em;
+  text-align: center;
 
   #loader {
     display: flex;
