@@ -9,11 +9,12 @@ $(document).ready(function () {
     $("#saveBtn").click(function () {
         updateBulletinArrays();
         bulletins = addTitleMarkers(bulletins);
-
+        $('#bottomHelpBannerText').fadeOut('fast');
         saveBulletins(bulletins, activeBulletinId, addContentMarkers($('#bulletinMainContent').val()));
     });
 
     $("#addBulletinBtn").click(function () {
+        $('#bottomHelpBannerText').fadeOut('fast');
         let newId = generateUUID();
         let newTitle = 'Title';
         let newDate = new Date().toLocaleDateString();
@@ -48,6 +49,8 @@ $(document).ready(function () {
     });
 
     $("#removeBulletinBtn").click(function () {
+        $('#bottomHelpBannerText').fadeOut('fast');
+
         let activeIdIndex = getActiveBulletinIdIndex();
 
         bulletins.ids.splice(activeIdIndex, 1);
@@ -124,6 +127,7 @@ $(document).ready(function () {
 
     //add recipient button handler
     $('#addRecipientBtn').click(function (e) {
+        $('#bottomHelpBannerText').fadeOut('fast');
         if (recipientAdded == false) {
             changeIconImageSource('#addRecipientBtn', "images/addRecipientActive.png");
 
@@ -152,6 +156,7 @@ $(document).ready(function () {
 
     //info button handler
     $('#infoBtn').click(function () {
+        $('#bottomHelpBannerText').fadeOut('fast');
         infoActive = (infoActive == false ? true : false);
         if (mobileMode()) hideBulletinList();
         $('#bulletinCol').fadeOut('fast', function () {
@@ -193,6 +198,7 @@ $(document).ready(function () {
     });
 
     $('#refreshBtn').click(function () {
+        $('#bottomHelpBannerText').hide();
         $('#loader').css('display', 'flex');
         hideBulletinContainer();
         getBulletins();
@@ -205,6 +211,7 @@ $(document).ready(function () {
 
     //bulletin list button handler for small screens
     $('#bulletinListBtn').click(function () {
+        $('#bottomHelpBannerText').fadeOut('fast');
         hideBulletinContainer();
     });
 
