@@ -78,6 +78,7 @@ function delBulletins() {
 
 function cbPush(resp) {
   console.log("response of push: " + JSON.stringify(resp));
+  transactionFeedbackHandler(JSON.stringify(resp));
 };
 
 function cbSearch(resp) {
@@ -121,7 +122,7 @@ function cbBulletinSearch(resp) {
 function cbDelete(resp) {
   console.log("response of deletion: " + JSON.stringify(resp));
   $("#bulletinList").empty();
-  $("#bulletinContainer").fadeOut('fast');
+  $("#bulletinCol").fadeOut('fast');
 };
 
 function cbSend(resp) {

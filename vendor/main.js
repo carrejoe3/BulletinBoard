@@ -7,9 +7,10 @@ let myIntro = introJs();
 
 $(document).ready(function () {
     $("#saveBtn").click(function () {
+        $('#bottomHelpBannerText').fadeIn('fast');
+        transactionFeedbackHandler('Saving');
         updateBulletinArrays();
         bulletins = addTitleMarkers(bulletins);
-        $('#bottomHelpBannerText').fadeOut('fast');
         saveBulletins(bulletins, activeBulletinId, addContentMarkers($('#bulletinMainContent').val()));
     });
 
@@ -68,9 +69,7 @@ $(document).ready(function () {
         changeIconImageSource('#bulletinListBtn', "images/listActive.png");
         disableEnableBulletinSpecificButtons('disable');
 
-        if (isNull(bulletins.ids[0])) {
-            delBulletins();
-        }
+        if (isNull(bulletins.ids[0])) delBulletins();
     });
 
     //set active buttons on hover
@@ -87,24 +86,16 @@ $(document).ready(function () {
         changeIconImageSource(this, "images/add.png");
     });
     $("#infoBtn").mouseover(function () {
-        if (!infoActive) {
-            changeIconImageSource($('#infoBtn'), "images/infoActive.png");
-        }
+        if (!infoActive) changeIconImageSource($('#infoBtn'), "images/infoActive.png");
     });
     $("#infoBtn").mouseleave(function () {
-        if (!infoActive) {
-            changeIconImageSource($('#infoBtn'), "images/info.png");
-        }
+        if (!infoActive) changeIconImageSource($('#infoBtn'), "images/info.png");
     });
     $("#addRecipientBtn").mouseover(function () {
-        if (!recipientAdded) {
-            changeIconImageSource(this, "images/addRecipientActive.png");
-        }
+        if (!recipientAdded) changeIconImageSource(this, "images/addRecipientActive.png");
     });
     $("#addRecipientBtn").mouseleave(function () {
-        if (!recipientAdded) {
-            changeIconImageSource(this, "images/addRecipient.png");
-        }
+        if (!recipientAdded) changeIconImageSource(this, "images/addRecipient.png");
     });
     $("#saveBtn").mouseover(function () {
         changeIconImageSource(this, "images/saveActive.png");
@@ -146,9 +137,7 @@ $(document).ready(function () {
             changeIconImageSource('#addRecipientBtn', "images/addRecipient.png");
             $('#recipientAddressContainer, #sendBtn').fadeOut('fast', function () {
                 $('#infoBtn, #removeBulletinBtn, #saveBtn, #refreshBtn').fadeIn('fast');
-                if (mobileMode()) {
-                    $('#bulletinListBtn').fadeIn('fast');
-                }
+                if (mobileMode()) $('#bulletinListBtn').fadeIn('fast');
             });
         }
         recipientAdded = (recipientAdded == false ? true : false);
@@ -514,10 +503,18 @@ function hideInfoPanel() {
 };
 
 function transactionFeedbackHandler(response) {
-    if (response == "success") {
-        $('#bottomHelpBannerText').text('Bulletin saved.');
-    } else {
-        $('#bottomHelpBannerText').text('Save unsuccessful.');
+    switch(response) {
+        case "success":
+            $('#bottomHelpBannerText').text('Bulletin saved.');
+            break;
+        case "Error: Transaction rejected by user":
+            $('#bottomHelpBannerText').text('Transaction rejected.');
+            break;
+        case "Saving":
+            $('#bottomHelpBannerText').text('Saving...');
+            break;
+        default:
+            $('#bottomHelpBannerText').text('Save unsuccessful.');
+            break;
     }
-    $('#bottomHelpBannerText').fadeIn();
 };
