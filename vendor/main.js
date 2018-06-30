@@ -202,6 +202,7 @@ $(document).ready(function () {
     $('#bulletinListBtn').click(function () {
         $('#bottomHelpBannerText').fadeOut('fast');
         hideBulletinContainer();
+        hideInfoPanel();
     });
 
     //tutorial button handler
@@ -214,7 +215,7 @@ $(document).ready(function () {
 window.addEventListener("load", function () {
     let isExtensionExist = typeof (webExtensionWallet) !== "undefined";
     if (!isExtensionExist) {
-        $('#helpBanner').append('<div class="alert" role="alert"><div>Please install <a href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> to use Bulletin Board</div></div>');
+        $('#helpBanner').append('<div class="alert" role="alert"><div>Please install <a href="https://chrome.google.com/webstore/detail/nasextwallet/gehjkhmhclgnkkhpfamakecfgakkfkco" target="_blank">WebExtensionWallet</a> to use Bulletin Board</div></div>');
         $('#bulletinMainContent, #addBulletinBtn, #bulletinTitle, #saveBtn, #bulletinListBtn').prop('disabled', true);
         $('#helpBanner').css('display', 'block');
     } else {
@@ -516,5 +517,5 @@ function transactionFeedbackHandler(response) {
         default:
             $('#bottomHelpBannerText').text('Save unsuccessful.');
             break;
-    }
+    };
 };
